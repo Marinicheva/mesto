@@ -1,0 +1,29 @@
+.profile__data {
+    display: grid;
+    grid-template-columns: repeat(3, max-content);
+    grid-template-rows: 2fr 1fr;
+    grid-template-areas: 
+        "photo name edit-btn"
+        "photo description .";
+    align-items: center;
+}
+
+@media screen and (max-width: 816px) and (min-width: 612px) {
+    .profile__data {
+        align-self: stretch;
+        grid-template-columns: repeat(3, auto);
+    }
+}
+
+@media screen and (max-width: 611px) {
+    .profile__data {
+        grid-template-columns: max-content min-content;
+        grid-template-rows: repeat(3, max-content);
+        grid-template-areas: 
+            "photo photo"
+            "name edit-btn"
+            "description description";
+        justify-items: center;
+        margin-bottom: 36px;
+    }
+}
