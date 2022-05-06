@@ -1,14 +1,26 @@
 .modal__input {
     margin-bottom: 30px;
-    padding-bottom: 13px;
+    padding: 13px 5px;
     font-size: 14px;
     line-height: 1.2;
     border: none;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid rgba(0, 0, 0, .2);
+    transition: all .6s;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
 .modal__input:last-of-type {
     margin-bottom: 48px;
+}
+
+.modal__input:hover {
+    background-color: rgba(0, 0, 0, .2);
+}
+
+.modal__input:focus {
+    border: 1px solid rgba(0, 0, 0, .5);
+    outline: none;
 }
 
 @media screen and (max-width: 500px) {
