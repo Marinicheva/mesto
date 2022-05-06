@@ -7,7 +7,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeBtn = modal.querySelector('.modal__close');
     const userName = modal.querySelector('.modal__input-name');
     const userDescription = modal.querySelector('.modal__input-description');
-    const submitBtn = modal.querySelector('.modal__btn');
     const editForm = modal.querySelector('.modal__form');
 
     let currentUserName = profileName.textContent;
@@ -60,11 +59,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     /*Обработка события отправки формы*/
-    submitBtn.addEventListener('click', event => {
-        event.preventDefault();
-        checkChanges();
-    });
-
     editForm.addEventListener('submit',  event => {
         event.preventDefault();
         checkChanges();
