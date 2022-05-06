@@ -1,0 +1,17 @@
+.gallery__list {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    row-gap: 20px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+@media screen and (max-width: 1023px) {
+    .gallery__list {
+        justify-content: space-evenly;
+        gap: 20px;
+    }
+    
+}

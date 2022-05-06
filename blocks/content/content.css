@@ -5,8 +5,14 @@
     margin: 0 auto;
 }
 
-@media screen and (max-width: 1023px) {
+@media screen and (max-width: 1023px) and (min-width: 321px) {
     .content {
         max-width: 80%;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .content {
+        max-width: 88%;
     }
 }

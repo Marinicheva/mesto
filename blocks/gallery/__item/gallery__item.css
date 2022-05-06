@@ -1,0 +1,5 @@
+.gallery__item {
+    min-height: 361px;
+    background-color: var(--basic-white);
+    border-radius: 10px;
+}
