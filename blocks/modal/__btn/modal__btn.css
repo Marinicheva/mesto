@@ -1,0 +1,14 @@
+.modal__btn {
+    height: 50px;
+    color: var(--basic-white);
+    font-size: 18px;
+    line-height: 1.2;
+    background-color: rgb(0, 0, 0);
+    border-radius: 2px;
+    transition: background-color .6s;
+    cursor: pointer;
+}
+
+.modal__btn:hover {
+    background-color: rgba(0, 0, 0, .8);
+}
