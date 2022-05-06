@@ -10,7 +10,7 @@
 
 @media screen and (max-width: 1023px) {
     .gallery__list {
-        justify-content: space-evenly;
+        justify-content: center;
         gap: 20px;
     }
     
