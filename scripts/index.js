@@ -17,7 +17,7 @@ function openModal() {
     modal.classList.add('modal_opened');
 }
 
-function modalClose() {
+function closeModal() {
     modal.classList.remove('modal_opened');
 }
 
@@ -28,13 +28,13 @@ function editProfile(evt) {
 
     currentUserName = userName.value;
     currentUserDescription = userDescription.value;
-    modalClose();
+    closeModal();
 }
 
 /*Обработка событий для открытия и закрытия модального окна*/
 editBtn.addEventListener('click', openModal);
 
-closeBtn.addEventListener('click', modalClose);
+closeBtn.addEventListener('click', closeModal);
 
 /*Обработка события отправки формы*/
 editForm.addEventListener('submit',  editProfile);

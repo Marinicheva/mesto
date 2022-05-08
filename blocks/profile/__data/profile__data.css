@@ -16,7 +16,7 @@
 
 @media screen and (max-width: 611px) {
     .profile__data {
-        max-width: 90%;
+        width: 87%;
         grid-template-columns: 1fr max-content;
         grid-template-rows: repeat(3, max-content);
         grid-template-areas: 

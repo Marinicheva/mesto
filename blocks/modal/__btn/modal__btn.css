@@ -14,7 +14,7 @@
     background-color: rgba(0, 0, 0, .8);
 }
 
-@media screen and (min-width: 320px) {
+@media screen and (max-width: 320px) {
     .modal__btn {
         font-size: 14px;
     }

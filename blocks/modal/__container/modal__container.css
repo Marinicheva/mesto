@@ -15,7 +15,7 @@
     .modal__container {
         padding: 25px 22px;
         min-width: unset;
-        max-width: 88%;
+        width: 88%;
         min-height: unset;
         max-height: 322px;
         
