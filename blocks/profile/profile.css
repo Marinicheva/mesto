@@ -1,7 +1,7 @@
 .profile {
     display: flex;
     justify-content: space-between;
-    flex-wrap: wrap;
+    column-gap: 10px;
     align-items: center;
     align-self: stretch;
     padding-top: 40px;

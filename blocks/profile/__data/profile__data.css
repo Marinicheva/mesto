@@ -1,6 +1,6 @@
 .profile__data {
     display: grid;
-    grid-template-columns: repeat(3, max-content);
+    grid-template-columns: max-content 1fr max-content;
     grid-template-rows: 2fr 1fr;
     grid-template-areas: 
         "photo name edit-btn"
@@ -11,14 +11,13 @@
 @media screen and (max-width: 816px) and (min-width: 612px) {
     .profile__data {
         align-self: stretch;
-        grid-template-columns: repeat(3, auto);
     }
 }
 
 @media screen and (max-width: 611px) {
     .profile__data {
-        min-width: 88%;
-        grid-template-columns: auto min-content;
+        max-width: 90%;
+        grid-template-columns: 1fr max-content;
         grid-template-rows: repeat(3, max-content);
         grid-template-areas: 
             "photo photo"
