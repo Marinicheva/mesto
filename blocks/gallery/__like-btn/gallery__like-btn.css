@@ -1,6 +1,6 @@
 .gallery__like-btn {
     display: block;
-    align-self: end;
+    margin-right: 5px;
     min-width: 22px;
     min-height: 19px;
     background-color: transparent;

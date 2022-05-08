@@ -20,6 +20,14 @@
 
 @media screen and (max-width: 600px) {
     .modal__close {
-        right: 0;
+        top: -36px;
+        right: -3px;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .modal__close {
+        width: 20px;
+        height: 20px;
     }
 }

@@ -1,4 +1,5 @@
 .header__link {
+    display: inline-block;
     transition: opacity .6s;
 }
 

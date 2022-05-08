@@ -1,6 +1,6 @@
 .modal__title {
     margin: 0;
-    padding-bottom: 54px;
+    margin-bottom: 50px;
     font-size: 24px;
     line-height: 1.2;
     font-weight: 900;
@@ -9,7 +9,7 @@
 
 @media screen and (max-width: 500px) {
     .modal__title {
-        padding-bottom: 75px;
+        margin-bottom: 75px;
         font-size: 18px;
     }
 }
