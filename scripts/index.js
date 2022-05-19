@@ -43,7 +43,6 @@ let currentUserName = profileName.textContent;
 let currentUserDescription = profileDescription.textContent;
 
 const closeBtns = document.querySelectorAll('.modal__close');
-const likeBtns = document.querySelectorAll('.gallery__like-btn');
 
 const popupFullScreen = document.querySelector('.modal_type_fullscreen-img');
 
@@ -109,8 +108,6 @@ closeBtns.forEach(item => {
     });
 });
 
-console.log(closeBtns);
-
 /*Редактирование профиля*/
 editForm.addEventListener('submit',  editProfile);
 
@@ -127,20 +124,15 @@ addCardForm.addEventListener('submit', (evt) => {
     closeModal(modalAddCard);
 });
 
-/*Лайк карточек. Не работает для новых карточек*/
-likeBtns.forEach(item => {
-    item.addEventListener('click', () => {
-        item.classList.toggle('gallery__like-btn_active');
-    });
-});
+/*Лайк И удление карточек*/
+cardsList.addEventListener('click', (evt) => {
+    const target = evt.target;
 
-
-/*Удаление карточек. Не работает для новых карточек*/
-const deleteBtns = document.querySelectorAll('.gallery__delete-btn');
-deleteBtns.forEach(item => {
-    item.addEventListener('click', ()=> {
-        item.parentElement.remove();
-    });
+    if ( target.classList.contains('gallery__like-btn') ) {
+        target.classList.toggle('gallery__like-btn_active');
+    } else if ( target.classList.contains('gallery__delete-btn') ) {
+        target.parentElement.remove();
+    }
 });
 
 /*Просмотр фотографий*/
