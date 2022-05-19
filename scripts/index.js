@@ -114,10 +114,18 @@ addCardForm.addEventListener('submit', (evt) => {
     closeModal(modalAddCard);
 });
 
-/*Лайк карточек*/
+/*Лайк карточек. Не работает для новых карточек*/
 const likeBtns = document.querySelectorAll('.gallery__like-btn');
 likeBtns.forEach(item => {
     item.addEventListener('click', () => {
         item.classList.toggle('gallery__like-btn_active');
+    });
+});
+
+/*Удаление карточек. Не работает для новых карточек*/
+const deleteBtns = document.querySelectorAll('.gallery__delete-btn');
+deleteBtns.forEach(item => {
+    item.addEventListener('click', ()=> {
+        item.parentElement.remove();
     });
 });
