@@ -27,7 +27,7 @@
 
         <section class="gallery">
             <ul class="gallery__list">
-                <!-- <template>
+                <template class="card-template">
                     <li class="gallery__item">
                         <img src="" alt="" class="gallery__img">
                         <div class="gallery__item-footer">
@@ -35,49 +35,7 @@
                             <button class="gallery__like-btn" aria-label="Нравится" type="button"></button>
                         </div>
                     </li>
-                </template> -->
-                <li class="gallery__item">
-                    <img src="./images/photo-1.jpg" alt="Сентинский храм, расположенный в 18 км южнее города Карачаевск" class="gallery__img">
-                    <div class="gallery__item-footer">
-                        <h2 class="gallery__img-caption">Карачаевск</h2>
-                        <button class="gallery__like-btn" aria-label="Нравится" type="button"></button>
-                    </div>
-                </li>
-                <li class="gallery__item">
-                    <img src="./images/photo-2.jpg" alt="Гора Эльбрус на фоне закатного неба" class="gallery__img">
-                    <div class="gallery__item-footer">
-                        <h2 class="gallery__img-caption">Гора Эльбрус</h2>
-                        <button class="gallery__like-btn" aria-label="Нравится" type="button"></button>
-                    </div>
-                </li>
-                <li class="gallery__item">
-                    <img src="./images/photo-3.jpg" alt="Белалакая - вершина западной части главного хребта Большого Кавказа" class="gallery__img">
-                    <div class="gallery__item-footer">
-                        <h2 class="gallery__img-caption">Домбай</h2>
-                        <button class="gallery__like-btn" aria-label="Нравится" type="button"></button>
-                    </div>
-                </li>
-                <li class="gallery__item">
-                    <img src="./images/photo-4.jpg" alt="Музей космонавтики в городе Калуга" class="gallery__img">
-                    <div class="gallery__item-footer">
-                        <h2 class="gallery__img-caption">Калуга</h2>
-                        <button class="gallery__like-btn" aria-label="Нравится" type="button"></button>
-                    </div>
-                </li>
-                <li class="gallery__item">
-                    <img src="./images/photo-5.jpg" alt="Исаакиевский собор в Санкт-Петербурге" class="gallery__img">
-                    <div class="gallery__item-footer">
-                        <h2 class="gallery__img-caption">Санкт-Петербург</h2>
-                        <button class="gallery__like-btn" aria-label="Нравится" type="button"></button>
-                    </div>
-                </li>
-                <li class="gallery__item">
-                    <img src="./images/photo-6.jpg" alt="Дедушка хомлин - один из хомлинов, пристаившихся на улицах Калининграда" class="gallery__img">
-                    <div class="gallery__item-footer">
-                        <h2 class="gallery__img-caption">Калининград</h2>
-                        <button class="gallery__like-btn" aria-label="Нравится" type="button"></button>   
-                    </div>
-                </li>
+                </template>
             </ul>
         </section>
     </main>
@@ -86,10 +44,10 @@
         <p class="footer__copyright">&#169; 2020 Mesto Russia</p>
     </footer>
 
-    <div class="modal">
+    <div class="modal modal_type_edit-form">
         <div class="modal__container">
             <h2 class="modal__title">Редактировать профиль</h2>
-            <form class="modal__form" action="#" method="POST" name="edit-profile-form">
+            <form class="modal__form modal__form_type-edit" action="#" method="POST" name="edit-profile-form">
                 <input class="modal__input modal__input-name" type="text" name="user-name" id="user-name">
                 <input class="modal__input modal__input-description" type="text" name="user-description" id="user-description">
                 <button class="modal__btn" type="submit">Сохранить</button>
@@ -97,6 +55,19 @@
             <button class="modal__close" type="button"></button>
         </div>
     </div>
+
+    <div class="modal modal_type_add-new-card">
+        <div class="modal__container">
+            <h2 class="modal__title">Новое место</h2>
+            <form class="modal__form modal__form_type-add-card" action="#" method="POST" name="add-new-card-form">
+                <input class="modal__input modal__input-place-name" type="text" name="place-name" id="place-name" placeholder="Название">
+                <input class="modal__input modal__input-place-link" type="text" name="place-link" id="place-link" placeholder="Ссылка на картинку">
+                <button class="modal__btn" type="submit">Создать</button>
+            </form>
+            <button class="modal__close" type="button"></button>
+        </div>
+    </div>
+
     <script src="./scripts/index.js"></script>
 </body>
 </html>
