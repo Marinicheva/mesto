@@ -1,3 +1,9 @@
 .modal__fullscreen-container {
     position: relative;
 }
+
+@media screen and (max-width: 768px) {
+    .modal__fullscreen-container {
+        max-width: 80%;
+    }
+}

@@ -1,6 +1,6 @@
 .modal__img-fullscreen {
     display: block;
-    min-width: 100%;
+    max-width: 90%;
     object-fit: contain;
     object-position: center center;
 }
