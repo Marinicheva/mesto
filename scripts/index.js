@@ -45,6 +45,8 @@ const closeBtn = document.querySelectorAll('.modal__close');
 let currentUserName = profileName.textContent;
 let currentUserDescription = profileDescription.textContent;
 
+
+
 function openModal(popup) {
     userName.value = currentUserName;
     userDescription.value = currentUserDescription;
@@ -76,6 +78,14 @@ function createCard(name, link) {
     cardsList.prepend(cardTemplate);
 }
 
+/*Динамическое создание карточек*/
+initialCards.forEach(item => {
+    const cardName = item.name;
+    const cardLink = item.link;
+    
+    createCard(cardName, cardLink);
+});
+
 /*Обработка событий для открытия модальных окон*/ 
 editBtn.addEventListener('click', () => openModal(modalEdit));
 addCardBtn.addEventListener('click', () => openModal(modalAddCard));
@@ -104,10 +114,10 @@ addCardForm.addEventListener('submit', (evt) => {
     closeModal(modalAddCard);
 });
 
-/*Динамическое создание карточек*/
-initialCards.forEach(item => {
-    const cardName = item.name;
-    const cardLink = item.link;
-    
-    createCard(cardName, cardLink);
+/*Лайк карточек*/
+const likeBtns = document.querySelectorAll('.gallery__like-btn');
+likeBtns.forEach(item => {
+    item.addEventListener('click', () => {
+        item.classList.toggle('gallery__like-btn_active');
+    });
 });
