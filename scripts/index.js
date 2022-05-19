@@ -124,7 +124,7 @@ addCardForm.addEventListener('submit', (evt) => {
     closeModal(modalAddCard);
 });
 
-/*Лайк И удление карточек*/
+/*Лайк и удаление карточек*/
 cardsList.addEventListener('click', (evt) => {
     const target = evt.target;
 
@@ -135,17 +135,18 @@ cardsList.addEventListener('click', (evt) => {
     }
 });
 
-/*Просмотр фотографий*/
-const imgs = document.querySelectorAll('.gallery__img');
-imgs.forEach(item => {
-    item.addEventListener('click', () => {
-        const imgNameContainer = item.parentElement.querySelector('.gallery__img-caption');
+/*Просмотр фотографий в полноэкранном режиме*/
+cardsList.addEventListener('click', (evt) => {
+    const target = evt.target;
+
+    if ( target.classList.contains('gallery__img') ) {
+        const imgNameContainer = target.parentElement.querySelector('.gallery__img-caption');
         const imgName = imgNameContainer.textContent;
-        const imgLink = item.src;
+        const imgLink = target.src;
 
         showFullScreen(imgName, imgLink);
         openModal(popupFullScreen);
-    });
+    }
 });
 
 /*Закрытие полэкранного просмотра*/
