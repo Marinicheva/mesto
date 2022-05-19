@@ -28,13 +28,13 @@ const cardsList = document.querySelector('.gallery__list');
 
 const addCardBtn = document.querySelector('.profile__add-btn');
 const modalAddCard = document.querySelector('.modal_type_add-new-card');
-const addCardForm = modalAddCard.querySelector('.modal__form_type-add-card');
+const addCardForm = modalAddCard.querySelector('.modal__form_type_add-card');
 const inputPlaceName = addCardForm.querySelector('.modal__input-place-name');
 const inputPlaceLink = addCardForm.querySelector('.modal__input-place-link');
 
 const editBtn = document.querySelector('.profile__edit-btn');
 const modalEdit = document.querySelector('.modal_type_edit-form');
-const editForm = modalEdit.querySelector('.modal__form_type-edit');
+const editForm = modalEdit.querySelector('.modal__form_type_edit');
 const userName = modalEdit.querySelector('.modal__input-name');
 const userDescription = modalEdit.querySelector('.modal__input-description');
 const profileName = document.querySelector('.profile__name');
