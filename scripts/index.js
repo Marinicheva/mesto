@@ -42,9 +42,9 @@ const profileDescription = document.querySelector('.profile__description');
 let currentUserName = profileName.textContent;
 let currentUserDescription = profileDescription.textContent;
 
-const closeBtn = document.querySelectorAll('.modal__close');
+const closeBtns = document.querySelectorAll('.modal__close');
+const likeBtns = document.querySelectorAll('.gallery__like-btn');
 
-// const imgs = document.querySelectorAll('.gallery__img');
 const popupFullScreen = document.querySelector('.modal_type_fullscreen-img');
 
 function openModal(popup) {
@@ -78,13 +78,12 @@ function createCard(name, link) {
     cardsList.prepend(cardItem);
 }
 
-function showFullScreen(element, name, link) {
-    const fullScreenImgTemplate = document.querySelector('.fullscreen-template').content;
-    const fullScreenItem = fullScreenImgTemplate.querySelector('.modal__fullscreen-container').cloneNode(true);
-    
-    fullScreenItem.querySelector('.modal__img-fullscreen').src = link;
-    fullScreenItem.querySelector('.modal__img-fullscreen').alt = `Пользовательское фото места ${name} в полноэкранном просмотре`;
-    fullScreenItem.querySelector('.modal__fullscreen-caption').textContent = name;
+function showFullScreen(name, link) {
+    const fullScreenItem = document.createElement('div');
+    fullScreenItem.classList.add('modal__fullscreen-container');
+    fullScreenItem.innerHTML = `<img src="${link}" alt="Пользовательское фото места ${name} в полноэкранном просмотре" class="modal__img-fullscreen">
+    <h2 class="modal__fullscreen-caption">${name}</h2>
+    <button class="modal__close" type="button"></button>`;
 
     popupFullScreen.append(fullScreenItem);
 }
@@ -102,12 +101,15 @@ editBtn.addEventListener('click', () => openModal(modalEdit));
 addCardBtn.addEventListener('click', () => openModal(modalAddCard));
 
 /*Обработка событий для закрытия модальных окон*/
-closeBtn.forEach(item => {
+closeBtns.forEach(item => {
     const modalNeedBeClose = item.parentElement.parentElement;
     item.addEventListener('click', () => {
+        console.log('was click');
         closeModal(modalNeedBeClose);
     });
 });
+
+console.log(closeBtns);
 
 /*Редактирование профиля*/
 editForm.addEventListener('submit',  editProfile);
@@ -126,12 +128,12 @@ addCardForm.addEventListener('submit', (evt) => {
 });
 
 /*Лайк карточек. Не работает для новых карточек*/
-const likeBtns = document.querySelectorAll('.gallery__like-btn');
 likeBtns.forEach(item => {
     item.addEventListener('click', () => {
         item.classList.toggle('gallery__like-btn_active');
     });
 });
+
 
 /*Удаление карточек. Не работает для новых карточек*/
 const deleteBtns = document.querySelectorAll('.gallery__delete-btn');
@@ -145,10 +147,20 @@ deleteBtns.forEach(item => {
 const imgs = document.querySelectorAll('.gallery__img');
 imgs.forEach(item => {
     item.addEventListener('click', () => {
-        console.log(item);
+        const imgNameContainer = item.parentElement.querySelector('.gallery__img-caption');
+        const imgName = imgNameContainer.textContent;
         const imgLink = item.src;
-        console.log(item.src);
-        showFullScreen(item, 'smth', imgLink);
+
+        showFullScreen(imgName, imgLink);
         openModal(popupFullScreen);
     });
+});
+
+/*Закрытие полэкранного просмотра*/
+popupFullScreen.addEventListener('click', (evt) => {
+    if ( evt.target.classList.contains('modal__close') ) {
+        closeModal(popupFullScreen);
+        const fullScreenImg = popupFullScreen.querySelector('.modal__fullscreen-container');
+        fullScreenImg.remove();
+    }
 });
