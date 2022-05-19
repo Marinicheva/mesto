@@ -26,6 +26,12 @@ const initialCards = [
 ];
 const cardsList = document.querySelector('.gallery__list');
 
+const addCardBtn = document.querySelector('.profile__add-btn');
+const modalAddCard = document.querySelector('.modal_type_add-new-card');
+const addCardForm = modalAddCard.querySelector('.modal__form_type-add-card');
+const inputPlaceName = addCardForm.querySelector('.modal__input-place-name');
+const inputPlaceLink = addCardForm.querySelector('.modal__input-place-link');
+
 const editBtn = document.querySelector('.profile__edit-btn');
 const modalEdit = document.querySelector('.modal_type_edit-form');
 const editForm = modalEdit.querySelector('.modal__form_type-edit');
@@ -33,19 +39,13 @@ const userName = modalEdit.querySelector('.modal__input-name');
 const userDescription = modalEdit.querySelector('.modal__input-description');
 const profileName = document.querySelector('.profile__name');
 const profileDescription = document.querySelector('.profile__description');
-
-const addCardBtn = document.querySelector('.profile__add-btn');
-const modalAddCard = document.querySelector('.modal_type_add-new-card');
-const addCardForm = modalAddCard.querySelector('.modal__form_type-add-card');
-const inputPlaceName = addCardForm.querySelector('.modal__input-place-name');
-const inputPlaceLink = addCardForm.querySelector('.modal__input-place-link');
-
-const closeBtn = document.querySelectorAll('.modal__close');
-
 let currentUserName = profileName.textContent;
 let currentUserDescription = profileDescription.textContent;
 
+const closeBtn = document.querySelectorAll('.modal__close');
 
+// const imgs = document.querySelectorAll('.gallery__img');
+const popupFullScreen = document.querySelector('.modal_type_fullscreen-img');
 
 function openModal(popup) {
     userName.value = currentUserName;
@@ -68,14 +68,25 @@ function editProfile(evt) {
 }
 
 function createCard(name, link) {
-    const template = document.querySelector('.card-template').content;
-    const cardTemplate = template.querySelector('.gallery__item').cloneNode(true);
+    const cardTemplate = document.querySelector('.card-template').content;
+    const cardItem = cardTemplate.querySelector('.gallery__item').cloneNode(true);
     
-    cardTemplate.querySelector('.gallery__img').src = link;
-    cardTemplate.querySelector('.gallery__img').alt = `Пользовательское фото места ${name}`;
-    cardTemplate.querySelector('.gallery__img-caption').textContent = name;
+    cardItem.querySelector('.gallery__img').src = link;
+    cardItem.querySelector('.gallery__img').alt = `Пользовательское фото места ${name}`;
+    cardItem.querySelector('.gallery__img-caption').textContent = name;
 
-    cardsList.prepend(cardTemplate);
+    cardsList.prepend(cardItem);
+}
+
+function showFullScreen(element, name, link) {
+    const fullScreenImgTemplate = document.querySelector('.fullscreen-template').content;
+    const fullScreenItem = fullScreenImgTemplate.querySelector('.modal__fullscreen-container').cloneNode(true);
+    
+    fullScreenItem.querySelector('.modal__img-fullscreen').src = link;
+    fullScreenItem.querySelector('.modal__img-fullscreen').alt = `Пользовательское фото места ${name} в полноэкранном просмотре`;
+    fullScreenItem.querySelector('.modal__fullscreen-caption').textContent = name;
+
+    popupFullScreen.append(fullScreenItem);
 }
 
 /*Динамическое создание карточек*/
@@ -127,5 +138,17 @@ const deleteBtns = document.querySelectorAll('.gallery__delete-btn');
 deleteBtns.forEach(item => {
     item.addEventListener('click', ()=> {
         item.parentElement.remove();
+    });
+});
+
+/*Просмотр фотографий*/
+const imgs = document.querySelectorAll('.gallery__img');
+imgs.forEach(item => {
+    item.addEventListener('click', () => {
+        console.log(item);
+        const imgLink = item.src;
+        console.log(item.src);
+        showFullScreen(item, 'smth', imgLink);
+        openModal(popupFullScreen);
     });
 });
