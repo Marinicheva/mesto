@@ -17,12 +17,15 @@
 @import url(../blocks/gallery/__list/gallery__list.css);
 @import url(../blocks/gallery/__item/gallery__item.css);
 @import url(../blocks/gallery/__img/gallery__img.css);
+@import url(../blocks/gallery/__delete-btn/gallery__delete-btn.css);
 @import url(../blocks/gallery/__img-caption/gallery__img-caption.css);
 @import url(../blocks/gallery/__item-footer/gallery__item-footer.css);
 @import url(../blocks/gallery/__like-btn/gallery__like-btn.css);
+@import url(../blocks/gallery/__like-btn/_active/gallery__like-btn_active.css);
 @import url(../blocks/footer/footer.css);
 @import url(../blocks/footer/__copyright/footer__copyright.css);
 @import url(../blocks/modal/modal.css);
+@import url(../blocks/modal/_type/modal_type_fullscreen-img.css);
 @import url(../blocks/modal/__container/modal__container.css);
 @import url(../blocks/modal/__title/modal__title.css);
 @import url(../blocks/modal/__form/modal__form.css);
@@ -30,3 +33,6 @@
 @import url(../blocks/modal/__btn/modal__btn.css);
 @import url(../blocks/modal/__close/modal__close.css);
 @import url(../blocks/modal/_opened/modal_opened.css);
+@import url(../blocks/modal/__fullscreen-container/modal__fullscreen-container.css);
+@import url(../blocks/modal/__img-fullscreen/modal__img-fullscreen.css);
+@import url(../blocks/modal/__fullscreen-caption/modal__fullscreen-caption.css);
