@@ -42,6 +42,8 @@ function createCard(cardData) {
     const cardItem = cardTemplate.querySelector('.gallery__item').cloneNode(true);
     const cardImg = cardItem.querySelector('.gallery__img');
     const cardCaption = cardItem.querySelector('.gallery__img-caption');
+    const btnLikeCard = cardItem.querySelector('.gallery__like-btn');
+    const btnDeleteCard = cardItem.querySelector('.gallery__delete-btn');
     
     cardImg.src = cardData.link;
     cardImg.alt = `Пользовательское фото места ${cardData.name}`;
@@ -51,7 +53,19 @@ function createCard(cardData) {
         showFullScreen(cardImg, cardCaption);
     });
 
+    btnLikeCard.addEventListener('click', () => {
+        likeCard(btnLikeCard);
+    });
+
+    btnDeleteCard.addEventListener('click', () => {
+        deleteCard(btnLikeCard);
+    });
+
     return cardItem;
+}
+
+function getCardData() {
+
 }
 
 function renderCard(cardData) {
@@ -70,8 +84,17 @@ function showFullScreen(img, caption) {
     openModal(modalFullScreen);
 }
 
+function likeCard(item) {
+    item.classList.toggle('gallery__like-btn_active');
+}
+
+function deleteCard(item) {
+    item.closest('.gallery__item').remove();
+}
+
 /*Динамическое создание карточек*/
  initialCards.forEach(item => renderCard(item));
+
 
 /*Обработка событий для открытия модальных окон*/ 
 editBtn.addEventListener('click', () => {
@@ -100,6 +123,7 @@ modalFullScreen.addEventListener('click', () => {
 /*Редактирование профиля*/
 editForm.addEventListener('submit',  editProfile);
 
+
 /*Создание новой карточки*/
 addCardForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
@@ -111,15 +135,4 @@ addCardForm.addEventListener('submit', (evt) => {
     addCardForm.reset();
 
     closeModal(modalAddCard);
-});
-
-/*Лайк и удаление карточек*/
-cardsList.addEventListener('click', (evt) => {
-    const target = evt.target;
-
-    if ( target.classList.contains('gallery__like-btn') ) {
-        target.classList.toggle('gallery__like-btn_active');
-    } else if ( target.classList.contains('gallery__delete-btn') ) {
-        target.parentElement.remove();
-    }
 });
