@@ -5,6 +5,7 @@ const modalAddCard = document.querySelector('.modal_type_add-new-card');
 const addCardForm = modalAddCard.querySelector('.modal__form_type_add-card');
 const inputPlaceName = addCardForm.querySelector('.modal__input-place-name');
 const inputPlaceLink = addCardForm.querySelector('.modal__input-place-link');
+const closeBtnAddCardModal = modalAddCard.querySelector('.modal__close');
 
 const editBtn = document.querySelector('.profile__edit-btn');
 const modalEdit = document.querySelector('.modal_type_edit-form');
@@ -13,10 +14,12 @@ const userName = modalEdit.querySelector('.modal__input-name');
 const userDescription = modalEdit.querySelector('.modal__input-description');
 const profileName = document.querySelector('.profile__name');
 const profileDescription = document.querySelector('.profile__description');
+const closeBtnEditModal = modalEdit.querySelector('.modal__close');
 
-const closeBtns = document.querySelectorAll('.modal__close');
+const modalFullScreen = document.querySelector('.modal_type_fullscreen-img');
+const closeBtnFullScreenModal = modalFullScreen.querySelector('.modal__close');
 
-const popupFullScreen = document.querySelector('.modal_type_fullscreen-img');
+
 
 function openModal(popup) {
     popup.classList.add('modal_opened');
@@ -37,10 +40,16 @@ function editProfile(evt) {
 function createCard(cardData) {
     const cardTemplate = document.querySelector('.card-template').content;
     const cardItem = cardTemplate.querySelector('.gallery__item').cloneNode(true);
+    const cardImg = cardItem.querySelector('.gallery__img');
+    const cardCaption = cardItem.querySelector('.gallery__img-caption');
     
-    cardItem.querySelector('.gallery__img').src = cardData.link;
-    cardItem.querySelector('.gallery__img').alt = `Пользовательское фото места ${cardData.name}`;
-    cardItem.querySelector('.gallery__img-caption').textContent = cardData.name;
+    cardImg.src = cardData.link;
+    cardImg.alt = `Пользовательское фото места ${cardData.name}`;
+    cardCaption.textContent = cardData.name;
+
+    cardImg.addEventListener('click', () => {
+        showFullScreen(cardImg, cardCaption);
+    });
 
     return cardItem;
 }
@@ -50,14 +59,15 @@ function renderCard(cardData) {
     cardsList.prepend(newCard);
 }
 
-function showFullScreen(name, link) {
-    const fullScreenItem = document.createElement('div');
-    fullScreenItem.classList.add('modal__fullscreen-container');
-    fullScreenItem.innerHTML = `<img src="${link}" alt="Пользовательское фото места ${name} в полноэкранном просмотре" class="modal__img-fullscreen">
-    <h2 class="modal__fullscreen-caption">${name}</h2>
-    <button class="modal__close" type="button"></button>`;
+function showFullScreen(img, caption) {
+    const fullScreenImg = modalFullScreen.querySelector('.modal__img-fullscreen');
+    const fullScreenCaption = modalFullScreen.querySelector('.modal__fullscreen-caption');
 
-    popupFullScreen.append(fullScreenItem);
+    fullScreenImg.src = img.src;
+    fullScreenImg.alt = img.alt;
+    fullScreenCaption.textContent = caption.textContent;
+    
+    openModal(modalFullScreen);
 }
 
 /*Динамическое создание карточек*/
@@ -72,14 +82,20 @@ editBtn.addEventListener('click', () => {
 
 addCardBtn.addEventListener('click', () => openModal(modalAddCard));
 
-/*Обработка событий для закрытия модальных окон*/
-closeBtns.forEach(item => {
-    const modalNeedBeClose = item.parentElement.parentElement;
-    item.addEventListener('click', () => {
-        console.log('was click');
-        closeModal(modalNeedBeClose);
-    });
+/*Закрытие модальных окон*/
+closeBtnEditModal.addEventListener('click', () => {
+    closeModal(modalEdit);
 });
+
+closeBtnAddCardModal.addEventListener('click', () => {
+    closeModal(modalAddCard);
+});
+
+
+modalFullScreen.addEventListener('click', () => {
+    closeModal(modalFullScreen);
+});
+
 
 /*Редактирование профиля*/
 editForm.addEventListener('submit',  editProfile);
@@ -105,28 +121,5 @@ cardsList.addEventListener('click', (evt) => {
         target.classList.toggle('gallery__like-btn_active');
     } else if ( target.classList.contains('gallery__delete-btn') ) {
         target.parentElement.remove();
-    }
-});
-
-/*Просмотр фотографий в полноэкранном режиме*/
-cardsList.addEventListener('click', (evt) => {
-    const target = evt.target;
-
-    if ( target.classList.contains('gallery__img') ) {
-        const imgNameContainer = target.parentElement.querySelector('.gallery__img-caption');
-        const imgName = imgNameContainer.textContent;
-        const imgLink = target.src;
-
-        showFullScreen(imgName, imgLink);
-        openModal(popupFullScreen);
-    }
-});
-
-/*Закрытие полэкранного просмотра*/
-popupFullScreen.addEventListener('click', (evt) => {
-    if ( evt.target.classList.contains('modal__close') ) {
-        closeModal(popupFullScreen);
-        const fullScreenImg = popupFullScreen.querySelector('.modal__fullscreen-container');
-        fullScreenImg.remove();
     }
 });
