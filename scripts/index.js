@@ -13,16 +13,12 @@ const userName = modalEdit.querySelector('.modal__input-name');
 const userDescription = modalEdit.querySelector('.modal__input-description');
 const profileName = document.querySelector('.profile__name');
 const profileDescription = document.querySelector('.profile__description');
-let currentUserName = profileName.textContent;
-let currentUserDescription = profileDescription.textContent;
 
 const closeBtns = document.querySelectorAll('.modal__close');
 
 const popupFullScreen = document.querySelector('.modal_type_fullscreen-img');
 
 function openModal(popup) {
-    userName.value = currentUserName;
-    userDescription.value = currentUserDescription;
     popup.classList.add('modal_opened');
 }
 
@@ -35,8 +31,6 @@ function editProfile(evt) {
     profileName.textContent = userName.value;
     profileDescription.textContent = userDescription.value;
 
-    currentUserName = userName.value;
-    currentUserDescription = userDescription.value;
     closeModal(modalEdit);
 }
 
@@ -70,7 +64,12 @@ initialCards.forEach(item => {
 });
 
 /*Обработка событий для открытия модальных окон*/ 
-editBtn.addEventListener('click', () => openModal(modalEdit));
+editBtn.addEventListener('click', () => {
+    userName.value = profileName.textContent;
+    userDescription.value = profileDescription.textContent;
+    openModal(modalEdit);
+});
+
 addCardBtn.addEventListener('click', () => openModal(modalAddCard));
 
 /*Обработка событий для закрытия модальных окон*/
