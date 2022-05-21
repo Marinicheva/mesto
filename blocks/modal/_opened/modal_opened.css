@@ -1,5 +1,5 @@
 .modal_opened {
     opacity: 1;
     visibility: visible;
-    transition: visibility 0s, opacity .8s;
+    transition: visibility 0s 0s, opacity .6s 0s;
 }
