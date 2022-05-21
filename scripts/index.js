@@ -34,15 +34,20 @@ function editProfile(evt) {
     closeModal(modalEdit);
 }
 
-function createCard(name, link) {
+function createCard(cardData) {
     const cardTemplate = document.querySelector('.card-template').content;
     const cardItem = cardTemplate.querySelector('.gallery__item').cloneNode(true);
     
-    cardItem.querySelector('.gallery__img').src = link;
-    cardItem.querySelector('.gallery__img').alt = `Пользовательское фото места ${name}`;
-    cardItem.querySelector('.gallery__img-caption').textContent = name;
+    cardItem.querySelector('.gallery__img').src = cardData.link;
+    cardItem.querySelector('.gallery__img').alt = `Пользовательское фото места ${cardData.name}`;
+    cardItem.querySelector('.gallery__img-caption').textContent = cardData.name;
 
-    cardsList.prepend(cardItem);
+    return cardItem;
+}
+
+function renderCard(cardData) {
+    const newCard = createCard(cardData);
+    cardsList.prepend(newCard);
 }
 
 function showFullScreen(name, link) {
@@ -56,12 +61,7 @@ function showFullScreen(name, link) {
 }
 
 /*Динамическое создание карточек*/
-initialCards.forEach(item => {
-    const cardName = item.name;
-    const cardLink = item.link;
-    
-    createCard(cardName, cardLink);
-});
+ initialCards.forEach(item => renderCard(item));
 
 /*Обработка событий для открытия модальных окон*/ 
 editBtn.addEventListener('click', () => {
@@ -87,12 +87,12 @@ editForm.addEventListener('submit',  editProfile);
 /*Создание новой карточки*/
 addCardForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
-    const newPlace = inputPlaceName.value;
-    const newLink = inputPlaceLink.value;
+    const newCard = {};
+    newCard.name = inputPlaceName.value;
+    newCard.link = inputPlaceLink.value;
 
-    createCard(newPlace, newLink);
-    inputPlaceName.value = '';
-    inputPlaceLink.value ='';
+    renderCard(newCard);
+    addCardForm.reset();
 
     closeModal(modalAddCard);
 });
