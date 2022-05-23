@@ -21,26 +21,26 @@ const closeBtnFullScreenModal = modalFullScreen.querySelector('.modal__close');
 
 
 
-function openModal(popup) {
+function handleOpenModal(popup) {
     popup.classList.add('modal_opened');
 }
 
-function closeModal(popup) {
+function handleCloseModal(popup) {
     popup.classList.remove('modal_opened');
 }
 
-function fillEditModal() {
+function handleFillEditModal() {
     userName.value = profileName.textContent;
     userDescription.value = profileDescription.textContent;
-    openModal(modalEdit);
+    handleOpenModal(modalEdit);
 }
 
-function editProfile(evt) {
+function handleEditProfileSubmit(evt) {
     evt.preventDefault();
     profileName.textContent = userName.value;
     profileDescription.textContent = userDescription.value;
 
-    closeModal(modalEdit);
+    handleCloseModal(modalEdit);
 }
 
 function createCard(cardData) {
@@ -56,28 +56,31 @@ function createCard(cardData) {
     cardCaption.textContent = cardData.name;
 
     cardImg.addEventListener('click', () => {
-        showFullScreen(cardImg, cardCaption);
+        handleshowFullScreen(cardImg, cardCaption);
     });
 
     btnLikeCard.addEventListener('click', () => {
-        likeCard(btnLikeCard);
+        handleLikeCard(btnLikeCard);
     });
 
     btnDeleteCard.addEventListener('click', () => {
-        deleteCard(btnLikeCard);
+        handleDeleteCard(btnLikeCard);
     });
 
     return cardItem;
 }
 
-function getCardData(evt) {
+function handleCreateUserCardSubmit(evt) {
     evt.preventDefault();
 
     const newCard = {};
     newCard.name = inputPlaceName.value;
     newCard.link = inputPlaceLink.value;
 
-    return newCard;
+    renderCard(newCard);
+    addCardForm.reset();
+
+    handleCloseModal(modalAddCard);
 }
 
 function renderCard(cardData) {
@@ -85,7 +88,7 @@ function renderCard(cardData) {
     cardsList.prepend(newCard);
 }
 
-function showFullScreen(img, caption) {
+function handleshowFullScreen(img, caption) {
     const fullScreenImg = modalFullScreen.querySelector('.modal__img-fullscreen');
     const fullScreenCaption = modalFullScreen.querySelector('.modal__fullscreen-caption');
 
@@ -93,15 +96,15 @@ function showFullScreen(img, caption) {
     fullScreenImg.alt = img.alt;
     fullScreenCaption.textContent = caption.textContent;
     
-    openModal(modalFullScreen);
+    handleOpenModal(modalFullScreen);
 }
 
-function likeCard(item) {
-    item.classList.toggle('gallery__like-btn_active');
+function handleLikeCard(element) {
+    element.classList.toggle('gallery__like-btn_active');
 }
 
-function deleteCard(item) {
-    item.closest('.gallery__item').remove();
+function handleDeleteCard(element) {
+    element.closest('.gallery__item').remove();
 }
 
 /*Динамическое создание карточек*/
@@ -109,34 +112,28 @@ function deleteCard(item) {
 
 
 /*Обработка событий для открытия модальных окон*/ 
-editBtn.addEventListener('click', fillEditModal);
+editBtn.addEventListener('click', handleFillEditModal);
 
-addCardBtn.addEventListener('click', () => openModal(modalAddCard));
+addCardBtn.addEventListener('click', () => handleOpenModal(modalAddCard));
 
 
 /*Закрытие модальных окон*/
 closeBtnEditModal.addEventListener('click', () => {
-    closeModal(modalEdit);
+    handleCloseModal(modalEdit);
 });
 
 closeBtnAddCardModal.addEventListener('click', () => {
-    closeModal(modalAddCard);
+    handleCloseModal(modalAddCard);
 });
 
 modalFullScreen.addEventListener('click', () => {
-    closeModal(modalFullScreen);
+    handleCloseModal(modalFullScreen);
 });
 
 
 /*Редактирование профиля*/
-editForm.addEventListener('submit',  editProfile);
+editForm.addEventListener('submit',  handleEditProfileSubmit);
 
 
 /*Создание новой карточки*/
-addCardForm.addEventListener('submit', (evt) => {
-    const newCard = getCardData(evt);
-    renderCard(newCard);
-    addCardForm.reset();
-
-    closeModal(modalAddCard);
-});
+addCardForm.addEventListener('submit', handleCreateUserCardSubmit);
