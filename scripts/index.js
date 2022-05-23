@@ -29,6 +29,12 @@ function closeModal(popup) {
     popup.classList.remove('modal_opened');
 }
 
+function fillEditModal() {
+    userName.value = profileName.textContent;
+    userDescription.value = profileDescription.textContent;
+    openModal(modalEdit);
+}
+
 function editProfile(evt) {
     evt.preventDefault();
     profileName.textContent = userName.value;
@@ -64,8 +70,14 @@ function createCard(cardData) {
     return cardItem;
 }
 
-function getCardData() {
+function getCardData(evt) {
+    evt.preventDefault();
 
+    const newCard = {};
+    newCard.name = inputPlaceName.value;
+    newCard.link = inputPlaceLink.value;
+
+    return newCard;
 }
 
 function renderCard(cardData) {
@@ -97,13 +109,10 @@ function deleteCard(item) {
 
 
 /*Обработка событий для открытия модальных окон*/ 
-editBtn.addEventListener('click', () => {
-    userName.value = profileName.textContent;
-    userDescription.value = profileDescription.textContent;
-    openModal(modalEdit);
-});
+editBtn.addEventListener('click', fillEditModal);
 
 addCardBtn.addEventListener('click', () => openModal(modalAddCard));
+
 
 /*Закрытие модальных окон*/
 closeBtnEditModal.addEventListener('click', () => {
@@ -113,7 +122,6 @@ closeBtnEditModal.addEventListener('click', () => {
 closeBtnAddCardModal.addEventListener('click', () => {
     closeModal(modalAddCard);
 });
-
 
 modalFullScreen.addEventListener('click', () => {
     closeModal(modalFullScreen);
@@ -126,11 +134,7 @@ editForm.addEventListener('submit',  editProfile);
 
 /*Создание новой карточки*/
 addCardForm.addEventListener('submit', (evt) => {
-    evt.preventDefault();
-    const newCard = {};
-    newCard.name = inputPlaceName.value;
-    newCard.link = inputPlaceLink.value;
-
+    const newCard = getCardData(evt);
     renderCard(newCard);
     addCardForm.reset();
 
