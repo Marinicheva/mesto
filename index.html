@@ -49,8 +49,8 @@
         <div class="modal__container">
             <h2 class="modal__title">Редактировать профиль</h2>
             <form class="modal__form modal__form_type_edit" action="#" method="POST" name="edit-profile-form">
-                <input class="modal__input modal__input-name" type="text" name="user-name" id="user-name">
-                <input class="modal__input modal__input-description" type="text" name="user-description" id="user-description">
+                <input class="modal__input modal__input-name" type="text" name="user-name" id="user-name" required>
+                <input class="modal__input modal__input-description" type="text" name="user-description" id="user-description" required>
                 <button class="modal__btn" type="submit">Сохранить</button>
             </form>
             <button class="modal__close" type="button"></button>
@@ -62,7 +62,7 @@
             <h2 class="modal__title">Новое место</h2>
             <form class="modal__form modal__form_type_add-card" action="#" method="POST" name="add-new-card-form">
                 <input class="modal__input modal__input-place-name" type="text" name="place-name" id="place-name" placeholder="Название">
-                <input class="modal__input modal__input-place-link" type="text" name="place-link" id="place-link" placeholder="Ссылка на картинку">
+                <input class="modal__input modal__input-place-link" type="url" name="place-link" id="place-link" placeholder="Ссылка на картинку">
                 <button class="modal__btn" type="submit">Создать</button>
             </form>
             <button class="modal__close" type="button"></button>
