@@ -18,21 +18,22 @@ const closeBtnEditModal = modalEdit.querySelector('.modal__close');
 
 const modalFullScreen = document.querySelector('.modal_type_fullscreen-img');
 const closeBtnFullScreenModal = modalFullScreen.querySelector('.modal__close');
+const fullScreenImg = modalFullScreen.querySelector('.modal__img-fullscreen');
+const fullScreenCaption = modalFullScreen.querySelector('.modal__fullscreen-caption');
 
 
-
-function handleOpenModal(popup) {
+function openModal(popup) {
     popup.classList.add('modal_opened');
 }
 
-function handleCloseModal(popup) {
+function closeModal(popup) {
     popup.classList.remove('modal_opened');
 }
 
 function handleFillEditModal() {
     userName.value = profileName.textContent;
     userDescription.value = profileDescription.textContent;
-    handleOpenModal(modalEdit);
+    openModal(modalEdit);
 }
 
 function handleEditProfileSubmit(evt) {
@@ -40,7 +41,7 @@ function handleEditProfileSubmit(evt) {
     profileName.textContent = userName.value;
     profileDescription.textContent = userDescription.value;
 
-    handleCloseModal(modalEdit);
+    closeModal(modalEdit);
 }
 
 function createCard(cardData) {
@@ -56,16 +57,12 @@ function createCard(cardData) {
     cardCaption.textContent = cardData.name;
 
     cardImg.addEventListener('click', () => {
-        handleshowFullScreen(cardImg, cardCaption);
+        handleshowFullScreen(cardData);
     });
 
-    btnLikeCard.addEventListener('click', () => {
-        handleLikeCard(btnLikeCard);
-    });
+    btnLikeCard.addEventListener('click', handleLikeCard);
 
-    btnDeleteCard.addEventListener('click', () => {
-        handleDeleteCard(btnLikeCard);
-    });
+    btnDeleteCard.addEventListener('click', handleDeleteCard);
 
     return cardItem;
 }
@@ -77,57 +74,54 @@ function handleCreateUserCardSubmit(evt) {
     newCard.name = inputPlaceName.value;
     newCard.link = inputPlaceLink.value;
 
-    renderCard(newCard);
+    renderCard(newCard, cardsList);
     addCardForm.reset();
 
-    handleCloseModal(modalAddCard);
+    closeModal(modalAddCard);
 }
 
-function renderCard(cardData) {
+function renderCard(cardData, parent) {
     const newCard = createCard(cardData);
-    cardsList.prepend(newCard);
+    parent.prepend(newCard);
 }
 
-function handleshowFullScreen(img, caption) {
-    const fullScreenImg = modalFullScreen.querySelector('.modal__img-fullscreen');
-    const fullScreenCaption = modalFullScreen.querySelector('.modal__fullscreen-caption');
+function handleshowFullScreen(cardData) {
+    fullScreenImg.src = cardData.link;
+    fullScreenImg.alt = `Пользовательское фото места ${cardData.name}`;
+    fullScreenCaption.textContent = cardData.name;
 
-    fullScreenImg.src = img.src;
-    fullScreenImg.alt = img.alt;
-    fullScreenCaption.textContent = caption.textContent;
-    
-    handleOpenModal(modalFullScreen);
+    openModal(modalFullScreen);
 }
 
-function handleLikeCard(element) {
-    element.classList.toggle('gallery__like-btn_active');
+function handleLikeCard(evt) {
+    evt.target.classList.toggle('gallery__like-btn_active');
 }
 
-function handleDeleteCard(element) {
-    element.closest('.gallery__item').remove();
+function handleDeleteCard(evt) {
+    evt.target.closest('.gallery__item').remove();
 }
 
 /*Динамическое создание карточек*/
- initialCards.forEach(item => renderCard(item));
+ initialCards.forEach(item => renderCard(item, cardsList));
 
 
 /*Обработка событий для открытия модальных окон*/ 
 editBtn.addEventListener('click', handleFillEditModal);
 
-addCardBtn.addEventListener('click', () => handleOpenModal(modalAddCard));
+addCardBtn.addEventListener('click', () => openModal(modalAddCard));
 
 
 /*Закрытие модальных окон*/
 closeBtnEditModal.addEventListener('click', () => {
-    handleCloseModal(modalEdit);
+    closeModal(modalEdit);
 });
 
 closeBtnAddCardModal.addEventListener('click', () => {
-    handleCloseModal(modalAddCard);
+    closeModal(modalAddCard);
 });
 
-modalFullScreen.addEventListener('click', () => {
-    handleCloseModal(modalFullScreen);
+closeBtnFullScreenModal.addEventListener('click', () => {
+    closeModal(modalFullScreen);
 });
 
 
