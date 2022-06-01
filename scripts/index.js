@@ -79,15 +79,16 @@ function createCard(cardData) {
 
 function handleCreateUserCardSubmit(evt) {
     evt.preventDefault();
-
-    const newCard = {};
-    newCard.name = inputPlaceName.value;
-    newCard.link = inputPlaceLink.value;
-
-    renderCard(newCard, cardsList);
-    addCardForm.reset();
-
-    closeModal(modalAddCard);
+    if ( !hasInvalidInput(modalAddCard) ) {
+        const newCard = {};
+        newCard.name = inputPlaceName.value;
+        newCard.link = inputPlaceLink.value;
+    
+        renderCard(newCard, cardsList);
+        addCardForm.reset();
+    
+        closeModal(modalAddCard);
+    }
 }
 
 function renderCard(cardData, parent) {
@@ -150,7 +151,7 @@ function isValid(form, inputElement) {
     }
 }
 
-/*функция установки обработчика событий на все поля формы*/
+/*установкa обработчика событий на все поля формы*/
 function setEventListener(form) {
     const inputsList = Array.from(form.querySelectorAll('.modal__input'));
     inputsList.forEach(input => {
@@ -190,6 +191,8 @@ closeBtnEditModal.addEventListener('click', () => {
 });
 
 closeBtnAddCardModal.addEventListener('click', () => {
+    addCardForm.reset();
+    removeErrors(addCardForm);
     closeModal(modalAddCard);
 });
 
@@ -200,7 +203,6 @@ closeBtnFullScreenModal.addEventListener('click', () => {
 
 /*Редактирование профиля*/
 editForm.addEventListener('submit',  handleEditProfileSubmit);
-
 
 /*Создание новой карточки*/
 addCardForm.addEventListener('submit', handleCreateUserCardSubmit);

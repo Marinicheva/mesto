@@ -62,9 +62,11 @@
     <div class="modal modal_type_add-new-card">
         <div class="modal__container">
             <h2 class="modal__title">Новое место</h2>
-            <form class="modal__form modal__form_type_add-card" action="#" method="POST" name="add-new-card-form">
-                <input class="modal__input modal__input-place-name" type="text" name="place-name" id="place-name" placeholder="Название">
-                <input class="modal__input modal__input-place-link" type="url" name="place-link" id="place-link" placeholder="Ссылка на картинку">
+            <form class="modal__form modal__form_type_add-card" action="#" method="POST" name="add-new-card-form" novalidate>
+                <input class="modal__input modal__input-place-name" type="text" name="place-name" id="place-name" placeholder="Название" minlength="2" maxlength="30" required>
+                <span class="modal__input-error place-name-input-error"></span>
+                <input class="modal__input modal__input-place-link" type="url" name="place-link" id="place-link" placeholder="Ссылка на картинку" required>
+                <span class="modal__input-error place-link-input-error"></span>
                 <button class="modal__btn" type="submit">Создать</button>
             </form>
             <button class="modal__close" type="button"></button>
