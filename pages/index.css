@@ -30,7 +30,10 @@
 @import url(../blocks/modal/__title/modal__title.css);
 @import url(../blocks/modal/__form/modal__form.css);
 @import url(../blocks/modal/__input/modal__input.css);
+@import url(../blocks/modal/__input/_type/form__input_type_error.css);
+@import url(../blocks/modal/__input-error/modal__input-error.css);
 @import url(../blocks/modal/__btn/modal__btn.css);
+@import url(../blocks/modal/__btn/_inactive/modal__btn_inactive.css);
 @import url(../blocks/modal/__close/modal__close.css);
 @import url(../blocks/modal/_opened/modal_opened.css);
 @import url(../blocks/modal/__fullscreen-container/modal__fullscreen-container.css);

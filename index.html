@@ -48,9 +48,11 @@
     <div class="modal modal_type_edit-form">
         <div class="modal__container">
             <h2 class="modal__title">Редактировать профиль</h2>
-            <form class="modal__form modal__form_type_edit" action="#" method="POST" name="edit-profile-form">
-                <input class="modal__input modal__input-name" type="text" name="user-name" id="user-name" required>
-                <input class="modal__input modal__input-description" type="text" name="user-description" id="user-description" required>
+            <form class="modal__form modal__form_type_edit" action="#" method="POST" name="edit-profile-form" novalidate>
+                <input class="modal__input modal__input-name" type="text" value= "Жак-Ив Кусто" name="user-name" id="user-name" minlength="2" maxlength="40" required>
+                <span class="modal__input-error user-name-input-error"></span>
+                <input class="modal__input modal__input-description" type="text" value="Исследователь океана" name="user-description" id="user-description" minlength="2" maxlength="200" required>
+                <span class="modal__input-error user-description-input-error"></span>
                 <button class="modal__btn" type="submit">Сохранить</button>
             </form>
             <button class="modal__close" type="button"></button>
