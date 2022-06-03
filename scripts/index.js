@@ -23,7 +23,6 @@ const closeBtnFullScreenModal = modalFullScreen.querySelector('.modal__close');
 const fullScreenImg = modalFullScreen.querySelector('.modal__img-fullscreen');
 const fullScreenCaption = modalFullScreen.querySelector('.modal__fullscreen-caption');
 
-
 function openModal(modal) {
     modal.classList.add('modal_opened');
 }
@@ -56,6 +55,7 @@ function handleEditProfileSubmit(evt) {
     }
 }
 
+
 function createCard(cardData) {
     const cardTemplate = document.querySelector('.card-template').content;
     const cardItem = cardTemplate.querySelector('.gallery__item').cloneNode(true);
@@ -79,6 +79,11 @@ function createCard(cardData) {
     return cardItem;
 }
 
+function renderCard(cardData, parent) {
+    const newCard = createCard(cardData);
+    parent.prepend(newCard);
+}
+
 function handleCreateUserCardSubmit(evt) {
     evt.preventDefault();
     if ( !hasInvalidInput(modalAddCard) ) {
@@ -91,11 +96,6 @@ function handleCreateUserCardSubmit(evt) {
     
         closeModal(modalAddCard);
     }
-}
-
-function renderCard(cardData, parent) {
-    const newCard = createCard(cardData);
-    parent.prepend(newCard);
 }
 
 function handleshowFullScreen(cardData) {
@@ -122,7 +122,6 @@ function toggleButtonState(input, button) {
     }
 }
 
-/*Функции отображения ошибки при вводе*/
 function showInputError(form, inputElement) {
     inputElement.classList.add('form__input_type_error');
 
@@ -133,7 +132,6 @@ function showInputError(form, inputElement) {
     toggleButtonState(inputElement, button);
 }
 
-/*Функции скрытия ошибки при вводе*/
 function hideInputError(form, inputElement) {
     inputElement.classList.remove('form__input_type_error');
 
@@ -144,7 +142,6 @@ function hideInputError(form, inputElement) {
     toggleButtonState(inputElement, button);
 }
 
-/*Проверка состояния валидности инпута*/
 function isValid(form, inputElement) {
     if (!inputElement.validity.valid) {
         showInputError(form, inputElement);
@@ -153,7 +150,6 @@ function isValid(form, inputElement) {
     }
 }
 
-/*установкa обработчика событий на все поля формы*/
 function setEventListener(form) {
     const inputsList = Array.from(form.querySelectorAll('.modal__input'));
     inputsList.forEach(input => {
@@ -213,7 +209,6 @@ modalOverlay.forEach(item => {
         }
     });
 });
-
 
 /*Редактирование профиля*/
 editForm.addEventListener('submit',  handleEditProfileSubmit);
