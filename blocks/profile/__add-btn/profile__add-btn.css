@@ -16,6 +16,10 @@
     opacity: .6;
 }
 
+.profile__add-btn:focus {
+    outline: none;
+}
+
 @media screen and (max-width: 816px) {
     .profile__add-btn {
         align-self: center;

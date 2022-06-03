@@ -1,5 +1,7 @@
 const cardsList = document.querySelector('.gallery__list');
 
+const modalOverlay = Array.from(document.querySelectorAll('.modal'));
+
 const addCardBtn = document.querySelector('.profile__add-btn');
 const modalAddCard = document.querySelector('.modal_type_add-new-card');
 const addCardForm = modalAddCard.querySelector('.modal__form_type_add-card');
@@ -198,6 +200,18 @@ closeBtnAddCardModal.addEventListener('click', () => {
 
 closeBtnFullScreenModal.addEventListener('click', () => {
     closeModal(modalFullScreen);
+});
+
+modalOverlay.forEach(item => {
+    item.addEventListener('click', (evt) => {
+        closeModal(evt.target);
+    });
+
+    document.addEventListener('keydown', (evt) => {
+        if (evt.key === 'Escape' && item.classList.contains('modal_opened')) {
+            closeModal(item);
+        }
+    });
 });
 
 
