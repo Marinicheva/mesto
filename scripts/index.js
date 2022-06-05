@@ -37,22 +37,12 @@ function handleFillEditModal() {
     openModal(modalEdit);
 }
 
-function hasInvalidInput(form) {
-    const inputsList = Array.from(form.querySelectorAll('.modal__input'));
-    return inputsList.some((item) =>  {
-        return !item.validity.valid;
-    }); 
-}
-
 function handleEditProfileSubmit(evt) {
     evt.preventDefault();
-    if ( !hasInvalidInput(editForm) ) {
-        
-        profileName.textContent = userName.value;
-        profileDescription.textContent = userDescription.value;
+    profileName.textContent = userName.value;
+    profileDescription.textContent = userDescription.value;
 
-        closeModal(modalEdit);
-    }
+    closeModal(modalEdit);
 }
 
 
@@ -86,8 +76,7 @@ function renderCard(cardData, parent) {
 
 function handleCreateUserCardSubmit(evt) {
     evt.preventDefault();
-    if ( !hasInvalidInput(modalAddCard) ) {
-        const newCard = {};
+    const newCard = {};
         newCard.name = inputPlaceName.value;
         newCard.link = inputPlaceLink.value;
     
@@ -95,7 +84,6 @@ function handleCreateUserCardSubmit(evt) {
         addCardForm.reset();
     
         closeModal(modalAddCard);
-    }
 }
 
 function handleshowFullScreen(cardData) {
@@ -113,64 +101,6 @@ function handleLikeCard(evt) {
 function handleDeleteCard(evt) {
     evt.target.closest('.gallery__item').remove();
 }
-
-function toggleButtonState(input, button) {
-    if ( !input.validity.valid ) {
-        button.classList.add('modal__btn_inactive');
-    } else {
-        button.classList.remove('modal__btn_inactive');
-    }
-}
-
-function showInputError(form, inputElement) {
-    inputElement.classList.add('form__input_type_error');
-
-    const errorMessage = form.querySelector(`.${inputElement.id}-input-error`);
-    const button = form.querySelector('.modal__btn');
-
-    errorMessage.textContent = inputElement.validationMessage;
-    toggleButtonState(inputElement, button);
-}
-
-function hideInputError(form, inputElement) {
-    inputElement.classList.remove('form__input_type_error');
-
-    const errorMessage = form.querySelector(`.${inputElement.id}-input-error`);
-    const button = form.querySelector('.modal__btn');
-
-    errorMessage.textContent = '';
-    toggleButtonState(inputElement, button);
-}
-
-function isValid(form, inputElement) {
-    if (!inputElement.validity.valid) {
-        showInputError(form, inputElement);
-    } else {
-        hideInputError(form, inputElement);
-    }
-}
-
-function setEventListener(form) {
-    const inputsList = Array.from(form.querySelectorAll('.modal__input'));
-    inputsList.forEach(input => {
-        input.addEventListener('input', () => {
-            isValid(form, input);
-        });
-    });
-}
-
-function anableValidation() {
-    const formList = document.querySelectorAll('.modal__form');
-    formList.forEach(form => setEventListener(form) );
-}
-
-function removeErrors(modal) {
-    const inputsList = Array.from(modal.querySelectorAll('.modal__input'));
-    const button = modal.querySelector('.modal__btn');
-
-    inputsList.forEach(input => hideInputError(modal, input));
-    button.classList.remove('modal__btn_inactive');
-}
  
 /*Динамическое создание карточек*/
  initialCards.forEach(item => renderCard(item, cardsList));
@@ -185,13 +115,13 @@ addCardBtn.addEventListener('click', () => openModal(modalAddCard));
 /*Закрытие модальных окон*/
 closeBtnEditModal.addEventListener('click', () => {
     closeModal(modalEdit);
-    removeErrors(modalEdit);
+    removeErrors(modalEdit, validateConfig);
 });
 
 closeBtnAddCardModal.addEventListener('click', () => {
     addCardForm.reset();
     removeErrors(addCardForm);
-    closeModal(modalAddCard);
+    closeModal(modalAddCard, validateConfig);
 });
 
 closeBtnFullScreenModal.addEventListener('click', () => {
@@ -215,6 +145,3 @@ editForm.addEventListener('submit',  handleEditProfileSubmit);
 
 /*Создание новой карточки*/
 addCardForm.addEventListener('submit', handleCreateUserCardSubmit);
-
-/*Валидация форм*/
-anableValidation();

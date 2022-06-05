@@ -1,11 +1,8 @@
 .modal__input-error {
-    margin-bottom: 10px;
+    display: none;
+    margin-top: 5px;
     min-height: 15px;
     color: var(--error-red);
     font-size: 12px;
     line-height: 1.25;
-}
-
-.modal__input-error:last-of-type {
-    margin-bottom: 30px;
 }
