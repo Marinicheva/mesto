@@ -1,6 +1,5 @@
+const ESC_CODE = 'Escape';
 const cardsList = document.querySelector('.gallery__list');
-
-const modalOverlay = Array.from(document.querySelectorAll('.modal'));
 
 const addCardBtn = document.querySelector('.profile__add-btn');
 const modalAddCard = document.querySelector('.modal_type_add-new-card');
@@ -23,13 +22,35 @@ const closeBtnFullScreenModal = modalFullScreen.querySelector('.modal__close');
 const fullScreenImg = modalFullScreen.querySelector('.modal__img-fullscreen');
 const fullScreenCaption = modalFullScreen.querySelector('.modal__fullscreen-caption');
 
+function closeModalByEsc(evt) {
+    if (evt.key === ESC_CODE) {
+        const openedModal = document.querySelector('.modal_opened');
+        closeModal(openedModal); 
+      }
+}
+
+function closeModalByOverlayClick(evt) {
+    const openedModal = evt.target;
+    if (openedModal.classList.contains('modal_opened')) {
+        closeModal(openedModal);
+    }
+}
+
 function openModal(modal) {
     modal.classList.add('modal_opened');
+
+    document.addEventListener('keydown', closeModalByEsc);
+    document.addEventListener('click', closeModalByOverlayClick);
+    
 }
 
 function closeModal(modal) {
     modal.classList.remove('modal_opened');
+
+    document.removeEventListener('keydown', closeModalByEsc);
+    document.removeEventListener('click', closeModalByOverlayClick);
 }
+
 
 function handleFillEditModal() {
     userName.value = profileName.textContent;
@@ -120,24 +141,12 @@ closeBtnEditModal.addEventListener('click', () => {
 
 closeBtnAddCardModal.addEventListener('click', () => {
     addCardForm.reset();
-    removeErrors(addCardForm);
-    closeModal(modalAddCard, validateConfig);
+    removeErrors(modalAddCard, validateConfig);
+    closeModal(modalAddCard);
 });
 
 closeBtnFullScreenModal.addEventListener('click', () => {
     closeModal(modalFullScreen);
-});
-
-modalOverlay.forEach(item => {
-    item.addEventListener('click', (evt) => {
-        closeModal(evt.target);
-    });
-
-    document.addEventListener('keydown', (evt) => {
-        if (evt.key === 'Escape' && item.classList.contains('modal_opened')) {
-            closeModal(item);
-        }
-    });
 });
 
 /*Редактирование профиля*/
