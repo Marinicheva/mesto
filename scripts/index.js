@@ -60,6 +60,7 @@ function handleFillEditModal() {
 
 function handleEditProfileSubmit(evt) {
     evt.preventDefault();
+    
     profileName.textContent = userName.value;
     profileDescription.textContent = userDescription.value;
 
@@ -95,6 +96,13 @@ function renderCard(cardData, parent) {
     parent.prepend(newCard);
 }
 
+function toggleSubmitButtonWhileSubmitting(buton) {
+    const buttonSubmit = modalAddCard.querySelector('.modal__btn');
+    buttonSubmit.classList.toggle('modal__btn_inactive');
+
+    buttonSubmit.disabled = true ? false : true;
+}
+
 function handleCreateUserCardSubmit(evt) {
     evt.preventDefault();
     const newCard = {};
@@ -102,6 +110,8 @@ function handleCreateUserCardSubmit(evt) {
         newCard.link = inputPlaceLink.value;
     
         renderCard(newCard, cardsList);
+
+        toggleSubmitButtonWhileSubmitting();
         addCardForm.reset();
     
         closeModal(modalAddCard);
@@ -143,6 +153,7 @@ closeBtnAddCardModal.addEventListener('click', () => {
     addCardForm.reset();
     removeErrors(modalAddCard, validateConfig);
     closeModal(modalAddCard);
+    toggleSubmitButtonWhileSubmitting();
 });
 
 closeBtnFullScreenModal.addEventListener('click', () => {
