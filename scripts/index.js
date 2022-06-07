@@ -96,25 +96,25 @@ function renderCard(cardData, parent) {
     parent.prepend(newCard);
 }
 
-function toggleSubmitButtonWhileSubmitting(buton) {
-    const buttonSubmit = modalAddCard.querySelector('.modal__btn');
-    buttonSubmit.classList.toggle('modal__btn_inactive');
-
-    buttonSubmit.disabled = true ? false : true;
+function disableButton(button) {
+    button.classList.add('modal__btn_inactive'); 
+    button.disabled = true;
 }
 
 function handleCreateUserCardSubmit(evt) {
     evt.preventDefault();
     const newCard = {};
-        newCard.name = inputPlaceName.value;
-        newCard.link = inputPlaceLink.value;
-    
-        renderCard(newCard, cardsList);
+    newCard.name = inputPlaceName.value;
+    newCard.link = inputPlaceLink.value;
 
-        toggleSubmitButtonWhileSubmitting();
-        addCardForm.reset();
-    
-        closeModal(modalAddCard);
+    const buttonSubmit = modalAddCard.querySelector('.modal__btn');
+
+    renderCard(newCard, cardsList);
+
+    disableButton(buttonSubmit);
+    addCardForm.reset();
+
+    closeModal(modalAddCard);
 }
 
 function handleshowFullScreen(cardData) {
@@ -153,7 +153,6 @@ closeBtnAddCardModal.addEventListener('click', () => {
     addCardForm.reset();
     removeErrors(modalAddCard, validateConfig);
     closeModal(modalAddCard);
-    toggleSubmitButtonWhileSubmitting();
 });
 
 closeBtnFullScreenModal.addEventListener('click', () => {
