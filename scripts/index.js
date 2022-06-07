@@ -40,7 +40,7 @@ function openModal(modal) {
     modal.classList.add('modal_opened');
 
     document.addEventListener('keydown', closeModalByEsc);
-    document.addEventListener('click', closeModalByOverlayClick);
+    document.addEventListener('mousedown', closeModalByOverlayClick);
     
 }
 
