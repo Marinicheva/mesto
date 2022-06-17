@@ -140,7 +140,12 @@ function handleDeleteCard(evt) {
 /*Обработка событий для открытия модальных окон*/ 
 editBtn.addEventListener('click', handleFillEditModal);
 
-addCardBtn.addEventListener('click', () => openModal(modalAddCard));
+addCardBtn.addEventListener('click', () => {
+    const buttonSubmit = modalAddCard.querySelector('.modal__btn');
+    disableButton(buttonSubmit);
+    
+    openModal(modalAddCard);
+});
 
 
 /*Закрытие модальных окон*/
