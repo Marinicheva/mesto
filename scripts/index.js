@@ -25,7 +25,8 @@ const fullScreenCaption = modalFullScreen.querySelector('.modal__fullscreen-capt
 function closeModalByEsc(evt) {
     if (evt.key === ESC_CODE) {
         const openedModal = document.querySelector('.modal_opened');
-        closeModal(openedModal); 
+        closeModal(openedModal);
+        removeErrors(openedModal, validateConfig);
       }
 }
 
@@ -55,6 +56,7 @@ function closeModal(modal) {
 function handleFillEditModal() {
     userName.value = profileName.textContent;
     userDescription.value = profileDescription.textContent;
+    removeErrors(modalEdit, validateConfig);
     openModal(modalEdit);
 }
 
@@ -146,7 +148,6 @@ addCardBtn.addEventListener('click', () => openModal(modalAddCard));
 /*Закрытие модальных окон*/
 closeBtnEditModal.addEventListener('click', () => {
     closeModal(modalEdit);
-    removeErrors(modalEdit, validateConfig);
 });
 
 closeBtnAddCardModal.addEventListener('click', () => {
