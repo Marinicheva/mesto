@@ -22,6 +22,8 @@ const closeBtnEditModal = modalEdit.querySelector('.modal__close');
 
 const modalFullScreen = document.querySelector('.modal_type_fullscreen-img');
 const closeBtnFullScreenModal = modalFullScreen.querySelector('.modal__close');
+const fullScreenImg = modalFullScreen.querySelector('.modal__img-fullscreen');
+const fullScreenCaption = modalFullScreen.querySelector('.modal__fullscreen-caption');
 
 function closeModalByEsc(evt) {
     if (evt.key === ESC_CODE) {
@@ -94,6 +96,14 @@ function disableButton(button) {
     button.disabled = true;
 }
 
+function fillFullScreenModal({name, link}) {
+    fullScreenImg.src = link;
+    fullScreenImg.alt = `Пользовательское фото места ${name}`;
+    fullScreenCaption.textContent = name;
+
+    openModal(modalFullScreen);
+}
+
 /*Создание карточки с данными от пользователя*/
 function handleCreateUserCardSubmit(evt) {
     evt.preventDefault();
@@ -148,3 +158,5 @@ editForm.addEventListener('submit',  handleEditProfileSubmit);
 
 /*Создание новой карточки*/
 addCardForm.addEventListener('submit', handleCreateUserCardSubmit);
+
+export {fillFullScreenModal};

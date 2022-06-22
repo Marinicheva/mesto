@@ -1,3 +1,4 @@
+import {fillFullScreenModal} from './index.js';
 class Card {
   constructor(data, templateSelector) {
     this._title = data.name;
@@ -22,13 +23,7 @@ class Card {
   }
 
   _handleShowFullImg() {
-    const modalFullScreen = document.querySelector('.modal_type_fullscreen-img');
-    const fullScreenImg = modalFullScreen.querySelector('.modal__img-fullscreen');
-    const fullScreenCaption = modalFullScreen.querySelector('.modal__fullscreen-caption');
-
-    fullScreenImg.src = this._url;
-    fullScreenImg.alt = `Пользовательское фото места ${this._title}`;
-    fullScreenCaption.textContent = this._title;
+    fillFullScreenModal({link: this._url, name: this._title});
   }
 
   _setEvenetListeners() {
@@ -44,7 +39,7 @@ class Card {
       this._handleDeleteClick();
     });
 
-    cardImage.addEventListener('click', () => {
+    cardImage.addEventListener('click', (evt) => {
       this._handleShowFullImg();
     });
   }
