@@ -1,3 +1,6 @@
+import initialCards from './cards.js';
+import Card from './card.js';
+
 const ESC_CODE = 'Escape';
 const cardsList = document.querySelector('.gallery__list');
 
@@ -19,8 +22,6 @@ const closeBtnEditModal = modalEdit.querySelector('.modal__close');
 
 const modalFullScreen = document.querySelector('.modal_type_fullscreen-img');
 const closeBtnFullScreenModal = modalFullScreen.querySelector('.modal__close');
-const fullScreenImg = modalFullScreen.querySelector('.modal__img-fullscreen');
-const fullScreenCaption = modalFullScreen.querySelector('.modal__fullscreen-caption');
 
 function closeModalByEsc(evt) {
     if (evt.key === ESC_CODE) {
@@ -70,75 +71,52 @@ function handleEditProfileSubmit(evt) {
 }
 
 
-function createCard(cardData) {
-    const cardTemplate = document.querySelector('.card-template').content;
-    const cardItem = cardTemplate.querySelector('.gallery__item').cloneNode(true);
-    const cardImg = cardItem.querySelector('.gallery__img');
-    const cardCaption = cardItem.querySelector('.gallery__img-caption');
-    const btnLikeCard = cardItem.querySelector('.gallery__like-btn');
-    const btnDeleteCard = cardItem.querySelector('.gallery__delete-btn');
-    
-    cardImg.src = cardData.link;
-    cardImg.alt = `Пользовательское фото места ${cardData.name}`;
-    cardCaption.textContent = cardData.name;
+function renderCard(cardItem, parent) {
+    parent.prepend(cardItem);
+}
 
-    cardImg.addEventListener('click', () => {
-        handleshowFullScreen(cardData);
+initialCards.forEach(item => {
+    const card = new Card(item, '.card-template');
+    const newCard = card.generateCard();
+
+    newCard.addEventListener('click', (evt) => {
+        if ( evt.target.classList.contains('gallery__img') ) {
+            openModal(modalFullScreen);
+        }
     });
+    
+    renderCard(newCard, cardsList);
+  });
 
-    btnLikeCard.addEventListener('click', handleLikeCard);
-
-    btnDeleteCard.addEventListener('click', handleDeleteCard);
-
-    return cardItem;
-}
-
-function renderCard(cardData, parent) {
-    const newCard = createCard(cardData);
-    parent.prepend(newCard);
-}
 
 function disableButton(button) {
     button.classList.add('modal__btn_inactive'); 
     button.disabled = true;
 }
 
+/*Создание карточки с данными от пользователя*/
 function handleCreateUserCardSubmit(evt) {
     evt.preventDefault();
-    const newCard = {};
-    newCard.name = inputPlaceName.value;
-    newCard.link = inputPlaceLink.value;
+
+    const newCardData = {};
+    newCardData.name = inputPlaceName.value;
+    newCardData.link = inputPlaceLink.value;
+
+    /*Этот код !!!повторяется!!! в обходе массива данных исходный карточек*/
+    const card = new Card(newCardData, '.card-template');
+    const newCard = card.generateCard();
 
     const buttonSubmit = modalAddCard.querySelector('.modal__btn');
 
     renderCard(newCard, cardsList);
 
     disableButton(buttonSubmit);
+
     addCardForm.reset();
 
     closeModal(modalAddCard);
 }
-
-function handleshowFullScreen(cardData) {
-    fullScreenImg.src = cardData.link;
-    fullScreenImg.alt = `Пользовательское фото места ${cardData.name}`;
-    fullScreenCaption.textContent = cardData.name;
-
-    openModal(modalFullScreen);
-}
-
-function handleLikeCard(evt) {
-    evt.target.classList.toggle('gallery__like-btn_active');
-}
-
-function handleDeleteCard(evt) {
-    evt.target.closest('.gallery__item').remove();
-}
  
-/*Динамическое создание карточек*/
- initialCards.forEach(item => renderCard(item, cardsList));
-
-
 /*Обработка событий для открытия модальных окон*/ 
 editBtn.addEventListener('click', handleFillEditModal);
 

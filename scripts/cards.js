@@ -24,3 +24,5 @@ const initialCards = [
         link: './images/photo-6.jpg',
     },
 ];
+
+export default initialCards;
