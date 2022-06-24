@@ -45,7 +45,7 @@
         <p class="footer__copyright">&#169; 2020 Mesto Russia</p>
     </footer>
 
-    <div class="modal modal_type_edit-form">
+    <div class="modal modal_need-validation modal_type_edit-form">
         <div class="modal__container">
             <h2 class="modal__title">Редактировать профиль</h2>
             <form class="modal__form modal__form_type_edit" action="#" method="POST" name="edit-profile-form" novalidate>
@@ -59,7 +59,7 @@
         </div>
     </div>
 
-    <div class="modal modal_type_add-new-card">
+    <div class="modal modal_need-validation modal_type_add-new-card">
         <div class="modal__container">
             <h2 class="modal__title">Новое место</h2>
             <form class="modal__form modal__form_type_add-card" action="#" method="POST" name="add-new-card-form" novalidate>
@@ -80,9 +80,12 @@
             <button class="modal__close" type="button"></button>
         </div>
     </div>
-    <script type="module" src="./scripts/index.js"></script>
     <script type="module" src="./scripts/card.js"></script>
     <script type="module" src="./scripts/cards.js"></script>
-    <script src="./scripts/validate.js"></script>
+
+    <script type="module" src="./scripts/index.js"></script>
+
+
+    <!-- <script src="./scripts/validate.js"></script> -->
 </body>
 </html>

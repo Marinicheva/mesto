@@ -1,5 +1,6 @@
 import initialCards from './cards.js';
 import Card from './card.js';
+import { FormValidator ,validationConfig } from './formValidator.js';
 
 const ESC_CODE = 'Escape';
 const cardsList = document.querySelector('.gallery__list');
@@ -25,11 +26,13 @@ const closeBtnFullScreenModal = modalFullScreen.querySelector('.modal__close');
 const fullScreenImg = modalFullScreen.querySelector('.modal__img-fullscreen');
 const fullScreenCaption = modalFullScreen.querySelector('.modal__fullscreen-caption');
 
+const formsNeedValidation = Array.from( document.querySelectorAll('.modal_need-validation') );
+
 function closeModalByEsc(evt) {
     if (evt.key === ESC_CODE) {
         const openedModal = document.querySelector('.modal_opened');
         closeModal(openedModal);
-        removeErrors(openedModal, validateConfig);
+        // removeErrors(openedModal, validateConfig);
       }
 }
 
@@ -59,7 +62,7 @@ function closeModal(modal) {
 function handleFillEditModal() {
     userName.value = profileName.textContent;
     userDescription.value = profileDescription.textContent;
-    removeErrors(modalEdit, validateConfig);
+    // removeErrors(modalEdit, validateConfig);
     openModal(modalEdit);
 }
 
@@ -76,20 +79,6 @@ function handleEditProfileSubmit(evt) {
 function renderCard(cardItem, parent) {
     parent.prepend(cardItem);
 }
-
-initialCards.forEach(item => {
-    const card = new Card(item, '.card-template', handleOpenViewModal);
-    const newCard = card.generateCard();
-
-    newCard.addEventListener('click', (evt) => {
-        if ( evt.target.classList.contains('gallery__img') ) {
-            openModal(modalFullScreen);
-        }
-    });
-    
-    renderCard(newCard, cardsList);
-  });
-
 
 function disableButton(button) {
     button.classList.add('modal__btn_inactive'); 
@@ -112,14 +101,13 @@ function handleCreateUserCardSubmit(evt) {
     newCardData.name = inputPlaceName.value;
     newCardData.link = inputPlaceLink.value;
 
-    /*Этот код !!!повторяется!!! в обходе массива данных исходный карточек*/
-    const card = new Card(newCardData, '.card-template');
+    /*Этот код 3 строки !!!повторяется!!! в обходе массива данных исходный карточек*/
+    const card = new Card(newCardData, '.card-template', handleOpenViewModal);
     const newCard = card.generateCard();
-
-    const buttonSubmit = modalAddCard.querySelector('.modal__btn');
 
     renderCard(newCard, cardsList);
 
+    const buttonSubmit = modalAddCard.querySelector('.modal__btn');
     disableButton(buttonSubmit);
 
     addCardForm.reset();
@@ -145,7 +133,7 @@ closeBtnEditModal.addEventListener('click', () => {
 
 closeBtnAddCardModal.addEventListener('click', () => {
     addCardForm.reset();
-    removeErrors(modalAddCard, validateConfig);
+    // removeErrors(modalAddCard, validateConfig);
     closeModal(modalAddCard);
 });
 
@@ -156,5 +144,19 @@ closeBtnFullScreenModal.addEventListener('click', () => {
 /*Редактирование профиля*/
 editForm.addEventListener('submit',  handleEditProfileSubmit);
 
+/*Создание экзмепляров класса Card*/
+initialCards.forEach(item => {
+    const card = new Card(item, '.card-template', handleOpenViewModal);
+    const newCard = card.generateCard();
+
+    renderCard(newCard, cardsList);
+});
+
 /*Создание новой карточки*/
 addCardForm.addEventListener('submit', handleCreateUserCardSubmit);
+
+/*Валидация форм*/
+formsNeedValidation.forEach(form => {
+    const formValidation = new FormValidator(validationConfig, form);
+    formValidation.enableValidation();
+});
