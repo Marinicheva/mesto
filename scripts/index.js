@@ -78,7 +78,7 @@ function renderCard(cardItem, parent) {
 }
 
 initialCards.forEach(item => {
-    const card = new Card(item, '.card-template');
+    const card = new Card(item, '.card-template', handleOpenViewModal);
     const newCard = card.generateCard();
 
     newCard.addEventListener('click', (evt) => {
@@ -96,7 +96,7 @@ function disableButton(button) {
     button.disabled = true;
 }
 
-function fillFullScreenModal({name, link}) {
+function handleOpenViewModal({name, link}) {
     fullScreenImg.src = link;
     fullScreenImg.alt = `Пользовательское фото места ${name}`;
     fullScreenCaption.textContent = name;
@@ -158,5 +158,3 @@ editForm.addEventListener('submit',  handleEditProfileSubmit);
 
 /*Создание новой карточки*/
 addCardForm.addEventListener('submit', handleCreateUserCardSubmit);
-
-export {fillFullScreenModal};

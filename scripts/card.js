@@ -1,9 +1,9 @@
-import {fillFullScreenModal} from './index.js';
 class Card {
-  constructor(data, templateSelector) {
+  constructor(data, templateSelector, handleOpenViewModal) {
     this._title = data.name;
     this._url = data.link;
     this._templateSelector = templateSelector;
+    this._handleOpenViewModal = handleOpenViewModal;
   }
 
   _getTemplate() {
@@ -22,8 +22,8 @@ class Card {
     this._cardItem.remove();
   }
 
-  _handleShowFullImg() {
-    fillFullScreenModal({link: this._url, name: this._title});
+  _handleclickImage() {
+    this._handleOpenViewModal({link: this._url, name: this._title});
   }
 
   _setEvenetListeners() {
@@ -40,7 +40,7 @@ class Card {
     });
 
     cardImage.addEventListener('click', (evt) => {
-      this._handleShowFullImg();
+      this._handleclickImage();
     });
   }
 
