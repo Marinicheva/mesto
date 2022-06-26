@@ -79,11 +79,6 @@ class FormValidator {
 
     this._setEventListeners();
   }
-
-  showMe() {
-    console.log(this._form);
-    console.log(this._inputList);
-  }
 }
 
 export {FormValidator, validationConfig};
