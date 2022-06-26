@@ -1,5 +1,4 @@
-const initialCards = [
-    {
+const initialCards = [{
         name: 'Карачаевск',
         link: './images/photo-1.jpg',
     },

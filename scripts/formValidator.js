@@ -24,11 +24,11 @@ class FormValidator {
   _hasInvalidInput() {
     return this._inputList.some(input => {
       return !input.validity.valid;
-    }); 
+    });
   }
 
   _toggleButtonState() {
-    if ( this._hasInvalidInput() ) {
+    if (this._hasInvalidInput()) {
       this._buttonSubmit.disabled = true;
       this._buttonSubmit.classList.add(this._inactiveButtonClass);
     } else {
@@ -39,7 +39,7 @@ class FormValidator {
 
   _showInputError(input) {
     input.classList.add(this._inputErrorClass);
-  
+
     const errorMessage = this._form.querySelector(`.${input.id}-input-error`);
     errorMessage.textContent = input.validationMessage;
     errorMessage.classList.add(this._errorClass);
@@ -47,7 +47,7 @@ class FormValidator {
 
   _hideInputError(input) {
     input.classList.remove(this._inputErrorClass);
-  
+
     const errorMessage = this._form.querySelector(`.${input.id}-input-error`);
     errorMessage.classList.remove(this._errorClass);
     errorMessage.textContent = '';
@@ -81,4 +81,7 @@ class FormValidator {
   }
 }
 
-export {FormValidator, validationConfig};
+export {
+  FormValidator,
+  validationConfig
+};

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,6 +8,7 @@
     <title>Mesto</title>
     <link rel="stylesheet" href="./pages/index.css">
 </head>
+
 <body class="page">
     <header class="header">
         <a href="#" class="header__link">
@@ -20,7 +22,7 @@
                 <img src="./images/avatar.jpg" alt="Фото автора страницы" class="profile__photo">
                 <h1 class="profile__name">Жак-Ив Кусто</h1>
                 <button class="profile__edit-btn" aria-label="Изменить данные профиля" type="button"></button>
-                <p class="profile__description">Исследователь океана</p> 
+                <p class="profile__description">Исследователь океана</p>
             </div>
             <button class="profile__add-btn" aria-label="Добавить новое фото" type="button"></button>
         </section>
@@ -48,10 +50,14 @@
     <div class="modal modal_need-validation modal_type_edit-form">
         <div class="modal__container">
             <h2 class="modal__title">Редактировать профиль</h2>
-            <form class="modal__form modal__form_type_edit" action="#" method="POST" name="edit-profile-form" novalidate>
-                <input class="modal__input modal__input-name" type="text" value= "Жак-Ив Кусто" name="user-name" id="user-name" placeholder="Ваше имя" minlength="2" maxlength="40" required>
+            <form class="modal__form modal__form_type_edit" action="#" method="POST" name="edit-profile-form"
+                novalidate>
+                <input class="modal__input modal__input-name" type="text" value="Жак-Ив Кусто" name="user-name"
+                    id="user-name" placeholder="Ваше имя" minlength="2" maxlength="40" required>
                 <span class="modal__input-error user-name-input-error"></span>
-                <input class="modal__input modal__input-description" type="text" value="Исследователь океана" name="user-description" id="user-description" placeholder="Пару слов о Вас" minlength="2" maxlength="200" required>
+                <input class="modal__input modal__input-description" type="text" value="Исследователь океана"
+                    name="user-description" id="user-description" placeholder="Пару слов о Вас" minlength="2"
+                    maxlength="200" required>
                 <span class="modal__input-error user-description-input-error"></span>
                 <button class="modal__btn" type="submit">Сохранить</button>
             </form>
@@ -62,10 +68,13 @@
     <div class="modal modal_need-validation modal_type_add-new-card">
         <div class="modal__container">
             <h2 class="modal__title">Новое место</h2>
-            <form class="modal__form modal__form_type_add-card" action="#" method="POST" name="add-new-card-form" novalidate>
-                <input class="modal__input modal__input-place-name" type="text" name="place-name" id="place-name" placeholder="Название" minlength="2" maxlength="30" required>
+            <form class="modal__form modal__form_type_add-card" action="#" method="POST" name="add-new-card-form"
+                novalidate>
+                <input class="modal__input modal__input-place-name" type="text" name="place-name" id="place-name"
+                    placeholder="Название" minlength="2" maxlength="30" required>
                 <span class="modal__input-error place-name-input-error"></span>
-                <input class="modal__input modal__input-place-link" type="url" name="place-link" id="place-link" placeholder="Ссылка на картинку" required>
+                <input class="modal__input modal__input-place-link" type="url" name="place-link" id="place-link"
+                    placeholder="Ссылка на картинку" required>
                 <span class="modal__input-error place-link-input-error"></span>
                 <button class="modal__btn" type="submit">Создать</button>
             </form>
@@ -82,10 +91,7 @@
     </div>
     <script type="module" src="./scripts/card.js"></script>
     <script type="module" src="./scripts/cards.js"></script>
-
+    <script type="module" src="./scripts/formValidator.js"></script>
     <script type="module" src="./scripts/index.js"></script>
-
-
-    <!-- <script src="./scripts/validate.js"></script> -->
 </body>
 </html>

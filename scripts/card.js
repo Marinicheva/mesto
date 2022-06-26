@@ -8,9 +8,9 @@ class Card {
 
   _getTemplate() {
     const card = document.querySelector(this._templateSelector)
-                         .content
-                         .querySelector('.gallery__item')
-                         .cloneNode(true);
+      .content
+      .querySelector('.gallery__item')
+      .cloneNode(true);
     return card;
   }
 
@@ -23,7 +23,10 @@ class Card {
   }
 
   _handleclickImage() {
-    this._handleOpenViewModal({link: this._url, name: this._title});
+    this._handleOpenViewModal({
+      link: this._url,
+      name: this._title
+    });
   }
 
   _setEvenetListeners() {
@@ -47,7 +50,7 @@ class Card {
   generateCard() {
     this._cardItem = this._getTemplate();
     this._setEvenetListeners();
-    
+
     const cardTitle = this._cardItem.querySelector('.gallery__img-caption');
     const cardImg = this._cardItem.querySelector('.gallery__img');
 

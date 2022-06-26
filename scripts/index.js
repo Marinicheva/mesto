@@ -1,4 +1,4 @@
-import initialCards from './cards.js';
+import initialCards from './initialCards.js';
 import Card from './card.js';
 import {
   FormValidator,
@@ -82,10 +82,10 @@ function removeErrors(form) {
 function setButtonSubmitState(form) {
   const buttonSubmit = form.querySelector(validationConfig.submitButtonSelector);
 
-  if ( form.checkValidity() ) {
+  if (form.checkValidity()) {
     buttonSubmit.classList.remove('modal__btn_inactive');
     buttonSubmit.disabled = false;
-  } else  {
+  } else {
     buttonSubmit.classList.add('modal__btn_inactive');
     buttonSubmit.disabled = true;
   }
@@ -121,7 +121,10 @@ function renderCard(cardItem, parent) {
 }
 
 /*Открытие полноразмерного просмотра*/
-function handleOpenViewModal( {name, link} ) {
+function handleOpenViewModal({
+  name,
+  link
+}) {
   fullScreenImg.src = link;
   fullScreenImg.alt = `Пользовательское фото места ${name}`;
   fullScreenCaption.textContent = name;
