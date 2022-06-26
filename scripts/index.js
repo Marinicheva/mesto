@@ -1,6 +1,9 @@
 import initialCards from './cards.js';
 import Card from './card.js';
-import { FormValidator ,validationConfig } from './formValidator.js';
+import {
+  FormValidator,
+  validationConfig
+} from './formValidator.js';
 
 const ESC_CODE = 'Escape';
 const cardsList = document.querySelector('.gallery__list');
@@ -26,137 +29,161 @@ const closeBtnFullScreenModal = modalFullScreen.querySelector('.modal__close');
 const fullScreenImg = modalFullScreen.querySelector('.modal__img-fullscreen');
 const fullScreenCaption = modalFullScreen.querySelector('.modal__fullscreen-caption');
 
-const formsNeedValidation = Array.from( document.querySelectorAll('.modal_need-validation') );
+const formsNeedValidation = Array.from(document.querySelectorAll('.modal_need-validation'));
 
-function closeModalByEsc(evt) {
-    if (evt.key === ESC_CODE) {
-        const openedModal = document.querySelector('.modal_opened');
-        closeModal(openedModal);
-        // removeErrors(openedModal, validateConfig);
-      }
-}
-
-function closeModalByOverlayClick(evt) {
-    const openedModal = evt.target;
-    if (openedModal.classList.contains('modal_opened')) {
-        closeModal(openedModal);
-    }
-}
-
+/*Открытие и закрытие модальных окон*/
 function openModal(modal) {
-    modal.classList.add('modal_opened');
+  modal.classList.add('modal_opened');
 
-    document.addEventListener('keydown', closeModalByEsc);
-    document.addEventListener('mousedown', closeModalByOverlayClick);
-    
+  document.addEventListener('keydown', closeModalByEsc);
+  document.addEventListener('mousedown', closeModalByOverlayClick);
 }
 
 function closeModal(modal) {
-    modal.classList.remove('modal_opened');
+  modal.classList.remove('modal_opened');
 
-    document.removeEventListener('keydown', closeModalByEsc);
-    document.removeEventListener('click', closeModalByOverlayClick);
+  document.removeEventListener('keydown', closeModalByEsc);
+  document.removeEventListener('click', closeModalByOverlayClick);
 }
 
+function closeModalByEsc(evt) {
+  if (evt.key === ESC_CODE) {
+    const openedModal = document.querySelector('.modal_opened');
+    closeModal(openedModal);
+  }
+}
 
+function closeModalByOverlayClick(evt) {
+  const openedModal = evt.target;
+  if (openedModal.classList.contains('modal_opened')) {
+    closeModal(openedModal);
+  }
+}
+
+/*Очистка формы от ошибок*/
+function cleanForm(modal) {
+  const form = modal.querySelector(validationConfig.formSelector);
+
+  removeErrors(form);
+  setButtonSubmitState(form);
+}
+
+/*Удаление элементов ошибки*/
+function removeErrors(form) {
+  const errors = Array.from(form.querySelectorAll(`.${validationConfig.inputErrorClass}`));
+
+  errors.forEach(item => {
+    item.classList.remove(validationConfig.inputErrorClass);
+    item.nextElementSibling.classList.remove(validationConfig.errorClass);
+  });
+}
+
+/*Установка состояния кнопки сабмита*/
+function setButtonSubmitState(form) {
+  const buttonSubmit = form.querySelector(validationConfig.submitButtonSelector);
+
+  if ( form.checkValidity() ) {
+    buttonSubmit.classList.remove('modal__btn_inactive');
+    buttonSubmit.disabled = false;
+  } else  {
+    buttonSubmit.classList.add('modal__btn_inactive');
+    buttonSubmit.disabled = true;
+  }
+}
+
+/*Заполнение формы редактирования профиля*/
 function handleFillEditModal() {
-    userName.value = profileName.textContent;
-    userDescription.value = profileDescription.textContent;
-    // removeErrors(modalEdit, validateConfig);
-    openModal(modalEdit);
+  userName.value = profileName.textContent;
+  userDescription.value = profileDescription.textContent;
 }
 
+/*Сохранение новых данных профиля*/
 function handleEditProfileSubmit(evt) {
-    evt.preventDefault();
-    
-    profileName.textContent = userName.value;
-    profileDescription.textContent = userDescription.value;
+  evt.preventDefault();
 
-    closeModal(modalEdit);
+  profileName.textContent = userName.value;
+  profileDescription.textContent = userDescription.value;
+
+  closeModal(modalEdit);
 }
 
+/*Создание экземпляра Card*/
+function createNewCard(cardData) {
+  const card = new Card(cardData, '.card-template', handleOpenViewModal);
+  const newCard = card.generateCard();
 
+  return newCard;
+}
+
+/*Рендер полученного экземпляра Card*/
 function renderCard(cardItem, parent) {
-    parent.prepend(cardItem);
+  parent.prepend(cardItem);
 }
 
-function disableButton(button) {
-    button.classList.add('modal__btn_inactive'); 
-    button.disabled = true;
-}
+/*Открытие полноразмерного просмотра*/
+function handleOpenViewModal( {name, link} ) {
+  fullScreenImg.src = link;
+  fullScreenImg.alt = `Пользовательское фото места ${name}`;
+  fullScreenCaption.textContent = name;
 
-function handleOpenViewModal({name, link}) {
-    fullScreenImg.src = link;
-    fullScreenImg.alt = `Пользовательское фото места ${name}`;
-    fullScreenCaption.textContent = name;
-
-    openModal(modalFullScreen);
+  openModal(modalFullScreen);
 }
 
 /*Создание карточки с данными от пользователя*/
 function handleCreateUserCardSubmit(evt) {
-    evt.preventDefault();
+  evt.preventDefault();
 
-    const newCardData = {};
-    newCardData.name = inputPlaceName.value;
-    newCardData.link = inputPlaceLink.value;
+  const newCardData = {};
+  newCardData.name = inputPlaceName.value;
+  newCardData.link = inputPlaceLink.value;
 
-    /*Этот код 3 строки !!!повторяется!!! в обходе массива данных исходный карточек*/
-    const card = new Card(newCardData, '.card-template', handleOpenViewModal);
-    const newCard = card.generateCard();
+  const Card = createNewCard(newCardData);
+  renderCard(Card, cardsList);
 
-    renderCard(newCard, cardsList);
-
-    const buttonSubmit = modalAddCard.querySelector('.modal__btn');
-    disableButton(buttonSubmit);
-
-    addCardForm.reset();
-
-    closeModal(modalAddCard);
+  closeModal(modalAddCard);
 }
- 
-/*Обработка событий для открытия модальных окон*/ 
-editBtn.addEventListener('click', handleFillEditModal);
 
-addCardBtn.addEventListener('click', () => {
-    const buttonSubmit = modalAddCard.querySelector('.modal__btn');
-    disableButton(buttonSubmit);
-    
-    openModal(modalAddCard);
+/*Обработчики событий*/
+/*Открытие модальных окон*/
+editBtn.addEventListener('click', () => {
+  handleFillEditModal();
+  cleanForm(modalEdit);
+  openModal(modalEdit);
 });
 
+addCardBtn.addEventListener('click', () => {
+  cleanForm(modalAddCard);
+  addCardForm.reset();
+  openModal(modalAddCard);
+});
 
 /*Закрытие модальных окон*/
 closeBtnEditModal.addEventListener('click', () => {
-    closeModal(modalEdit);
+  closeModal(modalEdit);
 });
 
 closeBtnAddCardModal.addEventListener('click', () => {
-    addCardForm.reset();
-    // removeErrors(modalAddCard, validateConfig);
-    closeModal(modalAddCard);
+  closeModal(modalAddCard);
 });
 
 closeBtnFullScreenModal.addEventListener('click', () => {
-    closeModal(modalFullScreen);
+  closeModal(modalFullScreen);
 });
 
 /*Редактирование профиля*/
-editForm.addEventListener('submit',  handleEditProfileSubmit);
+editForm.addEventListener('submit', handleEditProfileSubmit);
 
-/*Создание экзмепляров класса Card*/
+/*Создание экзмепляров класса Card для исходных карточек*/
 initialCards.forEach(item => {
-    const card = new Card(item, '.card-template', handleOpenViewModal);
-    const newCard = card.generateCard();
-
-    renderCard(newCard, cardsList);
+  const card = createNewCard(item);
+  renderCard(card, cardsList);
 });
 
-/*Создание новой карточки*/
+/*Создание новой карточки с данными от пользователя*/
 addCardForm.addEventListener('submit', handleCreateUserCardSubmit);
 
-/*Валидация форм*/
+/*Запуск валидации форм*/
 formsNeedValidation.forEach(form => {
-    const formValidation = new FormValidator(validationConfig, form);
-    formValidation.enableValidation();
+  const formValidation = new FormValidator(validationConfig, form);
+  formValidation.enableValidation();
 });
