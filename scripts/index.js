@@ -1,9 +1,9 @@
 import initialCards from './initialCards.js';
-import Card from './card.js';
+import Card from './Card.js';
 import {
   FormValidator,
   validationConfig
-} from './formValidator.js';
+} from './FormValidator.js';
 
 const ESC_CODE = 'Escape';
 const cardsList = document.querySelector('.gallery__list');
@@ -43,7 +43,7 @@ function closeModal(modal) {
   modal.classList.remove('modal_opened');
 
   document.removeEventListener('keydown', closeModalByEsc);
-  document.removeEventListener('click', closeModalByOverlayClick);
+  document.removeEventListener('mousedown', closeModalByOverlayClick);
 }
 
 function closeModalByEsc(evt) {
@@ -57,37 +57,6 @@ function closeModalByOverlayClick(evt) {
   const openedModal = evt.target;
   if (openedModal.classList.contains('modal_opened')) {
     closeModal(openedModal);
-  }
-}
-
-/*Очистка формы от ошибок*/
-function cleanForm(modal) {
-  const form = modal.querySelector(validationConfig.formSelector);
-
-  removeErrors(form);
-  setButtonSubmitState(form);
-}
-
-/*Удаление элементов ошибки*/
-function removeErrors(form) {
-  const errors = Array.from(form.querySelectorAll(`.${validationConfig.inputErrorClass}`));
-
-  errors.forEach(item => {
-    item.classList.remove(validationConfig.inputErrorClass);
-    item.nextElementSibling.classList.remove(validationConfig.errorClass);
-  });
-}
-
-/*Установка состояния кнопки сабмита*/
-function setButtonSubmitState(form) {
-  const buttonSubmit = form.querySelector(validationConfig.submitButtonSelector);
-
-  if (form.checkValidity()) {
-    buttonSubmit.classList.remove('modal__btn_inactive');
-    buttonSubmit.disabled = false;
-  } else {
-    buttonSubmit.classList.add('modal__btn_inactive');
-    buttonSubmit.disabled = true;
   }
 }
 
@@ -140,22 +109,29 @@ function handleCreateUserCardSubmit(evt) {
   newCardData.name = inputPlaceName.value;
   newCardData.link = inputPlaceLink.value;
 
-  const Card = createNewCard(newCardData);
-  renderCard(Card, cardsList);
+  const card = createNewCard(newCardData);
+
+  const buttonSubmit = modalAddCard.querySelector('.modal__btn');
+  disableButton(buttonSubmit);
+
+  renderCard(card, cardsList);
 
   closeModal(modalAddCard);
+}
+
+function disableButton(button) {
+  button.classList.add('modal__btn_inactive'); 
+  button.disabled = true;
 }
 
 /*Обработчики событий*/
 /*Открытие модальных окон*/
 editBtn.addEventListener('click', () => {
   handleFillEditModal();
-  cleanForm(modalEdit);
   openModal(modalEdit);
 });
 
 addCardBtn.addEventListener('click', () => {
-  cleanForm(modalAddCard);
   addCardForm.reset();
   openModal(modalAddCard);
 });
