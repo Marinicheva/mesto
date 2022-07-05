@@ -16,8 +16,8 @@ import {
   modalAddCard,
   ESC_CODE
 } from '../utils/constants.js';
-import Card from '../scripts/Card.js';
-import FormValidator from '../scripts/FormValidator.js';
+import Card from '../components/Card.js';
+import FormValidator from '../components/FormValidator.js';
 
 //Открытие и закрытие модальных окон
 function openModal(modal) {
