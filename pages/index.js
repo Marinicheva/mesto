@@ -6,10 +6,12 @@ import {
   addCardBtn,
   closeButtons,
   editForm,
-  cardsList,
+  cardsContainer,
   addCardForm,
   userName,
   userDescription,
+  inputPlaceName,
+  inputPlaceLink,
   profileName,
   profileDescription,
   modalEdit,
@@ -17,6 +19,7 @@ import {
   ESC_CODE
 } from '../utils/constants.js';
 import Card from '../components/Card.js';
+import Section from '../components/Section.js';
 import FormValidator from '../components/FormValidator.js';
 
 //Открытие и закрытие модальных окон
@@ -72,6 +75,7 @@ function createNewCard(cardData) {
   return newCard;
 }
 
+//Если я правильно понимаю этой функции быть недолжно за рендер отвечает класс???
 //Рендер полученного экземпляра Card
 function renderCard(cardItem, parent) {
   parent.prepend(cardItem);
@@ -99,7 +103,7 @@ function handleCreateUserCardSubmit(evt) {
 
   const card = createNewCard(newCardData);
 
-  renderCard(card, cardsList);
+  renderCard(card, cardsContainer);
 
   closeModal(modalAddCard);
 }
@@ -145,10 +149,17 @@ closeButtons.forEach((button) => {
 editForm.addEventListener('submit', handleEditProfileSubmit);
 
 //Создание экзмепляров класса Card для исходных карточек
-initialCards.forEach(item => {
-  const card = createNewCard(item);
-  renderCard(card, cardsList);
-});
+const cardList = new Section({
+  items: initialCards,
+  renderer: (cardData) => {
+    const card = new Card(cardData, '.card-template', handleOpenViewModal);
+    const newCard = card.generateCard();
+
+    cardList.addItem(newCard);
+  },
+}, cardsContainer);
+
+cardList.renderItems();
 
 //Создание новой карточки с данными от пользователя
 addCardForm.addEventListener('submit', handleCreateUserCardSubmit);

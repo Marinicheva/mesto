@@ -1,7 +1,7 @@
 export default class Card {
-  constructor(data, templateSelector, handleOpenViewModal) {
-    this._title = data.name;
-    this._url = data.link;
+  constructor({name, link}, templateSelector, handleOpenViewModal) {
+    this._title = name;
+    this._url = link;
     this._templateSelector = templateSelector;
     this._handleOpenViewModal = handleOpenViewModal;
   }

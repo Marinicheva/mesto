@@ -34,7 +34,7 @@ export const validationConfig = {
 };
 
 export const ESC_CODE = 'Escape';
-export const cardsList = document.querySelector('.gallery__list');
+export const cardsContainer = document.querySelector('.gallery__list');
 
 export const closeButtons = document.querySelectorAll('.modal__close');
 
