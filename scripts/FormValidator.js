@@ -1,13 +1,4 @@
-const validationConfig = {
-  formSelector: '.modal__form',
-  inputSelector: '.modal__input',
-  submitButtonSelector: '.modal__btn',
-  inactiveButtonClass: 'modal__btn_inactive',
-  inputErrorClass: 'form__input_type_error',
-  errorClass: 'modal__input-error_visible'
-};
-
-class FormValidator {
+export default class FormValidator {
   constructor(dataConfig, formElement) {
     this._form = formElement;
     this._inputSelector = dataConfig.inputSelector;
@@ -90,7 +81,7 @@ class FormValidator {
   }
 }
 
-export {
-  FormValidator,
-  validationConfig
-};
+// export {
+//   FormValidator,
+//   validationConfig
+// };

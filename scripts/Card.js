@@ -1,4 +1,4 @@
-class Card {
+export default class Card {
   constructor(data, templateSelector, handleOpenViewModal) {
     this._title = data.name;
     this._url = data.link;
@@ -60,5 +60,3 @@ class Card {
     return this._cardItem;
   }
 }
-
-export default Card;

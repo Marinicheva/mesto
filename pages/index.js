@@ -1,35 +1,24 @@
-import initialCards from './initialCards.js';
-import Card from './Card.js';
+// import initialCards from '../scripts/initialCards.js';
 import {
-  FormValidator,
-  validationConfig
-} from './FormValidator.js';
-
-const ESC_CODE = 'Escape';
-const cardsList = document.querySelector('.gallery__list');
-
-const closeButtons = document.querySelectorAll('.modal__close');
-
-const addCardBtn = document.querySelector('.profile__add-btn');
-const modalAddCard = document.querySelector('.modal_type_add-new-card');
-const addCardForm = modalAddCard.querySelector('.modal__form_type_add-card');
-const inputPlaceName = addCardForm.querySelector('.modal__input-place-name');
-const inputPlaceLink = addCardForm.querySelector('.modal__input-place-link');
-
-const editBtn = document.querySelector('.profile__edit-btn');
-const modalEdit = document.querySelector('.modal_type_edit-form');
-const editForm = modalEdit.querySelector('.modal__form_type_edit');
-const userName = modalEdit.querySelector('.modal__input-name');
-const userDescription = modalEdit.querySelector('.modal__input-description');
-const profileName = document.querySelector('.profile__name');
-const profileDescription = document.querySelector('.profile__description');
-
-const modalFullScreen = document.querySelector('.modal_type_fullscreen-img');
-const fullScreenImg = modalFullScreen.querySelector('.modal__img-fullscreen');
-const fullScreenCaption = modalFullScreen.querySelector('.modal__fullscreen-caption');
-
-const formValidation = {};
-
+  validationConfig,
+  formValidation,
+  initialCards,
+  editBtn,
+  addCardBtn,
+  closeButtons,
+  editForm,
+  cardsList,
+  addCardForm,
+  userName,
+  userDescription,
+  profileName,
+  profileDescription,
+  modalEdit,
+  modalAddCard,
+  ESC_CODE
+} from '../utils/constants.js';
+import Card from '../scripts/Card.js';
+import FormValidator from '../scripts/FormValidator.js';
 
 //Открытие и закрытие модальных окон
 function openModal(modal) {
@@ -118,16 +107,16 @@ function handleCreateUserCardSubmit(evt) {
 
 
 // Включение валидации
-function enableValidation (config) {
+function enableValidation(config) {
   const formList = Array.from(document.querySelectorAll(config.formSelector));
   formList.forEach((form) => {
 
     const validatorItem = new FormValidator(config, form);
 
     const formName = form.getAttribute('name');
-   formValidation[formName] = validatorItem;
+    formValidation[formName] = validatorItem;
 
-   validatorItem.enableValidation();
+    validatorItem.enableValidation();
   });
 }
 
@@ -137,7 +126,7 @@ enableValidation(validationConfig);
 //Открытие модальных окон
 editBtn.addEventListener('click', () => {
   handleFillEditModal();
-    formValidation[editForm.name].resetValidation();
+  formValidation[editForm.name].resetValidation();
   openModal(modalEdit);
 });
 
