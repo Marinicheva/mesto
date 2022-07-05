@@ -1,0 +1,11 @@
+.popup__btn_inactive {
+    background-color: transparent;
+    color: var( --basic-black);
+    border: 1px solid var( --basic-black);
+    opacity: .2;
+}
+
+.popup__btn_inactive:hover {
+    background-color: transparent;
+    cursor: default;
+}

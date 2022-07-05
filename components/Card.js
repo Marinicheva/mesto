@@ -1,9 +1,9 @@
 export default class Card {
-  constructor({name, link}, templateSelector, handleOpenViewModal) {
+  constructor({name, link}, templateSelector, handleOpenViewPopup) {
     this._title = name;
     this._url = link;
     this._templateSelector = templateSelector;
-    this._handleOpenViewModal = handleOpenViewModal;
+    this._handleOpenViewPopup = handleOpenViewPopup;
   }
 
   _getTemplate() {
@@ -23,7 +23,7 @@ export default class Card {
   }
 
   _handleclickImage() {
-    this._handleOpenViewModal({
+    this._handleOpenViewPopup({
       link: this._url,
       name: this._title
     });

@@ -25,35 +25,35 @@ export const initialCards = [{
 ];
 
 export const validationConfig = {
-  formSelector: '.modal__form',
-  inputSelector: '.modal__input',
-  submitButtonSelector: '.modal__btn',
-  inactiveButtonClass: 'modal__btn_inactive',
-  inputErrorClass: 'form__input_type_error',
-  errorClass: 'modal__input-error_visible'
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__btn',
+  inactiveButtonClass: 'popup__btn_inactive',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__input-error_visible'
 };
 
 export const ESC_CODE = 'Escape';
 export const cardsContainer = document.querySelector('.gallery__list');
 
-export const closeButtons = document.querySelectorAll('.modal__close');
+export const closeButtons = document.querySelectorAll('.popup__close');
 
 export const addCardBtn = document.querySelector('.profile__add-btn');
-export const modalAddCard = document.querySelector('.modal_type_add-new-card');
-export const addCardForm = modalAddCard.querySelector('.modal__form_type_add-card');
-export const inputPlaceName = addCardForm.querySelector('.modal__input-place-name');
-export const inputPlaceLink = addCardForm.querySelector('.modal__input-place-link');
+export const popupAddCard = document.querySelector('.popup_type_add-new-card');
+export const addCardForm = popupAddCard.querySelector('.popup__form_type_add-card');
+export const inputPlaceName = addCardForm.querySelector('.popup__input-place-name');
+export const inputPlaceLink = addCardForm.querySelector('.popup__input-place-link');
 
 export const editBtn = document.querySelector('.profile__edit-btn');
-export const modalEdit = document.querySelector('.modal_type_edit-form');
-export const editForm = modalEdit.querySelector('.modal__form_type_edit');
-export const userName = modalEdit.querySelector('.modal__input-name');
-export const userDescription = modalEdit.querySelector('.modal__input-description');
+export const popupEdit = document.querySelector('.popup_type_edit-form');
+export const editForm = popupEdit.querySelector('.popup__form_type_edit');
+export const userName = popupEdit.querySelector('.popup__input-name');
+export const userDescription = popupEdit.querySelector('.popup__input-description');
 export const profileName = document.querySelector('.profile__name');
 export const profileDescription = document.querySelector('.profile__description');
 
-export const modalFullScreen = document.querySelector('.modal_type_fullscreen-img');
-export const fullScreenImg = modalFullScreen.querySelector('.modal__img-fullscreen');
-export const fullScreenCaption = modalFullScreen.querySelector('.modal__fullscreen-caption');
+export const popupFullScreen = document.querySelector('.popup_type_fullscreen-img');
+export const fullScreenImg = popupFullScreen.querySelector('.popup__img-fullscreen');
+export const fullScreenCaption = popupFullScreen.querySelector('.popup__fullscreen-caption');
 
 export const formValidation = {};

@@ -1,0 +1,10 @@
+.popup__fullscreen-container {
+    position: relative;
+    max-width: 90%;
+}
+
+@media screen and (max-width: 768px) {
+    .popup__fullscreen-container {
+        max-width: 80%;
+    }
+}

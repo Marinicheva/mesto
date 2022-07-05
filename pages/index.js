@@ -14,8 +14,11 @@ import {
   inputPlaceLink,
   profileName,
   profileDescription,
-  modalEdit,
-  modalAddCard,
+  popupEdit,
+  popupAddCard,
+  fullScreenImg,
+  fullScreenCaption,
+  popupFullScreen,
   ESC_CODE
 } from '../utils/constants.js';
 import Card from '../components/Card.js';
@@ -23,36 +26,36 @@ import Section from '../components/Section.js';
 import FormValidator from '../components/FormValidator.js';
 
 //Открытие и закрытие модальных окон
-function openModal(modal) {
-  modal.classList.add('modal_opened');
+function openPopup(popup) {
+  popup.classList.add('popup_opened');
 
-  document.addEventListener('keydown', closeModalByEsc);
-  document.addEventListener('mousedown', closeModalByOverlayClick);
+  document.addEventListener('keydown', closePopupByEsc);
+  document.addEventListener('mousedown', closePopupByOverlayClick);
 }
 
-function closeModal(modal) {
-  modal.classList.remove('modal_opened');
+function closePopup(popup) {
+  popup.classList.remove('popup_opened');
 
-  document.removeEventListener('keydown', closeModalByEsc);
-  document.removeEventListener('mousedown', closeModalByOverlayClick);
+  document.removeEventListener('keydown', closePopupByEsc);
+  document.removeEventListener('mousedown', closePopupByOverlayClick);
 }
 
-function closeModalByEsc(evt) {
+function closePopupByEsc(evt) {
   if (evt.key === ESC_CODE) {
-    const openedModal = document.querySelector('.modal_opened');
-    closeModal(openedModal);
+    const openedPopup = document.querySelector('.popup_opened');
+    closePopup(openedPopup);
   }
 }
 
-function closeModalByOverlayClick(evt) {
-  const openedModal = evt.target;
-  if (openedModal.classList.contains('modal_opened')) {
-    closeModal(openedModal);
+function closePopupByOverlayClick(evt) {
+  const openedPopup = evt.target;
+  if (openedPopup.classList.contains('modal_opened')) {
+    closePopup(openedPopup);
   }
 }
 
 //Заполнение формы редактирования профиля
-function handleFillEditModal() {
+function handleFillEditPopup() {
   userName.value = profileName.textContent;
   userDescription.value = profileDescription.textContent;
 }
@@ -64,7 +67,7 @@ function handleEditProfileSubmit(evt) {
   profileName.textContent = userName.value;
   profileDescription.textContent = userDescription.value;
 
-  closeModal(modalEdit);
+  closePopup(popupEdit);
 }
 
 //Создание экземпляра Card
@@ -75,14 +78,14 @@ function createNewCard(cardData) {
   return newCard;
 }
 
-//Если я правильно понимаю этой функции быть недолжно за рендер отвечает класс???
+//Если я правильно понимаю этой функции быть не должно за рендер отвечает класс???
 //Рендер полученного экземпляра Card
 function renderCard(cardItem, parent) {
   parent.prepend(cardItem);
 }
 
 //Открытие полноразмерного просмотра
-function handleOpenViewModal({
+function handleOpenViewPopup({
   name,
   link
 }) {
@@ -90,7 +93,7 @@ function handleOpenViewModal({
   fullScreenImg.alt = `Пользовательское фото места ${name}`;
   fullScreenCaption.textContent = name;
 
-  openModal(modalFullScreen);
+  openPopup(popupFullScreen);
 }
 
 //Создание карточки с данными от пользователя
@@ -105,7 +108,7 @@ function handleCreateUserCardSubmit(evt) {
 
   renderCard(card, cardsContainer);
 
-  closeModal(modalAddCard);
+  closePopup(popupAddCard);
 }
 
 
@@ -128,21 +131,21 @@ enableValidation(validationConfig);
 //Обработчики событий
 //Открытие модальных окон
 editBtn.addEventListener('click', () => {
-  handleFillEditModal();
+  handleFillEditPopup();
   formValidation[editForm.name].resetValidation();
-  openModal(modalEdit);
+  openPopup(popupEdit);
 });
 
 addCardBtn.addEventListener('click', () => {
   addCardForm.reset();
   formValidation[addCardForm.name].resetValidation();
-  openModal(modalAddCard);
+  openPopup(popupAddCard);
 });
 
 //Закрытие модальных окон
 closeButtons.forEach((button) => {
-  const modal = button.closest('.modal');
-  button.addEventListener('click', () => closeModal(modal));
+  const popup = button.closest('.popup');
+  button.addEventListener('click', () => closePopup(popup));
 });
 
 //Редактирование профиля
@@ -152,7 +155,7 @@ editForm.addEventListener('submit', handleEditProfileSubmit);
 const cardList = new Section({
   items: initialCards,
   renderer: (cardData) => {
-    const card = new Card(cardData, '.card-template', handleOpenViewModal);
+    const card = new Card(cardData, '.card-template', handleOpenViewPopup);
     const newCard = card.generateCard();
 
     cardList.addItem(newCard);
