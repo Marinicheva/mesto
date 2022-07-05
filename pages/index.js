@@ -1,4 +1,3 @@
-// import initialCards from '../scripts/initialCards.js';
 import {
   validationConfig,
   formValidation,
