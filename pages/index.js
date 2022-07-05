@@ -49,7 +49,7 @@ function closePopupByEsc(evt) {
 
 function closePopupByOverlayClick(evt) {
   const openedPopup = evt.target;
-  if (openedPopup.classList.contains('modal_opened')) {
+  if (openedPopup.classList.contains('popup_opened')) {
     closePopup(openedPopup);
   }
 }
