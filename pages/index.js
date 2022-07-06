@@ -4,7 +4,7 @@ import {
   initialCards,
   editBtn,
   addCardBtn,
-  closeButtons,
+  closeButtons, //Возможно переменная больше не потребуется
   editForm,
   cardsContainer,
   addCardForm,
@@ -18,11 +18,11 @@ import {
   popupAddCard,
   fullScreenImg,
   fullScreenCaption,
-  popupFullScreen,
-  ESC_CODE
+  popupFullScreen
 } from '../utils/constants.js';
 import Card from '../components/Card.js';
 import Section from '../components/Section.js';
+import Popup from '../components/Popup.js';
 import FormValidator from '../components/FormValidator.js';
 
 //Открытие и закрытие модальных окон
@@ -40,13 +40,14 @@ function closePopup(popup) {
   document.removeEventListener('mousedown', closePopupByOverlayClick);
 }
 
-function closePopupByEsc(evt) {
-  if (evt.key === ESC_CODE) {
-    const openedPopup = document.querySelector('.popup_opened');
-    closePopup(openedPopup);
-  }
-}
+// function closePopupByEsc(evt) {
+//   if (evt.key === ESC_CODE) {
+//     const openedPopup = document.querySelector('.popup_opened');
+//     closePopup(openedPopup);
+//   }
+// }
 
+//После добавления класса будет не нужна
 function closePopupByOverlayClick(evt) {
   const openedPopup = evt.target;
   if (openedPopup.classList.contains('popup_opened')) {
@@ -133,25 +134,26 @@ enableValidation(validationConfig);
 editBtn.addEventListener('click', () => {
   handleFillEditPopup();
   formValidation[editForm.name].resetValidation();
-  openPopup(popupEdit);
+
+  const popupEdit = new Popup('.popup_type_edit-form');
+  popupEdit.setEventListeners();
+  popupEdit.openPopup();
 });
 
 addCardBtn.addEventListener('click', () => {
   addCardForm.reset();
   formValidation[addCardForm.name].resetValidation();
-  openPopup(popupAddCard);
-});
-
-//Закрытие модальных окон
-closeButtons.forEach((button) => {
-  const popup = button.closest('.popup');
-  button.addEventListener('click', () => closePopup(popup));
+  
+  const addFormPopup = new Popup('.popup_type_add-new-card');
+  addFormPopup.setEventListeners();
+  addFormPopup.openPopup();
 });
 
 //Редактирование профиля
 editForm.addEventListener('submit', handleEditProfileSubmit);
 
-//Создание экзмепляров класса Card для исходных карточек
+//Создание экзмепляров класса Card для исходных карточек 
+//ГОТОВОЕ!!!!
 const cardList = new Section({
   items: initialCards,
   renderer: (cardData) => {
