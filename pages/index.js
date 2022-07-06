@@ -4,7 +4,6 @@ import {
   initialCards,
   editBtn,
   addCardBtn,
-  closeButtons, //Возможно переменная больше не потребуется
   editForm,
   cardsContainer,
   addCardForm,
@@ -15,45 +14,14 @@ import {
   profileName,
   profileDescription,
   popupEdit,
-  popupAddCard,
-  fullScreenImg,
-  fullScreenCaption,
-  popupFullScreen
+  popupAddCard
 } from '../utils/constants.js';
+
 import Card from '../components/Card.js';
 import Section from '../components/Section.js';
 import Popup from '../components/Popup.js';
+import PopupWithImage from '../components/PopupWithImage.js';
 import FormValidator from '../components/FormValidator.js';
-
-//Открытие и закрытие модальных окон
-function openPopup(popup) {
-  popup.classList.add('popup_opened');
-
-  document.addEventListener('keydown', closePopupByEsc);
-  document.addEventListener('mousedown', closePopupByOverlayClick);
-}
-
-function closePopup(popup) {
-  popup.classList.remove('popup_opened');
-
-  document.removeEventListener('keydown', closePopupByEsc);
-  document.removeEventListener('mousedown', closePopupByOverlayClick);
-}
-
-// function closePopupByEsc(evt) {
-//   if (evt.key === ESC_CODE) {
-//     const openedPopup = document.querySelector('.popup_opened');
-//     closePopup(openedPopup);
-//   }
-// }
-
-//После добавления класса будет не нужна
-function closePopupByOverlayClick(evt) {
-  const openedPopup = evt.target;
-  if (openedPopup.classList.contains('popup_opened')) {
-    closePopup(openedPopup);
-  }
-}
 
 //Заполнение формы редактирования профиля
 function handleFillEditPopup() {
@@ -85,16 +53,12 @@ function renderCard(cardItem, parent) {
   parent.prepend(cardItem);
 }
 
-//Открытие полноразмерного просмотра
-function handleOpenViewPopup({
-  name,
-  link
-}) {
-  fullScreenImg.src = link;
-  fullScreenImg.alt = `Пользовательское фото места ${name}`;
-  fullScreenCaption.textContent = name;
+//Открытие полноразмерного просмотра фото
+function handleCardClick({name, link}) {
+  const popupFullSizeImg = new PopupWithImage('.popup_type_fullscreen-img');
+  popupFullSizeImg.setEventListeners();
 
-  openPopup(popupFullScreen);
+  popupFullSizeImg.openPopup({name, link});
 }
 
 //Создание карточки с данными от пользователя
@@ -131,6 +95,7 @@ enableValidation(validationConfig);
 
 //Обработчики событий
 //Открытие модальных окон
+//ГОТОВОЕ!!!!
 editBtn.addEventListener('click', () => {
   handleFillEditPopup();
   formValidation[editForm.name].resetValidation();
@@ -157,7 +122,7 @@ editForm.addEventListener('submit', handleEditProfileSubmit);
 const cardList = new Section({
   items: initialCards,
   renderer: (cardData) => {
-    const card = new Card(cardData, '.card-template', handleOpenViewPopup);
+    const card = new Card(cardData, '.card-template', handleCardClick);
     const newCard = card.generateCard();
 
     cardList.addItem(newCard);

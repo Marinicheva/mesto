@@ -36,8 +36,6 @@ export const validationConfig = {
 export const ESC_CODE = 'Escape';
 export const cardsContainer = document.querySelector('.gallery__list');
 
-export const closeButtons = document.querySelectorAll('.popup__close');
-
 export const addCardBtn = document.querySelector('.profile__add-btn');
 export const popupAddCard = document.querySelector('.popup_type_add-new-card');
 export const addCardForm = popupAddCard.querySelector('.popup__form_type_add-card');
@@ -51,9 +49,5 @@ export const userName = popupEdit.querySelector('.popup__input-name');
 export const userDescription = popupEdit.querySelector('.popup__input-description');
 export const profileName = document.querySelector('.profile__name');
 export const profileDescription = document.querySelector('.profile__description');
-
-export const popupFullScreen = document.querySelector('.popup_type_fullscreen-img');
-export const fullScreenImg = popupFullScreen.querySelector('.popup__img-fullscreen');
-export const fullScreenCaption = popupFullScreen.querySelector('.popup__fullscreen-caption');
 
 export const formValidation = {};
