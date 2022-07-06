@@ -17,11 +17,10 @@ export default class Popup {
     if (evt.key === ESC_CODE) {
       this.closePopup();
     }
-    
   }
 
-  _handleOverlayClose() {
-    if (this._popup.classList.contains('popup_opened')) {
+  _handleOverlayClose(evt) {
+    if (evt.target.classList.contains('popup_opened')) {
       this.closePopup();
     }
   }
@@ -30,7 +29,7 @@ export default class Popup {
     const btnClose = this._popup.querySelector('.popup__close');
     btnClose.addEventListener('click', () => this.closePopup());
 
-    this._popup.addEventListener('mousedown', () => this._handleOverlayClose());
+    this._popup.addEventListener('mousedown', (evt) => this._handleOverlayClose(evt));
 
     document.addEventListener('keydown', (evt) => this._handleEscClose(evt)); //Как удалить слушатель здесь????
   }

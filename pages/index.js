@@ -9,18 +9,16 @@ import {
   addCardForm,
   userName,
   userDescription,
-  inputPlaceName,
-  inputPlaceLink,
   profileName,
   profileDescription,
-  popupEdit,
-  popupAddCard
+  popupEdit
 } from '../utils/constants.js';
 
 import Card from '../components/Card.js';
 import Section from '../components/Section.js';
 import Popup from '../components/Popup.js';
 import PopupWithImage from '../components/PopupWithImage.js';
+import PopupWithForm from '../components/PopupWithForm.js';
 import FormValidator from '../components/FormValidator.js';
 
 //Заполнение формы редактирования профиля
@@ -30,6 +28,7 @@ function handleFillEditPopup() {
 }
 
 //Сохранение новых данных профиля
+//i!!!!!!!!!!!!!!!!!!!!!!!!!!
 function handleEditProfileSubmit(evt) {
   evt.preventDefault();
 
@@ -47,12 +46,6 @@ function createNewCard(cardData) {
   return newCard;
 }
 
-//Если я правильно понимаю этой функции быть не должно за рендер отвечает класс???
-//Рендер полученного экземпляра Card
-function renderCard(cardItem, parent) {
-  parent.prepend(cardItem);
-}
-
 //Открытие полноразмерного просмотра фото
 function handleCardClick({name, link}) {
   const popupFullSizeImg = new PopupWithImage('.popup_type_fullscreen-img');
@@ -60,22 +53,6 @@ function handleCardClick({name, link}) {
 
   popupFullSizeImg.openPopup({name, link});
 }
-
-//Создание карточки с данными от пользователя
-function handleCreateUserCardSubmit(evt) {
-  evt.preventDefault();
-
-  const newCardData = {};
-  newCardData.name = inputPlaceName.value;
-  newCardData.link = inputPlaceLink.value;
-
-  const card = createNewCard(newCardData);
-
-  renderCard(card, cardsContainer);
-
-  closePopup(popupAddCard);
-}
-
 
 // Включение валидации
 function enableValidation(config) {
@@ -93,23 +70,40 @@ function enableValidation(config) {
 
 enableValidation(validationConfig);
 
-//Обработчики событий
-//Открытие модальных окон
-//ГОТОВОЕ!!!!
+//Попап редактирования данных пользователя
+//Дополнить Сабмит
 editBtn.addEventListener('click', () => {
-  handleFillEditPopup();
   formValidation[editForm.name].resetValidation();
 
   const popupEdit = new Popup('.popup_type_edit-form');
+
   popupEdit.setEventListeners();
   popupEdit.openPopup();
 });
 
+
+//Попап добавления карточки пользователем (НАЧАЛО)
+//ГОТОВОЕ!!!!
 addCardBtn.addEventListener('click', () => {
-  addCardForm.reset();
   formValidation[addCardForm.name].resetValidation();
   
-  const addFormPopup = new Popup('.popup_type_add-new-card');
+  //Экз класса popupWithForm
+  const addFormPopup = new PopupWithForm('.popup_type_add-new-card', (data) => {
+    //при сабмите создаем экз класса Section для рендера новой карточки
+    const userNewCard = new Section({
+      items: [data],
+      renderer: (cardData) => {
+        //Экземпляр новой карточки
+        const card = new Card(cardData, '.card-template', handleCardClick);
+        const newCard = card.generateCard();
+    
+        cardList.addItem(newCard);
+      },
+    }, cardsContainer);
+
+    userNewCard.renderItems();
+  });
+
   addFormPopup.setEventListeners();
   addFormPopup.openPopup();
 });
@@ -117,11 +111,13 @@ addCardBtn.addEventListener('click', () => {
 //Редактирование профиля
 editForm.addEventListener('submit', handleEditProfileSubmit);
 
-//Создание экзмепляров класса Card для исходных карточек 
+//Создание исходных карточек (НАЧАЛО)
 //ГОТОВОЕ!!!!
+//Рендер картинок в DOM - класс Section
 const cardList = new Section({
   items: initialCards,
   renderer: (cardData) => {
+    //Создание экземпляров карточек из данных массива
     const card = new Card(cardData, '.card-template', handleCardClick);
     const newCard = card.generateCard();
 
@@ -130,6 +126,3 @@ const cardList = new Section({
 }, cardsContainer);
 
 cardList.renderItems();
-
-//Создание новой карточки с данными от пользователя
-addCardForm.addEventListener('submit', handleCreateUserCardSubmit);

@@ -1,4 +1,4 @@
-export const initialCards = [{
+/*export const initialCards = [{
     name: 'Карачаевск',
     link: './images/photo-1.jpg',
   },
@@ -22,6 +22,32 @@ export const initialCards = [{
     name: 'Калининград',
     link: './images/photo-6.jpg',
   },
+];*/
+
+export const initialCards = [{
+  'place-name': 'Карачаевск',
+  'place-link': './images/photo-1.jpg',
+},
+{
+  'place-name': 'Гора Эльбрус',
+  'place-link': './images/photo-2.jpg',
+},
+{
+  'place-name': 'Домбай',
+  'place-link': './images/photo-3.jpg',
+},
+{
+  'place-name': 'Калуга',
+  'place-link': './images/photo-4.jpg',
+},
+{
+  'place-name': 'Санкт-Петербург',
+  'place-link': './images/photo-5.jpg',
+},
+{
+  'place-name': 'Калининград',
+  'place-link': './images/photo-6.jpg',
+},
 ];
 
 export const validationConfig = {
@@ -37,10 +63,7 @@ export const ESC_CODE = 'Escape';
 export const cardsContainer = document.querySelector('.gallery__list');
 
 export const addCardBtn = document.querySelector('.profile__add-btn');
-export const popupAddCard = document.querySelector('.popup_type_add-new-card');
-export const addCardForm = popupAddCard.querySelector('.popup__form_type_add-card');
-export const inputPlaceName = addCardForm.querySelector('.popup__input-place-name');
-export const inputPlaceLink = addCardForm.querySelector('.popup__input-place-link');
+export const addCardForm = document.querySelector('.popup__form_type_add-card');
 
 export const editBtn = document.querySelector('.profile__edit-btn');
 export const popupEdit = document.querySelector('.popup_type_edit-form');
