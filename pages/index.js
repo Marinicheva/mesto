@@ -6,42 +6,20 @@ import {
   addCardBtn,
   editForm,
   cardsContainer,
-  addCardForm,
-  userName,
-  userDescription,
-  profileName,
-  profileDescription,
-  popupEdit
+  addCardForm
 } from '../utils/constants.js';
 
 import Card from '../components/Card.js';
 import Section from '../components/Section.js';
 import FormValidator from '../components/FormValidator.js';
-import Popup from '../components/Popup.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
 
-const userData = new UserInfo({name: '.profile__name', description: '.profile__description'});
-userData.getUserInfo();
-
-//Заполнение формы редактирования профиля
-// function handleFillEditPopup() {
-//   userName.value = profileName.textContent;
-//   userDescription.value = profileDescription.textContent;
-// }
-
-//Сохранение новых данных профиля
-//i!!!!!!!!!!!!!!!!!!!!!!!!!!
-// function handleEditProfileSubmit(evt) {
-//   evt.preventDefault();
-
-//   profileName.textContent = userName.value;
-//   profileDescription.textContent = userDescription.value;
-
-//   closePopup(popupEdit);
-// }
-
+const userData = new UserInfo({
+  name: '.profile__name',
+  description: '.profile__description'
+});
 
 // Включение валидации
 function enableValidation(config) {
@@ -60,63 +38,69 @@ function enableValidation(config) {
 enableValidation(validationConfig);
 
 //Открытие полноразмерного просмотра фото
-function handleCardClick({name, link}) {
+function handleCardClick({
+  name,
+  link
+}) {
   const popupFullSizeImg = new PopupWithImage('.popup_type_fullscreen-img');
   popupFullSizeImg.setEventListeners();
 
-  popupFullSizeImg.openPopup({name, link});
+  popupFullSizeImg.openPopup({
+    name,
+    link
+  });
 }
 
+//Создание экземпляров попапов
+//Редактирование профиля
+const popupEdit = new PopupWithForm('.popup_type_edit-form', () => {
+  
+  const data = popupEdit._getInputValues();
+  userData.setUserInfo(data);
+});
 
-//Попап редактирования данных пользователя
-//Дополнить Сабмит
+popupEdit.setEventListeners();
+
+//Добавление карточки пользователем
+const addFormPopup = new PopupWithForm('.popup_type_add-new-card', () => {
+  //при сабмите создаем экз класса Section для рендера новой карточки
+  const data = addFormPopup._getInputValues();
+
+  const userNewCard = new Section({
+    items: [data],
+    renderer: (cardData) => {
+      //Экземпляр новой карточки
+      const card = new Card(cardData, '.card-template', handleCardClick);
+      const newCard = card.generateCard();
+
+      cardList.addItem(newCard);
+    },
+  }, cardsContainer);
+
+  userNewCard.renderItems();
+});
+
+addFormPopup.setEventListeners();
+
+
+//Открытие попапа редактирования данных пользователя
 editBtn.addEventListener('click', () => {
   formValidation[editForm.name].resetValidation();
 
-  const popupEdit = new PopupWithForm('.popup_type_edit-form', () => {
-    const inputUserData = popupEdit._getInputValues();
-    console.log(inputUserData);
-    userData.setUserInfo(inputUserData);
-  });
   const userCurrentData = userData.getUserInfo();
-  
-  popupEdit.setEventListeners();
+
+  popupEdit.setInputsValues(userCurrentData);
   popupEdit.openPopup();
 });
 
 
-//Попап добавления карточки пользователем (НАЧАЛО)
-//ГОТОВОЕ!!!!
+//Открытие попапа с формой добавления карточки
 addCardBtn.addEventListener('click', () => {
   formValidation[addCardForm.name].resetValidation();
-  
-  //Экз класса popupWithForm
-  const addFormPopup = new PopupWithForm('.popup_type_add-new-card', (data) => {
-    //при сабмите создаем экз класса Section для рендера новой карточки
-    const userNewCard = new Section({
-      items: [data],
-      renderer: (cardData) => {
-        //Экземпляр новой карточки
-        const card = new Card(cardData, '.card-template', handleCardClick);
-        const newCard = card.generateCard();
-    
-        cardList.addItem(newCard);
-      },
-    }, cardsContainer);
-
-    userNewCard.renderItems();
-  });
-
-  addFormPopup.setEventListeners();
   addFormPopup.openPopup();
 });
 
-//Редактирование профиля
-// editForm.addEventListener('submit', handleEditProfileSubmit);
-
 //Создание исходных карточек (НАЧАЛО)
-//ГОТОВОЕ!!!!
-//Рендер картинок в DOM - класс Section
 const cardList = new Section({
   items: initialCards,
   renderer: (cardData) => {

@@ -80,8 +80,3 @@ export default class FormValidator {
 
   }
 }
-
-// export {
-//   FormValidator,
-//   validationConfig
-// };

@@ -2,18 +2,21 @@ export default class UserInfo {
   constructor({name, description}) {
     this._userName = document.querySelector(name);
     this._userDescription = document.querySelector(description);
-    this.userData = {};
     
   }
 
   getUserInfo() {
+    this.userData = {};
     this.userData['user-name'] = this._userName.textContent;
     this.userData['user-description'] = this._userDescription.textContent;
+
+    console.log(this.userData);
 
     return this.userData;
   }
 
   setUserInfo(data) {
+    console.log(data);
     this._userName.textContent = data['user-name'];
     this._userDescription.textContent = data['user-description'];
   }

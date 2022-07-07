@@ -42,9 +42,5 @@ export const addCardForm = document.querySelector('.popup__form_type_add-card');
 export const editBtn = document.querySelector('.profile__edit-btn');
 export const popupEdit = document.querySelector('.popup_type_edit-form');
 export const editForm = popupEdit.querySelector('.popup__form_type_edit');
-export const userName = popupEdit.querySelector('.popup__input-name');
-export const userDescription = popupEdit.querySelector('.popup__input-description');
-export const profileName = document.querySelector('.profile__name');
-export const profileDescription = document.querySelector('.profile__description');
 
 export const formValidation = {};
