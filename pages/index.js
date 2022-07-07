@@ -38,13 +38,6 @@ function handleEditProfileSubmit(evt) {
   closePopup(popupEdit);
 }
 
-//Создание экземпляра Card
-function createNewCard(cardData) {
-  const card = new Card(cardData, '.card-template', handleOpenViewModal);
-  const newCard = card.generateCard();
-
-  return newCard;
-}
 
 //Открытие полноразмерного просмотра фото
 function handleCardClick({name, link}) {
