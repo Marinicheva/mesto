@@ -16,36 +16,32 @@ import {
 
 import Card from '../components/Card.js';
 import Section from '../components/Section.js';
+import FormValidator from '../components/FormValidator.js';
 import Popup from '../components/Popup.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
-import FormValidator from '../components/FormValidator.js';
+import UserInfo from '../components/UserInfo.js';
+
+const userData = new UserInfo({name: '.profile__name', description: '.profile__description'});
+userData.getUserInfo();
 
 //Заполнение формы редактирования профиля
-function handleFillEditPopup() {
-  userName.value = profileName.textContent;
-  userDescription.value = profileDescription.textContent;
-}
+// function handleFillEditPopup() {
+//   userName.value = profileName.textContent;
+//   userDescription.value = profileDescription.textContent;
+// }
 
 //Сохранение новых данных профиля
 //i!!!!!!!!!!!!!!!!!!!!!!!!!!
-function handleEditProfileSubmit(evt) {
-  evt.preventDefault();
+// function handleEditProfileSubmit(evt) {
+//   evt.preventDefault();
 
-  profileName.textContent = userName.value;
-  profileDescription.textContent = userDescription.value;
+//   profileName.textContent = userName.value;
+//   profileDescription.textContent = userDescription.value;
 
-  closePopup(popupEdit);
-}
+//   closePopup(popupEdit);
+// }
 
-
-//Открытие полноразмерного просмотра фото
-function handleCardClick({name, link}) {
-  const popupFullSizeImg = new PopupWithImage('.popup_type_fullscreen-img');
-  popupFullSizeImg.setEventListeners();
-
-  popupFullSizeImg.openPopup({name, link});
-}
 
 // Включение валидации
 function enableValidation(config) {
@@ -63,13 +59,27 @@ function enableValidation(config) {
 
 enableValidation(validationConfig);
 
+//Открытие полноразмерного просмотра фото
+function handleCardClick({name, link}) {
+  const popupFullSizeImg = new PopupWithImage('.popup_type_fullscreen-img');
+  popupFullSizeImg.setEventListeners();
+
+  popupFullSizeImg.openPopup({name, link});
+}
+
+
 //Попап редактирования данных пользователя
 //Дополнить Сабмит
 editBtn.addEventListener('click', () => {
   formValidation[editForm.name].resetValidation();
 
-  const popupEdit = new Popup('.popup_type_edit-form');
-
+  const popupEdit = new PopupWithForm('.popup_type_edit-form', () => {
+    const inputUserData = popupEdit._getInputValues();
+    console.log(inputUserData);
+    userData.setUserInfo(inputUserData);
+  });
+  const userCurrentData = userData.getUserInfo();
+  
   popupEdit.setEventListeners();
   popupEdit.openPopup();
 });
@@ -102,7 +112,7 @@ addCardBtn.addEventListener('click', () => {
 });
 
 //Редактирование профиля
-editForm.addEventListener('submit', handleEditProfileSubmit);
+// editForm.addEventListener('submit', handleEditProfileSubmit);
 
 //Создание исходных карточек (НАЧАЛО)
 //ГОТОВОЕ!!!!
