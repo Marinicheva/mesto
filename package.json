@@ -4,7 +4,8 @@
   "description": "learning project",
   "main": "index.js",
   "scripts": {
-    "build": "rimraf dist && webpack"
+    "build": "rimraf dist && webpack --mode production",
+    "dev": "webpack serve"
   },
   "repository": {
     "type": "git",
