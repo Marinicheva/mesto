@@ -24,6 +24,8 @@ export const initialCards = [{
 },
 ];
 
+export const formValidation = {};
+
 export const validationConfig = {
   formSelector: '.popup__form',
   inputSelector: '.popup__input',
@@ -33,10 +35,9 @@ export const validationConfig = {
   errorClass: 'popup__input-error_visible'
 };
 
-export const ESC_CODE = 'Escape';
 export const cardsContainer = document.querySelector('.gallery__list');
 
 export const addCardBtn = document.querySelector('.profile__add-btn');
 export const editBtn = document.querySelector('.profile__edit-btn');
 
-export const formValidation = {};
+export const ESC_CODE = 'Escape';

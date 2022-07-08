@@ -1,25 +1,26 @@
 import {
-  validationConfig,
-  formValidation,
   initialCards,
+  cardsContainer,
+  formValidation,
+  validationConfig,
   editBtn,
   addCardBtn,
-  cardsContainer,
 } from '../utils/constants.js';
 
-import Card from '../components/Card.js';
+import UserInfo from '../components/UserInfo.js';
 import Section from '../components/Section.js';
+import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
-import UserInfo from '../components/UserInfo.js';
+
 
 const userData = new UserInfo({
   name: '.profile__name',
   description: '.profile__description'
 });
 
-//Открытие полноразмерного просмотра фото
+//Функция для открытия полноразмерного просмотра фото
 function handleCardClick({
   name,
   link
@@ -37,7 +38,6 @@ function handleCardClick({
 const cardList = new Section({
   items: initialCards,
   renderer: (cardData) => {
-    //Создание экземпляров карточек из данных массива
     const card = new Card(cardData, '.card-template', handleCardClick);
     const newCard = card.generateCard();
 
@@ -48,7 +48,7 @@ const cardList = new Section({
 cardList.renderItems();
 
 
-// Включение валидации
+//Функция включения валидации
 function enableValidation(config) {
   const formList = Array.from(document.querySelectorAll(config.formSelector));
   formList.forEach((form) => {
@@ -66,15 +66,15 @@ enableValidation(validationConfig);
 
 
 //Создание экземпляров попапов
-//Редактирование профиля
+//Попап с фформой редактирования профиля
 const popupEdit = new PopupWithForm('.popup_type_edit-form', () => {
   
   const data = popupEdit._getInputValues();
   userData.setUserInfo(data);
 });
 
+//Установка слушателей
 popupEdit.setEventListeners();
-
 
 //Открытие попапа редактирования данных пользователя
 editBtn.addEventListener('click', () => {
@@ -87,15 +87,13 @@ editBtn.addEventListener('click', () => {
 });
 
 
-//Добавление карточки пользователем
+//Попап с формой добавления карточки пользователем
 const addFormPopup = new PopupWithForm('.popup_type_add-new-card', () => {
-  //при сабмите нужен экз класса Section для рендера новой карточки
   const data = addFormPopup._getInputValues();
 
   const userNewCard = new Section({
     items: [data],
     renderer: (cardData) => {
-      //Экземпляр новой карточки
       const card = new Card(cardData, '.card-template', handleCardClick);
       const newCard = card.generateCard();
 
@@ -106,8 +104,8 @@ const addFormPopup = new PopupWithForm('.popup_type_add-new-card', () => {
   userNewCard.renderItems();
 });
 
+//Установка слушателей
 addFormPopup.setEventListeners();
-
 
 //Открытие попапа с формой добавления карточки
 addCardBtn.addEventListener('click', () => {
