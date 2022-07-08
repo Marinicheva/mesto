@@ -13,14 +13,14 @@
 <body class="page">
     <header class="header">
         <a href="#" class="header__link">
-            <img src="./images/logo.svg" alt="Логотип сервиса Mesto" class="header__logo">
+            <img src="<%=require('./images/logo.svg')%>" alt="Логотип сервиса Mesto" class="header__logo">
         </a>
     </header>
 
     <main class="content">
         <section class="profile">
             <div class="profile__data">
-                <img src="./images/avatar.jpg" alt="Фото автора страницы" class="profile__photo">
+                <img src="<%=require('./images/avatar.jpg')%>" alt="Фото автора страницы" class="profile__photo">
                 <h1 class="profile__name">Жак-Ив Кусто</h1>
                 <button class="profile__edit-btn" aria-label="Изменить данные профиля" type="button"></button>
                 <p class="profile__description">Исследователь океана</p>
