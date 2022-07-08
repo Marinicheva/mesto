@@ -37,10 +37,6 @@ export const ESC_CODE = 'Escape';
 export const cardsContainer = document.querySelector('.gallery__list');
 
 export const addCardBtn = document.querySelector('.profile__add-btn');
-export const addCardForm = document.querySelector('.popup__form_type_add-card');
-
 export const editBtn = document.querySelector('.profile__edit-btn');
-export const popupEdit = document.querySelector('.popup_type_edit-form');
-export const editForm = popupEdit.querySelector('.popup__form_type_edit');
 
 export const formValidation = {};
