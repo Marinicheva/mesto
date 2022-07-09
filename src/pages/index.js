@@ -68,9 +68,9 @@ enableValidation(validationConfig);
 
 //Создание экземпляров попапов
 //Попап с фформой редактирования профиля
-const popupEdit = new PopupWithForm('.popup_type_edit-form', () => {
+const popupEdit = new PopupWithForm('.popup_type_edit-form', (data) => {
   
-  const data = popupEdit._getInputValues();
+  // const data = popupEdit._getInputValues();
   userData.setUserInfo(data);
 });
 
@@ -89,8 +89,8 @@ editBtn.addEventListener('click', () => {
 
 
 //Попап с формой добавления карточки пользователем
-const addFormPopup = new PopupWithForm('.popup_type_add-new-card', () => {
-  const data = addFormPopup._getInputValues();
+const addFormPopup = new PopupWithForm('.popup_type_add-new-card', (data) => {
+  // const data = addFormPopup._getInputValues();
 
   const userNewCard = new Section({
     items: [data],
