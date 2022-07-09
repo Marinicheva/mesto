@@ -1,33 +1,26 @@
-import karachevskImg from '../images/photo-1.jpg';
-import elbrusImg from '../images/photo-2.jpg';
-import dombaiImg from '../images/photo-3.jpg';
-import kalugaImg from '../images/photo-4.jpg';
-import stPetersburgImg from '../images/photo-5.jpg';
-import kaliningradImg from '../images/photo-6.jpg';
-
 export const initialCards = [{
   'place-name': 'Карачаевск',
-  'place-link': karachevskImg,
+  'place-link': './images/photo-1.jpg',
 },
 {
   'place-name': 'Гора Эльбрус',
-  'place-link': elbrusImg,
+  'place-link': './images/photo-2.jpg',
 },
 {
   'place-name': 'Домбай',
-  'place-link': dombaiImg,
+  'place-link': './images/photo-3.jpg',
 },
 {
   'place-name': 'Калуга',
-  'place-link': kalugaImg,
+  'place-link': './images/photo-4.jpg',
 },
 {
   'place-name': 'Санкт-Петербург',
-  'place-link': stPetersburgImg,
+  'place-link': './images/photo-5.jpg',
 },
 {
   'place-name': 'Калининград',
-  'place-link': kaliningradImg,
+  'place-link': './images/photo-6.jpg',
 },
 ];
 
