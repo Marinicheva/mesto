@@ -42,8 +42,6 @@ export const validationConfig = {
   errorClass: 'popup__input-error_visible'
 };
 
-export const cardsContainer = document.querySelector('.gallery__list');
-
 export const addCardBtn = document.querySelector('.profile__add-btn');
 export const editBtn = document.querySelector('.profile__edit-btn');
 
