@@ -20,6 +20,7 @@ export default class Card {
 
   _handleDeleteClick() {
     this._cardItem.remove();
+    this._cardItem = null;
   }
 
   _handleclickImage() {
@@ -38,7 +39,7 @@ export default class Card {
       this._handleDeleteClick();
     });
 
-    this._cardImage.addEventListener('click', (evt) => {
+    this._cardImage.addEventListener('click', () => {
       this._handleclickImage();
     });
   }
