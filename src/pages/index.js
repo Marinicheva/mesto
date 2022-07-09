@@ -72,6 +72,7 @@ const popupEdit = new PopupWithForm('.popup_type_edit-form', (data) => {
   
   // const data = popupEdit._getInputValues();
   userData.setUserInfo(data);
+  popupEdit.closePopup();
 });
 
 //Установка слушателей
@@ -103,6 +104,7 @@ const addFormPopup = new PopupWithForm('.popup_type_add-new-card', (data) => {
   }, cardsContainer);
 
   userNewCard.renderItems();
+  addFormPopup.closePopup();
 });
 
 //Установка слушателей
