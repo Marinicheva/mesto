@@ -2,7 +2,9 @@ export default class FormValidator {
   constructor(dataConfig, formElement) {
     this._form = formElement;
     this._inputSelector = dataConfig.inputSelector;
-    this._inputList = Array.from(this._form.querySelectorAll(this._inputSelector));
+    this._inputList = Array.from(
+      this._form.querySelectorAll(this._inputSelector)
+    );
 
     this._submitButtonSelector = dataConfig.submitButtonSelector;
     this._buttonSubmit = this._form.querySelector(this._submitButtonSelector);
@@ -13,7 +15,7 @@ export default class FormValidator {
   }
 
   _hasInvalidInput() {
-    return this._inputList.some(input => {
+    return this._inputList.some((input) => {
       return !input.validity.valid;
     });
   }
@@ -41,7 +43,7 @@ export default class FormValidator {
 
     const errorMessage = this._form.querySelector(`.${input.id}-input-error`);
     errorMessage.classList.remove(this._errorClass);
-    errorMessage.textContent = '';
+    errorMessage.textContent = "";
   }
 
   _isValid(input) {
@@ -55,8 +57,8 @@ export default class FormValidator {
   _setEventListeners() {
     this._toggleButtonState();
 
-    this._inputList.forEach(input => {
-      input.addEventListener('input', () => {
+    this._inputList.forEach((input) => {
+      input.addEventListener("input", () => {
         this._isValid(input);
         this._toggleButtonState();
       });
@@ -64,7 +66,7 @@ export default class FormValidator {
   }
 
   enableValidation() {
-    this._form.addEventListener('submit', (evt) => {
+    this._form.addEventListener("submit", (evt) => {
       evt.preventDefault();
     });
 
@@ -72,11 +74,10 @@ export default class FormValidator {
   }
 
   resetValidation() {
-    this._inputList.forEach(input => {
+    this._inputList.forEach((input) => {
       this._toggleButtonState();
 
       this._hideInputError(input);
     });
-
   }
 }

@@ -59,12 +59,10 @@ function createCard(data) {
   return readyCard;
 }
 
-
 const userData = new UserInfo({
   name: ".profile__name",
   description: ".profile__description",
 });
-
 
 //Создание исходных карточек
 const cardGallery = new Section(
@@ -96,8 +94,8 @@ editBtn.addEventListener("click", handleClickEditBtn);
 
 //Попап с формой добавления карточки пользователем
 const addFormPopup = new PopupWithForm(".popup_type_add-new-card", (data) => {
-  const usernewCard = createCard(data);
-  cardGallery.addItem(usernewCard);
+  const userNewCard = createCard(data);
+  cardGallery.addItem(userNewCard);
 
   addFormPopup.closePopup();
 });
