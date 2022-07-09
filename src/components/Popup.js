@@ -3,6 +3,7 @@ import { ESC_CODE } from "../utils/constants.js";
 export default class Popup {
   constructor(popupSelector) {
     this._popup = document.querySelector(popupSelector);
+    this._btnClose = this._popup.querySelector('.popup__close');
     this._closeByEscape = this._handleEscClose.bind(this);
   }
 
@@ -29,9 +30,7 @@ export default class Popup {
   }
 
   setEventListeners() {
-    const btnClose = this._popup.querySelector('.popup__close');
-    btnClose.addEventListener('click', () => this.closePopup());
-
+    this._btnClose.addEventListener('click', () => this.closePopup());
     this._popup.addEventListener('mousedown', (evt) => this._handleOverlayClose(evt));
   }
 }
