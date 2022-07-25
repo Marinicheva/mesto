@@ -13,7 +13,7 @@ import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
-import  Api from "../components/Api";
+import Api from "../components/Api";
 
 //Функция включения валидации
 function enableValidation(config) {
@@ -28,6 +28,9 @@ function enableValidation(config) {
   });
 }
 
+//Включение валидации
+enableValidation(validationConfig);
+
 //Функция открытия полноразмерного просмотра фото
 function handleCardClick({ name, link }) {
   popupFullSizeImg.openPopup({
@@ -38,7 +41,7 @@ function handleCardClick({ name, link }) {
 
 //Коллбэк клика на кнопку редатирования профиля
 function handleClickEditBtn() {
-  formValidation[popupEdit.popupForm.name].resetValidation();
+  formValidation[popupEdit.popupForm.getAttribute("name")].resetValidation();
 
   const userCurrentData = userData.getUserInfo();
 
@@ -48,7 +51,7 @@ function handleClickEditBtn() {
 
 //Коллбэк клика на кнопку добавления новой карточки
 function handleClickAddCardBtn() {
-  formValidation[addFormPopup.popupForm.name].resetValidation();
+  formValidation[addFormPopup.popupForm.getAttribute("name")].resetValidation();
   addFormPopup.openPopup();
 }
 
@@ -65,27 +68,19 @@ const userData = new UserInfo({
   description: ".profile__description",
 });
 
-//Включение валидации
-enableValidation(validationConfig);
+const cardGallery = new Section({renderer: (cardData) => {
+    const newCard = createCard(cardData);
+
+    cardGallery.addItem(newCard);
+  }
+}, ".gallery__list");
 
 //API part
 const api = new Api (apiConfig);
 
 //Создание исходных карточек от сервера
 api.getCards().then((cards) => {
-  const cardGallery = new Section(
-    {
-      items: cards,
-      renderer: (cardData) => {
-        const newCard = createCard(cardData);
-  
-        cardGallery.addItem(newCard);
-      },
-    },
-    ".gallery__list"
-  );
-  
-  cardGallery.renderItems();
+  cardGallery.renderItems(cards);
 });
 
 //Загрузка данных пользователя с сервера
@@ -96,7 +91,8 @@ api.getUserData().then((data)=> {
 //Экземпляры попапов
 //Попап с формой редактирования профиля
 const popupEdit = new PopupWithForm(".popup_type_edit-form", (data) => {
-  userData.setUserInfo(data);
+  api.editUserData(data).then((res) => userData.setUserInfo(res));
+  
   popupEdit.closePopup();
 });
 
@@ -104,11 +100,13 @@ popupEdit.setEventListeners();
 editBtn.addEventListener("click", handleClickEditBtn);
 
 //Попап с формой добавления карточки пользователем
-const addFormPopup = new PopupWithForm(".popup_type_add-new-card", (data) => {
-  const userNewCard = createCard(data);
-  cardGallery.addItem(userNewCard);
+const addFormPopup = new PopupWithForm(".popup_type_add-new-card", (newCardData) => {
+  api.addNewCard(newCardData).then((res) => {
+    const userNewCard = createCard(res);
+    cardGallery.addItem(userNewCard);
 
-  addFormPopup.closePopup();
+    addFormPopup.closePopup();
+  })
 });
 
 addFormPopup.setEventListeners();

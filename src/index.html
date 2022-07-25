@@ -34,7 +34,10 @@
                         <img src="#" alt="" class="gallery__img">
                         <div class="gallery__item-footer">
                             <h2 class="gallery__img-caption"></h2>
-                            <button class="gallery__like-btn" aria-label="Нравится" type="button"></button>
+                            <div class="gallery__like-container">
+                                <button class="gallery__like-btn" aria-label="Нравится" type="button"></button>
+                                <p class="gallery__like-counter"></p>
+                            </div>
                         </div>
                         <button class="gallery__delete-btn" aria-label="Удалить карточку" type="button"></button>
                     </li>
@@ -52,11 +55,11 @@
             <h2 class="popup__title">Редактировать профиль</h2>
             <form class="popup__form popup__form_type_edit" action="#" method="POST" name="edit-profile-form"
                 novalidate>
-                <input class="popup__input popup__input-name" type="text" value="Жак-Ив Кусто" name="user-name"
+                <input class="popup__input popup__input-name" type="text" value="Жак-Ив Кусто" name="name"
                     id="user-name" placeholder="Ваше имя" minlength="2" maxlength="40" required>
                 <span class="popup__input-error user-name-input-error"></span>
                 <input class="popup__input popup__input-description" type="text" value="Исследователь океана"
-                    name="user-description" id="user-description" placeholder="Пару слов о Вас" minlength="2"
+                    name="about" id="user-description" placeholder="Пару слов о Вас" minlength="2"
                     maxlength="200" required>
                 <span class="popup__input-error user-description-input-error"></span>
                 <button class="popup__btn" type="submit">Сохранить</button>
@@ -70,10 +73,10 @@
             <h2 class="popup__title">Новое место</h2>
             <form class="popup__form popup__form_type_add-card" action="#" method="POST" name="add-new-card-form"
                 novalidate>
-                <input class="popup__input popup__input-place-name" type="text" name="place-name" id="place-name"
+                <input class="popup__input popup__input-place-name" type="text" name="name" id="place-name"
                     placeholder="Название" minlength="2" maxlength="30" required>
                 <span class="popup__input-error place-name-input-error"></span>
-                <input class="popup__input popup__input-place-link" type="url" name="place-link" id="place-link"
+                <input class="popup__input popup__input-place-link" type="url" name="link" id="place-link"
                     placeholder="Ссылка на картинку" required>
                 <span class="popup__input-error place-link-input-error"></span>
                 <button class="popup__btn" type="submit">Создать</button>
