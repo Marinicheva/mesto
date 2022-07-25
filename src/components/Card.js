@@ -1,7 +1,7 @@
 export default class Card {
   constructor(data, templateSelector, handleOpenViewPopup) {
-    this._title = data["place-name"];
-    this._url = data["place-link"];
+    this._title = data["name"];
+    this._url = data["link"];
     this._templateSelector = templateSelector;
     this._handleOpenViewPopup = handleOpenViewPopup;
   }

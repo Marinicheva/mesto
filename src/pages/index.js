@@ -1,10 +1,10 @@
 import "./index.css";
 import {
-  initialCards,
   formValidation,
   validationConfig,
   editBtn,
   addCardBtn,
+  apiConfig
 } from "../utils/constants.js";
 
 import UserInfo from "../components/UserInfo.js";
@@ -13,6 +13,7 @@ import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
+import  Api from "../components/Api";
 
 //Функция включения валидации
 function enableValidation(config) {
@@ -64,20 +65,25 @@ const userData = new UserInfo({
   description: ".profile__description",
 });
 
-//Создание исходных карточек
-const cardGallery = new Section(
-  {
-    items: initialCards,
-    renderer: (cardData) => {
-      const newCard = createCard(cardData);
+//API part
+const api = new Api (apiConfig);
 
-      cardGallery.addItem(newCard);
+//Создание исходных карточек от сервера
+api.getCards().then((cards) => {
+  const cardGallery = new Section(
+    {
+      items: cards,
+      renderer: (cardData) => {
+        const newCard = createCard(cardData);
+  
+        cardGallery.addItem(newCard);
+      },
     },
-  },
-  ".gallery__list"
-);
-
-cardGallery.renderItems();
+    ".gallery__list"
+  );
+  
+  cardGallery.renderItems();
+});
 
 //Включение валидации
 enableValidation(validationConfig);
@@ -107,3 +113,5 @@ addCardBtn.addEventListener("click", handleClickAddCardBtn);
 const popupFullSizeImg = new PopupWithImage(".popup_type_fullscreen-img");
 
 popupFullSizeImg.setEventListeners();
+
+
