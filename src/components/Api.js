@@ -13,7 +13,7 @@ export default class Api {
       },
     })
     .then((res) => {
-      console.log(res.json());
+      return res.json();
     })
   }
   

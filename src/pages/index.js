@@ -65,6 +65,9 @@ const userData = new UserInfo({
   description: ".profile__description",
 });
 
+//Включение валидации
+enableValidation(validationConfig);
+
 //API part
 const api = new Api (apiConfig);
 
@@ -85,8 +88,10 @@ api.getCards().then((cards) => {
   cardGallery.renderItems();
 });
 
-//Включение валидации
-enableValidation(validationConfig);
+//Загрузка данных пользователя с сервера
+api.getUserData().then((data)=> {
+  userData.setUserInfo(data);
+});
 
 //Экземпляры попапов
 //Попап с формой редактирования профиля
