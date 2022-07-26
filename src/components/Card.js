@@ -3,6 +3,7 @@ export default class Card {
     this._title = data["name"];
     this._url = data["link"];
     this._likes = data["likes"];
+    this._ownerId = data["owner"]["_id"];
     this._templateSelector = templateSelector;
     this._handleOpenViewPopup = handleOpenViewPopup;
     this._handleClickDeleteCard = handleClickDeleteCard;

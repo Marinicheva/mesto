@@ -2,15 +2,25 @@ export default class UserInfo {
   constructor({name, about}) {
     this._userName = document.querySelector(name);
     this._userAbout = document.querySelector(about);
-    
+    this.userInfo = {};
+  }
+
+  //Сохранение исходных данных пользователя с сервера
+  initUserInfo(data) {
+    this.userInfo['name'] = data["name"];
+    this.userInfo['about'] = data.about;
+    this.userId = data._id;
+
+    return this.userInfo;
   }
 
   getUserInfo() {
-    this.userData = {};
-    this.userData['name'] = this._userName.textContent;
-    this.userData['about'] = this._userAbout.textContent;
+    this.userInfo['name'] = this._userName.textContent;
+    this.userInfo['about'] = this._userAbout.textContent;
 
-    return this.userData;
+    console.log(this.userInfo);
+
+    return this.userInfo;
   }
 
   setUserInfo(data) {

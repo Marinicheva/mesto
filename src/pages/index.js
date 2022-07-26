@@ -56,6 +56,15 @@ function handleClickAddCardBtn() {
   addFormPopup.openPopup();
 }
 
+//Коллбэк клика на лайк
+// function handleClickLikeBtn(evt) {
+//   if ( evt.classList.contains('gallery__like-btn_active') ) {
+//     api.removeLike()
+//   } else {
+
+//   }
+// }
+
 //Функция для создания новой карточки
 function createCard(data) {
   const card = new Card(data, ".card-template", handleCardClick, handleClickDeleteCard);
@@ -64,16 +73,19 @@ function createCard(data) {
   return readyCard;
 }
 
-//Удаление карточки пользователем
+//Коллбэк клика на кнопку удаления карточки
 function handleClickDeleteCard() {
   popupDeleteCard.openPopup();
 }
 
+
+//Создание класса UserInfo
 const userData = new UserInfo({
   name: ".profile__name",
   about: ".profile__about",
 });
 
+//Создание класса Section
 const cardGallery = new Section({renderer: (cardData) => {
     const newCard = createCard(cardData);
 
@@ -81,8 +93,10 @@ const cardGallery = new Section({renderer: (cardData) => {
   }
 }, ".gallery__list");
 
-//API part
+
+//Создание класса API
 const api = new Api (apiConfig);
+
 
 //Создание исходных карточек от сервера
 api.getCards().then((cards) => {
@@ -91,8 +105,9 @@ api.getCards().then((cards) => {
 
 //Загрузка данных пользователя с сервера
 api.getUserData().then((data)=> {
-  userData.setUserInfo(data);
-});
+  return userData.initUserInfo(data);
+})
+.then((data) => userData.setUserInfo(data));
 
 //Экземпляры попапов
 //Попап с формой редактирования профиля
@@ -120,10 +135,8 @@ addCardBtn.addEventListener("click", handleClickAddCardBtn);
 
 //Попап полноразмерного просмотра фото
 const popupFullSizeImg = new PopupWithImage(".popup_type_fullscreen-img");
-
 popupFullSizeImg.setEventListeners();
 
 //Попап подтверждения удаления
-const popupDeleteCard = new Popup(".popup_type_delete-card");
-
+const popupDeleteCard = new Popup(".popup_type_delete-card");//Должна еще быть функция при сабмите, пока при сабмите ничего не происходит
 popupDeleteCard.setEventListeners();
