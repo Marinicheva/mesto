@@ -4,6 +4,7 @@ import {
   validationConfig,
   editBtn,
   addCardBtn,
+  updateAvatarBtn,
   apiConfig
 } from "../utils/constants.js";
 
@@ -19,6 +20,7 @@ import Popup from "../components/Popup";
 //Функция включения валидации
 function enableValidation(config) {
   const formList = Array.from(document.querySelectorAll(config.formSelector));
+
   formList.forEach((form) => {
     const validatorItem = new FormValidator(config, form);
 
@@ -31,6 +33,7 @@ function enableValidation(config) {
 
 //Включение валидации
 enableValidation(validationConfig);
+
 
 //Функция открытия полноразмерного просмотра фото
 function handleCardClick({ name, link }) {
@@ -49,6 +52,15 @@ function handleClickEditBtn() {
   popupEdit.setInputsValues(userCurrentData);
   popupEdit.openPopup();
 }
+
+
+//Коллбэк клика на кнопку обновления аватара
+function handleClickUpdateBtn() {
+  formValidation[popupUpdateAvatar.popupForm.getAttribute("name")].resetValidation();
+  popupUpdateAvatar.openPopup();
+}
+
+
 
 //Коллбэк клика на кнопку добавления новой карточки
 function handleClickAddCardBtn() {
@@ -77,7 +89,6 @@ function createCard(data) {
 function handleClickDeleteCard() {
   popupDeleteCard.openPopup();
 }
-
 
 //Создание класса UserInfo
 const userData = new UserInfo({
@@ -141,3 +152,8 @@ popupFullSizeImg.setEventListeners();
 //Попап подтверждения удаления
 const popupDeleteCard = new Popup(".popup_type_delete-card");//Должна еще быть функция при сабмите, пока при сабмите ничего не происходит
 popupDeleteCard.setEventListeners();
+
+//Попап обновления аватара
+const popupUpdateAvatar = new PopupWithForm(".popup_type_update-avatar");
+popupUpdateAvatar.setEventListeners();
+updateAvatarBtn.addEventListener('click', handleClickUpdateBtn);

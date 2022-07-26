@@ -11,6 +11,7 @@ export const validationConfig = {
 
 export const addCardBtn = document.querySelector('.profile__add-btn');
 export const editBtn = document.querySelector('.profile__edit-btn');
+export const updateAvatarBtn = document.querySelector('.profile__edit-photo-btn');
 
 export const ESC_CODE = 'Escape';
 
