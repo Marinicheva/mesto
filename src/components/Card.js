@@ -3,6 +3,7 @@ export default class Card {
     this._title = data["name"];
     this._url = data["link"];
     this._likes = data["likes"];
+    this._cardID = data["_id"];
     this._ownerId = data["owner"]["_id"];
     this._userID = userId;
     this._templateSelector = templateSelector;
@@ -41,12 +42,17 @@ export default class Card {
     });
 
     this._deleteBtn.addEventListener("click", () => {
-      this._handleClickDeleteCard();
+      this._handleClickDeleteCard(this._cardID);
     });
 
     this._cardImage.addEventListener("click", () => {
       this._handleclickImage();
     });
+  }
+
+  removeCard() {
+    this._cardItem.remove();
+    this._cardItem = null;
   }
 
   generateCard() {

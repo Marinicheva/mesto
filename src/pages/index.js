@@ -14,8 +14,9 @@ import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
+import PopupDeleteCard from "../components/PopupDeleteCard";
 import Api from "../components/Api";
-import Popup from "../components/Popup";
+
 
 //Функция включения валидации
 function enableValidation(config) {
@@ -86,8 +87,8 @@ function createCard(data) {
 }
 
 //Коллбэк клика на кнопку удаления карточки
-function handleClickDeleteCard() {
-  popupDeleteCard.openPopup();
+function handleClickDeleteCard(cardID) {
+  popupDeleteCard.openPopup(cardID);
 }
 
 //Создание класса UserInfo
@@ -149,7 +150,10 @@ const popupFullSizeImg = new PopupWithImage(".popup_type_fullscreen-img");
 popupFullSizeImg.setEventListeners();
 
 //Попап подтверждения удаления
-const popupDeleteCard = new Popup(".popup_type_delete-card");//Должна еще быть функция при сабмите, пока при сабмите ничего не происходит
+const popupDeleteCard = new PopupDeleteCard(".popup_type_delete-card", (id) => { //остановила здесь! надо передать метод удаления из разметки. Нужно думать
+  api.removeCard(id)
+  .then((res) => removeCard());
+});
 popupDeleteCard.setEventListeners();
 
 //Попап обновления аватара
@@ -160,4 +164,5 @@ const popupUpdateAvatar = new PopupWithForm(".popup_type_update-avatar", (avatar
   })
 });
 popupUpdateAvatar.setEventListeners();
+
 updateAvatarBtn.addEventListener('click', handleClickUpdateBtn);

@@ -92,6 +92,7 @@ export default class Api {
     })
   }
 
+  //Поставить лайк
   addLike(cardID) {
     return fetch(`${this._url}/cards/${cardID}/likes`, {
       method: "PUT",
@@ -107,6 +108,7 @@ export default class Api {
     })
   }
 
+  //Убрать лайк
   removeLike(cardID) {
     return fetch(`${this._url}/cards/${cardID}/likes`, {
       method: "DELETE",
@@ -120,5 +122,21 @@ export default class Api {
         Promise.reject(`Ошибка: ${res.code}.Лайк не снят`);
       }
     })
+  }
+
+  //Удалить карточку
+  removeCard(cardID) {
+    return fetch(`${this._url}cards/${cardID}`, {
+      method: "DELETE",
+      headers: this._headers,
+    })
+    .then((res) => {
+      if (res.ok) {
+        return res.json();
+      } else {
+        Promise.reject(`Ошибка: ${res.code}.Карточка не удалена`);
+      }
+    })
+
   }
 }
