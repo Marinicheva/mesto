@@ -83,6 +83,7 @@ function handleClickDeleteCard() {
 const userData = new UserInfo({
   name: ".profile__name",
   about: ".profile__about",
+  avatar: ".profile__photo",
 });
 
 //Создание класса Section
