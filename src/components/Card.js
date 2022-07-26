@@ -1,5 +1,5 @@
 export default class Card {
-  constructor(data, templateSelector, handleOpenViewPopup, handleClickDeleteCard, userId) {
+  constructor(data, templateSelector, handleOpenViewPopup, handleClickDeleteCard, addLike, removeLike, userId) {
     this._title = data["name"];
     this._url = data["link"];
     this._likes = data["likes"];
@@ -9,6 +9,8 @@ export default class Card {
     this._templateSelector = templateSelector;
     this._handleOpenViewPopup = handleOpenViewPopup;
     this._handleClickDeleteCard = handleClickDeleteCard;
+    this._addLike = addLike;
+    this._removeLike = removeLike;
   }
 
   _getTemplate() {
@@ -21,12 +23,16 @@ export default class Card {
 
   _handleLikeClick(evt) {
     if ( evt.target.classList.contains("gallery__like-btn_active") ) {
-      evt.target.classList.remove("gallery__like-btn_active")
-      this._likeCounter.textContent = +this._likeCounter.textContent === 1 ? null : +this._likeCounter.textContent - 1;
-    } else  {
-      evt.target.classList.add("gallery__like-btn_active")
-      this._likeCounter.textContent = +this._likeCounter.textContent + 1;
+      evt.target.classList.remove("gallery__like-btn_active");
+      this._removeLike(this._cardID, this._renderLikesCounter, this._likeCounter);
+    } else {
+      evt.target.classList.add("gallery__like-btn_active");
+      this._addLike(this._cardID, this._renderLikesCounter, this._likeCounter);
     }
+  }
+
+  _renderLikesCounter(likesArr, likeContainer) {
+    likeContainer.textContent = likesArr.length > 0 ? likesArr.length : null;
   }
 
   _handleclickImage() {
@@ -70,11 +76,15 @@ export default class Card {
       this._deleteBtn.classList.add("gallery__delete-btn_hide");
     }
 
+    if ( this._likes.some((item) => item["_id"] === this._userID) ) {
+      this._likeBtn.classList.add("gallery__like-btn_active");
+    } 
+
     this._cardTitle.textContent = this._title;
     this._cardImage.src = this._url;
     this._cardImage.alt = `Пользовательское фото места ${this._title}`;
 
-    this._likeCounter.textContent = this._likes.length > 0 ? this._likes.length : null;
+    this._renderLikesCounter(this._likes, this._likeCounter);
  
     return this._cardItem;
   }

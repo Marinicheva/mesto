@@ -68,19 +68,23 @@ function handleClickAddCardBtn() {
   addFormPopup.openPopup();
 }
 
-//Коллбэк клика на лайк
-// function handleClickLikeBtn(evt) {
-//   if ( evt.classList.contains('gallery__like-btn_active') ) {
-//     api.removeLike()
-//   } else {
+//Коллбэки клика на лайк
+function addLike(cardID, renderer, likeContainer) {
+  api.addLike(cardID)
+  .then((data) => {return data.likes})
+  .then((likes) => renderer(likes, likeContainer));
+}
 
-//   }
-// }
+function removeLike(cardID, renderer, likeContainer) {
+  api.removeLike(cardID)
+  .then((data) => {return data.likes})
+  .then((likes) => renderer(likes, likeContainer));
+}
 
 //Функция для создания новой карточки
 function createCard(data) {
   const userID = userData.userInfo.userId;
-  const card = new Card(data, ".card-template", handleCardClick, handleClickDeleteCard, userID);
+  const card = new Card(data, ".card-template", handleCardClick, handleClickDeleteCard, addLike, removeLike, userID);
   const readyCard = card.generateCard();
 
   return readyCard;

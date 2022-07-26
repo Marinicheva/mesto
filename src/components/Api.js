@@ -100,7 +100,7 @@ export default class Api {
     }
     ).then((res) => {
       if (res.ok) {
-        console.log(res);
+        // console.log(res, "Liked");
         return res.json();
       } else {
         Promise.reject(`Ошибка: ${res.code}.Лайк не поставлен`);
@@ -116,7 +116,7 @@ export default class Api {
     }
     ).then((res) => {
       if (res.ok) {
-        console.log(res);
+        // console.log(res,"Unliked");
         return res.json();
       } else {
         Promise.reject(`Ошибка: ${res.code}.Лайк не снят`);
