@@ -1,9 +1,10 @@
 export default class Card {
-  constructor(data, templateSelector, handleOpenViewPopup, handleClickDeleteCard) {
+  constructor(data, templateSelector, handleOpenViewPopup, handleClickDeleteCard, userId) {
     this._title = data["name"];
     this._url = data["link"];
     this._likes = data["likes"];
     this._ownerId = data["owner"]["_id"];
+    this._userID = userId;
     this._templateSelector = templateSelector;
     this._handleOpenViewPopup = handleOpenViewPopup;
     this._handleClickDeleteCard = handleClickDeleteCard;
@@ -59,11 +60,15 @@ export default class Card {
 
     this._setEvenetListeners();
 
+    if(this._ownerId !== this._userID) {
+      this._deleteBtn.classList.add("gallery__delete-btn_hide");
+    }
+
     this._cardTitle.textContent = this._title;
     this._cardImage.src = this._url;
     this._cardImage.alt = `Пользовательское фото места ${this._title}`;
 
-    this._likeCounter.textContent = this._likes.length > 0 ? this._likes.length : null; //Как проверить работу????
+    this._likeCounter.textContent = this._likes.length > 0 ? this._likes.length : null;
  
     return this._cardItem;
   }

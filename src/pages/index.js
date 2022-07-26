@@ -78,7 +78,8 @@ function handleClickAddCardBtn() {
 
 //Функция для создания новой карточки
 function createCard(data) {
-  const card = new Card(data, ".card-template", handleCardClick, handleClickDeleteCard);
+  const userID = userData.userInfo.userId;
+  const card = new Card(data, ".card-template", handleCardClick, handleClickDeleteCard, userID);
   const readyCard = card.generateCard();
 
   return readyCard;
@@ -108,17 +109,16 @@ const cardGallery = new Section({renderer: (cardData) => {
 //Создание класса API
 const api = new Api (apiConfig);
 
+//Создание исходных данных для загрузки от сервера
+const initUserData = api.getUserData().then((res) => userData.initUserInfo(res));
+const initCards = api.getCards();
 
-//Создание исходных карточек от сервера
-api.getCards().then((cards) => {
-  cardGallery.renderItems(cards);
+
+Promise.all([initUserData, initCards]).then((res) => {
+  userData.setUserInfo(res[0]);
+  cardGallery.renderItems(res[1]);
 });
 
-//Загрузка данных пользователя с сервера
-api.getUserData().then((data)=> {
-  return userData.initUserInfo(data);
-})
-.then((data) => userData.setUserInfo(data));
 
 //Экземпляры попапов
 //Попап с формой редактирования профиля

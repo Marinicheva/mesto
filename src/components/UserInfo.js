@@ -10,7 +10,7 @@ export default class UserInfo {
   initUserInfo(data) {
     this.userInfo['name'] = data.name;
     this.userInfo['about'] = data.about;
-    this.userId = data._id;
+    this.userInfo['userId'] = data._id;
     this._userAvatar.src = data.avatar;
 
     return this.userInfo;
@@ -19,8 +19,6 @@ export default class UserInfo {
   getUserInfo() {
     this.userInfo['name'] = this._userName.textContent;
     this.userInfo['about'] = this._userAbout.textContent;
-
-    console.log(this.userInfo);
 
     return this.userInfo;
   }
