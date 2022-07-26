@@ -19,7 +19,10 @@
     <main class="content">
         <section class="profile">
             <div class="profile__data">
-                <img src="#" alt="Фото автора страницы" class="profile__photo">
+                <div class="profile__photo-container">
+                    <img src="#" alt="Фото автора страницы" class="profile__photo">
+                    <button class="profile__edit-photo-btn" type="button"></button>
+                </div>
                 <h1 class="profile__name">Жак-Ив Кусто</h1>
                 <button class="profile__edit-btn" aria-label="Изменить данные профиля" type="button"></button>
                 <p class="profile__about">Исследователь океана</p>
@@ -97,6 +100,17 @@
         <div class="popup__delete-container">
             <h2 class="popup__title popup__title_margin_small">Вы уверены?</h2>
             <button class="popup__btn popup__btn-delete" type="button">Да</button>
+            <button class="popup__close" type="button"></button>
+        </div>
+    </div>
+
+    <div class="popup popup_type_update-avatar" style="opacity: 1; visibility: visible;">
+        <div class="popup__update-container">
+            <h2 class="popup__title popup__title_margin_small">Обновить аватар</h2>
+            <form class="popup__form popup__form_type_update-avatar" action="#" method="POST" name="update-avatar-form" novalidate>
+                <input class="popup__input popup__input-avatar-link" type="url" name="link" id="avatar-link" placeholder="Ссылка на аватар" required>
+                <button class="popup__btn popup__btn-update" type="submit">Да</button>
+            </form>
             <button class="popup__close" type="button"></button>
         </div>
     </div>
