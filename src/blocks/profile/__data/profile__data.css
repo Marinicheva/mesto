@@ -4,7 +4,7 @@
     grid-template-rows: 2fr 1fr;
     grid-template-areas: 
         "photo name edit-btn"
-        "photo description .";
+        "photo about .";
     align-items: center;
 }
 
@@ -22,7 +22,7 @@
         grid-template-areas: 
             "photo photo"
             "name edit-btn"
-            "description description";
+            "about about";
         justify-items: center;
         margin-bottom: 30px;
     }

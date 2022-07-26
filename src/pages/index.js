@@ -14,6 +14,7 @@ import FormValidator from "../components/FormValidator.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import Api from "../components/Api";
+import Popup from "../components/Popup";
 
 //Функция включения валидации
 function enableValidation(config) {
@@ -57,15 +58,20 @@ function handleClickAddCardBtn() {
 
 //Функция для создания новой карточки
 function createCard(data) {
-  const card = new Card(data, ".card-template", handleCardClick);
+  const card = new Card(data, ".card-template", handleCardClick, handleClickDeleteCard);
   const readyCard = card.generateCard();
 
   return readyCard;
 }
 
+//Удаление карточки пользователем
+function handleClickDeleteCard() {
+  popupDeleteCard.openPopup();
+}
+
 const userData = new UserInfo({
   name: ".profile__name",
-  description: ".profile__description",
+  about: ".profile__about",
 });
 
 const cardGallery = new Section({renderer: (cardData) => {
@@ -117,4 +123,7 @@ const popupFullSizeImg = new PopupWithImage(".popup_type_fullscreen-img");
 
 popupFullSizeImg.setEventListeners();
 
+//Попап подтверждения удаления
+const popupDeleteCard = new Popup(".popup_type_delete-card");
 
+popupDeleteCard.setEventListeners();

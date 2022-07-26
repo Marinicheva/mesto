@@ -1,5 +1,5 @@
-.profile__description {
-    grid-area: description;
+.profile__about {
+    grid-area: about;
     align-self: flex-start;
     margin: 0;
     font-size: 18px;
@@ -10,13 +10,13 @@
 }
 
 @media screen and (max-width: 611px) {
-    .profile__description {
+    .profile__about {
         max-width: 98%;
     }
 }
 
 @media screen and (max-width: 380px) {
-    .profile__description {
+    .profile__about {
         font-size: 14px;
         line-height: 17px;
     }

@@ -1,10 +1,11 @@
 export default class Card {
-  constructor(data, templateSelector, handleOpenViewPopup) {
+  constructor(data, templateSelector, handleOpenViewPopup, handleClickDeleteCard) {
     this._title = data["name"];
     this._url = data["link"];
     this._likes = data["likes"];
     this._templateSelector = templateSelector;
     this._handleOpenViewPopup = handleOpenViewPopup;
+    this._handleClickDeleteCard = handleClickDeleteCard;
   }
 
   _getTemplate() {
@@ -25,11 +26,6 @@ export default class Card {
     }
   }
 
-  _handleDeleteClick() {
-    this._cardItem.remove();
-    this._cardItem = null;
-  }
-
   _handleclickImage() {
     this._handleOpenViewPopup({
       link: this._url,
@@ -43,7 +39,7 @@ export default class Card {
     });
 
     this._deleteBtn.addEventListener("click", () => {
-      this._handleDeleteClick();
+      this._handleClickDeleteCard();
     });
 
     this._cardImage.addEventListener("click", () => {
