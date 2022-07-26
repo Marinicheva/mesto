@@ -61,7 +61,6 @@ function handleClickUpdateBtn() {
 }
 
 
-
 //Коллбэк клика на кнопку добавления новой карточки
 function handleClickAddCardBtn() {
   formValidation[addFormPopup.popupForm.getAttribute("name")].resetValidation();
@@ -124,7 +123,7 @@ api.getUserData().then((data)=> {
 //Экземпляры попапов
 //Попап с формой редактирования профиля
 const popupEdit = new PopupWithForm(".popup_type_edit-form", (data) => {
-  api.editUserData(data).then((res) => userData.setUserInfo(res));
+  api.updateUserData(data).then((res) => userData.setUserInfo(res));
   
   popupEdit.closePopup();
 });
@@ -154,6 +153,11 @@ const popupDeleteCard = new Popup(".popup_type_delete-card");//Должна ещ
 popupDeleteCard.setEventListeners();
 
 //Попап обновления аватара
-const popupUpdateAvatar = new PopupWithForm(".popup_type_update-avatar");
+const popupUpdateAvatar = new PopupWithForm(".popup_type_update-avatar", (avatar) => {
+  api.updateUserAvatar(avatar).then((data) => {
+    userData.updateUserAvatar(data);
+    popupUpdateAvatar.closePopup();
+  })
+});
 popupUpdateAvatar.setEventListeners();
 updateAvatarBtn.addEventListener('click', handleClickUpdateBtn);

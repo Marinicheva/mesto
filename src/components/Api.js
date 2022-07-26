@@ -20,7 +20,7 @@ export default class Api {
   }
 
   //Редактирование данных профиля
-  editUserData(newData) {
+  updateUserData(newData) {
     return fetch(`${this._url}users/me`, {
       method: "PATCH",
       headers: this._headers,
@@ -36,6 +36,24 @@ export default class Api {
         return res.json();
       } else {
         Promise.reject(`Ошибка: ${res.code}. Данные пользователя не отредактированы`);//Может вынести ошибки в индекс
+      }
+    })
+  }
+
+  //Обновление аватарки
+  updateUserAvatar(avatarData) {
+    return fetch(`${this._url}users/me/avatar`, {
+      method: "PATCH",
+      headers: this._headers,
+      body: JSON.stringify({
+        "avatar": avatarData.avatar,
+      })
+    })
+    .then((res) => {
+      if (res.ok) {
+        return res.json();
+      } else {
+        Promise.reject(`Ошибка: ${res.code}. Аватар пользователя не обновлен`);//Может вынести ошибки в индекс
       }
     })
   }
