@@ -7,8 +7,8 @@ export default class UserInfo {
 
   getUserInfo() {
     this.userData = {};
-    this.userData['user-name'] = this._userName.textContent;
-    this.userData['user-description'] = this._userDescription.textContent;
+    this.userData['name'] = this._userName.textContent;
+    this.userData['about'] = this._userDescription.textContent;
 
     return this.userData;
   }
