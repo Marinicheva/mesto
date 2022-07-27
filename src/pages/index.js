@@ -14,7 +14,7 @@ import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
-import PopupDeleteCard from "../components/PopupDeleteCard";
+import PopupWithConfirmation from "../components/PopupWithConfirmation.js";
 import Api from "../components/Api";
 
 
@@ -31,9 +31,6 @@ function enableValidation(config) {
     validatorItem.enableValidation();
   });
 }
-
-//Включение валидации
-enableValidation(validationConfig);
 
 //Функция открытия полноразмерного просмотра фото
 function handleCardClick({ name, link }) {
@@ -67,15 +64,17 @@ function handleClickAddCardBtn() {
 
 //Изменение лайка при клике
 function addLike(cardID, renderer, likeContainer) {
-  api.addLike(cardID)//ВАЖНО!!!! Везде добавить блок catch с выводом сообщения в консоль
+  api.addLike(cardID)
   .then((data) => {return data.likes})
-  .then((likes) => renderer(likes, likeContainer));
+  .then((likes) => renderer(likes, likeContainer))
+  .catch((err) => console.log(err));
 }
 
 function removeLike(cardID, renderer, likeContainer) {
   api.removeLike(cardID)
   .then((data) => {return data.likes})
-  .then((likes) => renderer(likes, likeContainer));
+  .then((likes) => renderer(likes, likeContainer))
+  .catch((err) => console.log(err));
 }
 
 //Функция для создания новой карточки
@@ -92,6 +91,13 @@ function handleClickDeleteCard(card, cardID) {
   popupDeleteCard.openPopup(card, cardID);
 }
 
+
+//Включение валидации
+enableValidation(validationConfig);
+
+//Создание класса API
+const api = new Api (apiConfig);
+
 //Создание класса UserInfo
 const userData = new UserInfo({
   name: ".profile__name",
@@ -107,19 +113,16 @@ const cardGallery = new Section({renderer: (cardData) => {
   }
 }, ".gallery__list");
 
-
-//Создание класса API
-const api = new Api (apiConfig);
-
 //Создание исходных данных для загрузки от сервера
 const initUserData = api.getUserData().then((res) => userData.initUserInfo(res));
 const initCards = api.getCards();
 
-
-Promise.all([initUserData, initCards]).then((res) => {
+Promise.all([initUserData, initCards])
+.then((res) => {
   userData.setUserInfo(res[0]);
   cardGallery.renderItems(res[1]);
-});
+})
+.catch((err) => console.log(err));
 
 
 //Экземпляры попапов
@@ -128,6 +131,7 @@ const popupEdit = new PopupWithForm(".popup_type_edit-form", (data) => {
   api.updateUserData(data)
   .then((res) => userData.setUserInfo(res))
   .then(() =>  popupEdit.closePopup())
+  .catch((err) => console.log(err))
   .finally(() => popupEdit.renderLoading(false));
 });
 
@@ -155,10 +159,11 @@ const popupFullSizeImg = new PopupWithImage(".popup_type_fullscreen-img");
 popupFullSizeImg.setEventListeners();
 
 //Попап подтверждения удаления
-const popupDeleteCard = new PopupDeleteCard(".popup_type_delete-card", (removedCard, cardID) => { 
+const popupDeleteCard = new PopupWithConfirmation(".popup_type_delete-card", (removedCard, cardID) => { 
   api.removeCardData(cardID)
   .then(() => removedCard.remove())
-  .then(() => popupDeleteCard.closePopup());
+  .then(() => popupDeleteCard.closePopup())
+  .catch((err) => console.log(err));
 });
 popupDeleteCard.setEventListeners();
 
@@ -169,6 +174,7 @@ const popupUpdateAvatar = new PopupWithForm(".popup_type_update-avatar", (avatar
     userData.updateUserAvatar(data);
   })
   .then(() => popupUpdateAvatar.closePopup())
+  .catch((err) => console.log(err))
   .finally(() => popupUpdateAvatar.renderLoading(false))
 });
 popupUpdateAvatar.setEventListeners();
