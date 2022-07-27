@@ -13,9 +13,8 @@ export default class Api {
     .then((res) => {
       if (res.ok) {
         return res.json();
-      } else {
-        Promise.reject(`Ошибка: ${res.code}. Данные о пользователе с сервера не получены`);//Может вынести ошибки в индекс
       }
+      Promise.reject(`Ошибка: ${res.status}. Данные о пользователе с сервера не получены`);
     })
   }
 
@@ -34,9 +33,8 @@ export default class Api {
     .then((res) => {
       if (res.ok) {
         return res.json();
-      } else {
-        Promise.reject(`Ошибка: ${res.code}. Данные пользователя не отредактированы`);//Может вынести ошибки в индекс
-      }
+      } 
+      Promise.reject(`Ошибка: ${res.status}. Данные пользователя не отредактированы`);
     })
   }
 
@@ -52,9 +50,8 @@ export default class Api {
     .then((res) => {
       if (res.ok) {
         return res.json();
-      } else {
-        Promise.reject(`Ошибка: ${res.code}. Аватар пользователя не обновлен`);//Может вынести ошибки в индекс
       }
+      Promise.reject(`Ошибка: ${res.status}. Аватар пользователя не обновлен`);
     })
   }
   
@@ -67,9 +64,8 @@ export default class Api {
     .then((res) => {
       if (res.ok) {
         return res.json();
-      } else {
-        Promise.reject(`Ошибка: ${res.code}. Карточки с сервера не пришли`);//Может вынести ошибки в индекс
       }
+      Promise.reject(`Ошибка: ${res.status}. Карточки с сервера не пришли`);
     })
   }
 
@@ -86,9 +82,8 @@ export default class Api {
     .then((res) => {
       if (res.ok) {
         return res.json();
-      } else {
-        console.log('Карточка не добавлена!');//Может вынести ошибки в индекс
       }
+      Promise.reject(`Ошибка: ${res.status}. Карточка не добавлена.`);
     })
   }
 
@@ -100,11 +95,9 @@ export default class Api {
     }
     ).then((res) => {
       if (res.ok) {
-        // console.log(res, "Liked");
         return res.json();
-      } else {
-        Promise.reject(`Ошибка: ${res.code}.Лайк не поставлен`);
       }
+      Promise.reject(`Ошибка: ${res.status}.Лайк не поставлен`);
     })
   }
 
@@ -118,9 +111,8 @@ export default class Api {
       if (res.ok) {
         // console.log(res,"Unliked");
         return res.json();
-      } else {
-        Promise.reject(`Ошибка: ${res.code}.Лайк не снят`);
       }
+      Promise.reject(`Ошибка: ${res.status}.Лайк не убран`);
     })
   }
 
@@ -133,9 +125,8 @@ export default class Api {
     .then((res) => {
       if (res.ok) {
         return res.json();
-      } else {
-        Promise.reject(`Ошибка: ${res.code}.Карточка не удалена`);
       }
+      Promise.reject(`Ошибка: ${res.status}. Карточка не удалена`);
     })
   }
 }
