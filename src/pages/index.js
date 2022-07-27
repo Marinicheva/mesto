@@ -88,8 +88,8 @@ function createCard(data) {
 }
 
 //Коллбэк клика на кнопку удаления карточки
-function handleClickDeleteCard(cardID, removeCard) {
-  popupDeleteCard.openPopup(cardID, removeCard);
+function handleClickDeleteCard(card, cardID) {
+  popupDeleteCard.openPopup(card, cardID);
 }
 
 //Создание класса UserInfo
@@ -155,10 +155,10 @@ const popupFullSizeImg = new PopupWithImage(".popup_type_fullscreen-img");
 popupFullSizeImg.setEventListeners();
 
 //Попап подтверждения удаления
-const popupDeleteCard = new PopupDeleteCard(".popup_type_delete-card", (cardID, removeCard) => { 
-  console.log("Сейчас удалим")
+const popupDeleteCard = new PopupDeleteCard(".popup_type_delete-card", (removedCard, cardID) => { 
   api.removeCardData(cardID)
-  .then((res) => removeCard());
+  .then(() => removedCard.remove())
+  .then(() => popupDeleteCard.closePopup());
 });
 popupDeleteCard.setEventListeners();
 
