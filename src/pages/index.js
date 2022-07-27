@@ -125,9 +125,10 @@ Promise.all([initUserData, initCards]).then((res) => {
 //Экземпляры попапов
 //Попап с формой редактирования профиля
 const popupEdit = new PopupWithForm(".popup_type_edit-form", (data) => {
-  api.updateUserData(data).then((res) => userData.setUserInfo(res));
-  
-  popupEdit.closePopup();
+  api.updateUserData(data)
+  .then((res) => userData.setUserInfo(res))
+  .then(() =>  popupEdit.closePopup())
+  .finally(() => popupEdit.renderLoading(false));
 });
 
 popupEdit.setEventListeners();
@@ -135,11 +136,14 @@ editBtn.addEventListener("click", handleClickEditBtn);
 
 //Попап с формой добавления карточки пользователем
 const addFormPopup = new PopupWithForm(".popup_type_add-new-card", (newCardData) => {
-  api.addNewCard(newCardData).then((res) => {
+  api.addNewCard(newCardData)
+  .then((res) => {
     const userNewCard = createCard(res);
     cardGallery.addItem(userNewCard);
-
-    addFormPopup.closePopup();
+  })
+  .then(() => addFormPopup.closePopup())
+  .finally(() => {
+    addFormPopup.renderLoading(false);
   })
 });
 
@@ -160,10 +164,12 @@ popupDeleteCard.setEventListeners();
 
 //Попап обновления аватара
 const popupUpdateAvatar = new PopupWithForm(".popup_type_update-avatar", (avatar) => {
-  api.updateUserAvatar(avatar).then((data) => {
+  api.updateUserAvatar(avatar)
+  .then((data) => {
     userData.updateUserAvatar(data);
-    popupUpdateAvatar.closePopup();
   })
+  .then(() => popupUpdateAvatar.closePopup())
+  .finally(() => popupUpdateAvatar.renderLoading(false))
 });
 popupUpdateAvatar.setEventListeners();
 
