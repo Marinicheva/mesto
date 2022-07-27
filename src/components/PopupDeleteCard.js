@@ -8,9 +8,10 @@ export default class PopupDeleteCard extends Popup {
     this._btnApprove = this._popup.querySelector('.popup__btn-delete');
   }
 
-  openPopup(idDeletedCard) {
+  openPopup(idDeletedCard, removeCard) {
     super.openPopup();
-    this._idDeletedCard = idDeletedCard;  
+    this._idDeletedCard = idDeletedCard;
+    this._removeCard = removeCard;
   }
 
   setEventListeners() {
@@ -18,7 +19,7 @@ export default class PopupDeleteCard extends Popup {
 
     this._btnApprove.addEventListener('click', (evt) => {
       evt.preventDefault();
-      this._handleConfirmation(this._idDeletedCard);
+      this._handleConfirmation(this._idDeletedCard, this._removeCard);
     });
   }
 }

@@ -35,7 +35,6 @@ function enableValidation(config) {
 //Включение валидации
 enableValidation(validationConfig);
 
-
 //Функция открытия полноразмерного просмотра фото
 function handleCardClick({ name, link }) {
   popupFullSizeImg.openPopup({
@@ -54,13 +53,11 @@ function handleClickEditBtn() {
   popupEdit.openPopup();
 }
 
-
 //Коллбэк клика на кнопку обновления аватара
 function handleClickUpdateBtn() {
   formValidation[popupUpdateAvatar.popupForm.getAttribute("name")].resetValidation();
   popupUpdateAvatar.openPopup();
 }
-
 
 //Коллбэк клика на кнопку добавления новой карточки
 function handleClickAddCardBtn() {
@@ -68,9 +65,9 @@ function handleClickAddCardBtn() {
   addFormPopup.openPopup();
 }
 
-//Коллбэки клика на лайк
+//Изменение лайка при клике
 function addLike(cardID, renderer, likeContainer) {
-  api.addLike(cardID)
+  api.addLike(cardID)//ВАЖНО!!!! Везде добавить блок catch с выводом сообщения в консоль
   .then((data) => {return data.likes})
   .then((likes) => renderer(likes, likeContainer));
 }
@@ -91,8 +88,8 @@ function createCard(data) {
 }
 
 //Коллбэк клика на кнопку удаления карточки
-function handleClickDeleteCard(cardID) {
-  popupDeleteCard.openPopup(cardID);
+function handleClickDeleteCard(cardID, removeCard) {
+  popupDeleteCard.openPopup(cardID, removeCard);
 }
 
 //Создание класса UserInfo
@@ -154,8 +151,9 @@ const popupFullSizeImg = new PopupWithImage(".popup_type_fullscreen-img");
 popupFullSizeImg.setEventListeners();
 
 //Попап подтверждения удаления
-const popupDeleteCard = new PopupDeleteCard(".popup_type_delete-card", (id) => { //остановила здесь! надо передать метод удаления из разметки. Нужно думать
-  api.removeCard(id)
+const popupDeleteCard = new PopupDeleteCard(".popup_type_delete-card", (cardID, removeCard) => { 
+  console.log("Сейчас удалим")
+  api.removeCardData(cardID)
   .then((res) => removeCard());
 });
 popupDeleteCard.setEventListeners();

@@ -125,7 +125,7 @@ export default class Api {
   }
 
   //Удалить карточку
-  removeCard(cardID) {
+  removeCardData(cardID) {
     return fetch(`${this._url}cards/${cardID}`, {
       method: "DELETE",
       headers: this._headers,
@@ -137,6 +137,5 @@ export default class Api {
         Promise.reject(`Ошибка: ${res.code}.Карточка не удалена`);
       }
     })
-
   }
 }

@@ -48,7 +48,8 @@ export default class Card {
     });
 
     this._deleteBtn.addEventListener("click", () => {
-      this._handleClickDeleteCard(this._cardID);
+      this._handleClickDeleteCard(this._cardID, this._removeCard);
+
     });
 
     this._cardImage.addEventListener("click", () => {
@@ -56,9 +57,9 @@ export default class Card {
     });
   }
 
-  removeCard() {
-    this._cardItem.remove();
+  _removeCard() {
     this._cardItem = null;
+    this._cardItem.remove();
   }
 
   generateCard() {
