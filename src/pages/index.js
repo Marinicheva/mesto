@@ -112,7 +112,7 @@ const cardGallery = new Section({renderer: (cardData) => {
   }
 }, ".gallery__list");
 
-//Создание исходных данных для загрузки от сервера
+//Получение исходных данных для загрузки от сервера
 const initUserData = api.getUserData().then((res) => userData.initUserInfo(res));
 const initCards = api.getCards();
 
@@ -163,7 +163,8 @@ const popupWithConfirmation = new PopupWithConfirmation(".popup_type_delete-card
   api.removeCardData(cardID)
   .then(() => removedCard.remove())
   .then(() => popupWithConfirmation.closePopup())
-  .catch((err) => console.log(err));
+  .catch((err) => console.log(err))
+  .finally(() => popupWithConfirmation.renderLoading(false));
 });
 popupWithConfirmation.setEventListeners();
 

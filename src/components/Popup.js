@@ -22,6 +22,7 @@ export default class Popup {
       this._submitBtn.classList.add("popup__btn_inactive");
     } else {
       this._submitBtn.innerText = this._buttonName;
+      this._submitBtn.classList.remove("popup__btn_inactive");
     }
   }
 
