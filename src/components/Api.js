@@ -109,7 +109,6 @@ export default class Api {
     }
     ).then((res) => {
       if (res.ok) {
-        // console.log(res,"Unliked");
         return res.json();
       }
       Promise.reject(`Ошибка: ${res.status}.Лайк не убран`);

@@ -1,4 +1,5 @@
 .profile__photo-container {
+  grid-area: photo;
   position: relative;
   margin-right: 30px;
   width: 120px;

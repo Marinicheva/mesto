@@ -1,9 +1,10 @@
 .profile__photo {
-    grid-area: photo;
+    /* grid-area: photo; */
     display: block;
     max-width: 100%;
     min-height: 100%;
     object-fit: cover;
+    object-position: center center;
 }
 
 @media screen and (max-width: 611px) {

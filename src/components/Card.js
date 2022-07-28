@@ -56,11 +56,6 @@ export default class Card {
     });
   }
 
-  // _removeCard(card) {
-  //   this._cardItem = null;
-  //   this._cardItem.remove();
-  // }
-
   generateCard() {
     this._cardItem = this._getTemplate();
 

@@ -88,9 +88,8 @@ function createCard(data) {
 
 //Коллбэк клика на кнопку удаления карточки
 function handleClickDeleteCard(card, cardID) {
-  popupDeleteCard.openPopup(card, cardID);
+  popupWithConfirmation.openPopup(card, cardID);
 }
-
 
 //Включение валидации
 enableValidation(validationConfig);
@@ -120,8 +119,9 @@ const initCards = api.getCards();
 Promise.all([initUserData, initCards])
 .then((res) => {
   userData.setUserInfo(res[0]);
-  cardGallery.renderItems(res[1]);
+  return res[1].reverse();
 })
+.then((data) => cardGallery.renderItems(data))
 .catch((err) => console.log(err));
 
 
@@ -159,13 +159,13 @@ const popupFullSizeImg = new PopupWithImage(".popup_type_fullscreen-img");
 popupFullSizeImg.setEventListeners();
 
 //Попап подтверждения удаления
-const popupDeleteCard = new PopupWithConfirmation(".popup_type_delete-card", (removedCard, cardID) => { 
+const popupWithConfirmation = new PopupWithConfirmation(".popup_type_delete-card", (removedCard, cardID) => { 
   api.removeCardData(cardID)
   .then(() => removedCard.remove())
-  .then(() => popupDeleteCard.closePopup())
+  .then(() => popupWithConfirmation.closePopup())
   .catch((err) => console.log(err));
 });
-popupDeleteCard.setEventListeners();
+popupWithConfirmation.setEventListeners();
 
 //Попап обновления аватара
 const popupUpdateAvatar = new PopupWithForm(".popup_type_update-avatar", (avatar) => {
