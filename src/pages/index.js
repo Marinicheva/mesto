@@ -15,7 +15,7 @@ import FormValidator from "../components/FormValidator.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import PopupWithConfirmation from "../components/PopupWithConfirmation.js";
-import Api from "../components/Api";
+import Api from "../components/Api.js";
 
 
 //Функция включения валидации
