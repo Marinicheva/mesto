@@ -19,7 +19,7 @@ export default class PopupWithConfirmation extends Popup {
 
     this._btnApprove.addEventListener('click', (evt) => {
       evt.preventDefault();
-      this.renderLoading(true);
+      this.renderLoading(true, "Удаление...");
       this._handleConfirmation(this._removedCard, this._idDeletedCard);
     });
   }

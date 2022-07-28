@@ -13,11 +13,11 @@ export default class Popup {
     document.addEventListener("keydown", this._closeByEscape);
   }
 
-  renderLoading(isLoading) {
+  renderLoading(isLoading, newBtnName = '') {
     this._buttonName = this._submitBtn.getAttribute("data-name");
 
     if (isLoading) {
-      this._submitBtn.innerText = "Сохранение..."
+      this._submitBtn.innerText = newBtnName;
       this._submitBtn.disabled = true;
       this._submitBtn.classList.add("popup__btn_inactive");
     } else {
