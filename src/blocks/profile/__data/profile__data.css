@@ -17,13 +17,10 @@
 @media screen and (max-width: 611px) {
     .profile__data {
         width: 87%;
-        grid-template-columns: 1fr max-content;
-        grid-template-rows: repeat(3, max-content);
-        grid-template-areas: 
-            "photo photo"
-            "name edit-btn"
-            "about about";
-        justify-items: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
         margin-bottom: 30px;
     }
 }
