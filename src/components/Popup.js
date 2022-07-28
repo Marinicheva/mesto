@@ -13,7 +13,7 @@ export default class Popup {
     document.addEventListener("keydown", this._closeByEscape);
   }
 
-  renderLoading(isLoading, newBtnName = '') {
+  renderLoading(isLoading, newBtnName = 'Подождите...') {
     this._buttonName = this._submitBtn.getAttribute("data-name");
 
     if (isLoading) {

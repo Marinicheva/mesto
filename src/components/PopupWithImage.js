@@ -7,11 +7,23 @@ export default class PopupWithImage extends Popup {
     this._popupCaption = this._popup.querySelector(".popup__fullscreen-caption");
   }
 
+  _clearPopup() {
+    this._popupImg.src = '';
+    this._popupImg.alt = '';
+    this._popupCaption.textContent = '';
+
+  }
+
   openPopup({ name, link }) {
     this._popupImg.src = link;
     this._popupImg.alt = `Пользовательское фото места ${name}`;
     this._popupCaption.textContent = name;
 
     super.openPopup();
+  }
+
+  closePopup() {
+    super.closePopup();
+    this._clearPopup();
   }
 }
