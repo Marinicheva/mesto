@@ -6,7 +6,6 @@ export default class UserInfo {
     this.userInfo = {};
   }
 
-  //Сохранение исходных данных пользователя с сервера
   initUserInfo(data) {
     this.userInfo['name'] = data.name;
     this.userInfo['about'] = data.about;

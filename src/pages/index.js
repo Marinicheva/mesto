@@ -2,8 +2,8 @@ import "./index.css";
 import {
   formValidation,
   validationConfig,
-  editBtn,
   addCardBtn,
+  editBtn,
   updateAvatarBtn,
   apiConfig
 } from "../utils/constants.js";
