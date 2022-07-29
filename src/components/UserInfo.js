@@ -6,15 +6,6 @@ export default class UserInfo {
     this.userInfo = {};
   }
 
-  initUserInfo(data) {
-    this.userInfo['name'] = data.name;
-    this.userInfo['about'] = data.about;
-    this.userInfo['userId'] = data._id;
-    this._userAvatar.src = data.avatar;
-
-    return this.userInfo;
-  }
-
   getUserInfo() {
     this.userInfo['name'] = this._userName.textContent;
     this.userInfo['about'] = this._userAbout.textContent;
@@ -25,6 +16,8 @@ export default class UserInfo {
   setUserInfo(data) {
     this._userName.textContent = data['name'];
     this._userAbout.textContent = data['about'];
+    this.userInfo['userId'] = data._id;
+    this._userAvatar.src = data.avatar;
   }
 
   updateUserAvatar(newData) {
