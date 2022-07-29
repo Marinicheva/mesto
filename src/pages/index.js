@@ -42,11 +42,10 @@ function handleCardClick({ name, link }) {
 
 //Коллбэк клика на кнопку редатирования профиля
 function handleClickEditBtn() {
-  formValidation[popupEdit.popupForm.getAttribute("name")].resetValidation();
-
   const userCurrentData = userData.getUserInfo();
-
   popupEdit.setInputsValues(userCurrentData);
+
+  formValidation[popupEdit.popupForm.getAttribute("name")].resetValidation();
   popupEdit.openPopup();
 }
 
