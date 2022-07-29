@@ -5,7 +5,7 @@ export default class Card {
     this._likes = data["likes"];
     this._cardID = data["_id"];
     this._ownerId = data["owner"]["_id"];
-    this._userID = userId;
+    this._userId = userId;
     this._templateSelector = templateSelector;
     this._handleOpenViewPopup = handleOpenViewPopup;
     this._handleClickDeleteCard = handleClickDeleteCard;
@@ -67,11 +67,11 @@ export default class Card {
 
     this._setEvenetListeners();
 
-    if(this._ownerId !== this._userID) {
+    if(this._ownerId !== this._userId) {
       this._deleteBtn.classList.add("gallery__delete-btn_hide");
     }
 
-    if ( this._likes.some((item) => item["_id"] === this._userID) ) {
+    if ( this._likes.some((item) => item["_id"] === this._userId) ) {
       this._likeBtn.classList.add("gallery__like-btn_active");
     } 
 

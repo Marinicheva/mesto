@@ -79,7 +79,7 @@ function removeLike(cardID, renderer, likeContainer) {
 
 //Функция для создания новой карточки
 function createCard(data) {
-  const userID = userData.userInfo.userId;
+  const userID = userData.userId;
   const card = new Card(data, ".card-template", handleCardClick, handleClickDeleteCard, addLike, removeLike, userID);
   const readyCard = card.generateCard();
 
