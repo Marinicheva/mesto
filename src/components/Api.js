@@ -1,7 +1,13 @@
 export default class Api {
-  constructor({url, headers}) {
-    this._url = url,
-    this._headers = headers;
+  constructor({ url, headers }) {
+    (this._url = url), (this._headers = headers);
+  }
+
+  _getResponseData(res, errorMessage) {
+    if (!res.ok) {
+      return Promise.reject(`Ошибка: ${res.status}.${errorMessage}`);
+    }
+    return res.json();
   }
 
   //Получение данных о пользователе
@@ -11,11 +17,8 @@ export default class Api {
       headers: this._headers,
     })
     .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      Promise.reject(`Ошибка: ${res.status}. Данные о пользователе с сервера не получены`);
-    })
+      return this._getResponseData(res, "Данные о пользователе не получены");
+    });
   }
 
   //Редактирование данных профиля
@@ -23,19 +26,13 @@ export default class Api {
     return fetch(`${this._url}users/me`, {
       method: "PATCH",
       headers: this._headers,
-      body: JSON.stringify(
-        {
-          "name": newData.name,
-          "about": newData.about
-        }
-      )
-    })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      } 
-      Promise.reject(`Ошибка: ${res.status}. Данные пользователя не отредактированы`);
-    })
+      body: JSON.stringify({
+        name: newData.name,
+        about: newData.about,
+      }),
+    }).then((res) => {
+      return this._getResponseData(res, "Данные пользователя не отредактированы");
+    });
   }
 
   //Обновление аватарки
@@ -44,47 +41,35 @@ export default class Api {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify({
-        "avatar": avatarData.avatar,
-      })
-    })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      Promise.reject(`Ошибка: ${res.status}. Аватар пользователя не обновлен`);
-    })
+        avatar: avatarData.avatar,
+      }),
+    }).then((res) => {
+      return this._getResponseData(res, "Аватар пользователя не обновлен");
+    });
   }
-  
+
   //Получение карточек с сервера
   getCards() {
     return fetch(`${this._url}cards`, {
-      method: 'GET',
+      method: "GET",
       headers: this._headers,
-    })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      Promise.reject(`Ошибка: ${res.status}. Карточки с сервера не пришли`);
-    })
+    }).then((res) => {
+      return this._getResponseData(res, "Карточки с сервера не пришли");
+    });
   }
 
   //Добавление новой карточки
   addNewCard(cardData) {
     return fetch(`${this._url}cards`, {
-      method: 'POST',
+      method: "POST",
       headers: this._headers,
       body: JSON.stringify({
-          "name": cardData.name,
-          "link": cardData.link
-        })
-    })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      Promise.reject(`Ошибка: ${res.status}. Карточка не добавлена.`);
-    })
+        name: cardData.name,
+        link: cardData.link,
+      }),
+    }).then((res) => {
+      return this._getResponseData(res, "Карточка не добавлена");
+    });
   }
 
   //Поставить лайк
@@ -92,13 +77,9 @@ export default class Api {
     return fetch(`${this._url}/cards/${cardID}/likes`, {
       method: "PUT",
       headers: this._headers,
-    }
-    ).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      Promise.reject(`Ошибка: ${res.status}.Лайк не поставлен`);
-    })
+    }).then((res) => {
+      return this._getResponseData(res, "Лайк не поставлен");
+    });
   }
 
   //Убрать лайк
@@ -106,13 +87,9 @@ export default class Api {
     return fetch(`${this._url}/cards/${cardID}/likes`, {
       method: "DELETE",
       headers: this._headers,
-    }
-    ).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      Promise.reject(`Ошибка: ${res.status}.Лайк не убран`);
-    })
+    }).then((res) => {
+      return this._getResponseData(res, "Лайк не убран");
+    });
   }
 
   //Удалить карточку
@@ -120,12 +97,8 @@ export default class Api {
     return fetch(`${this._url}cards/${cardID}`, {
       method: "DELETE",
       headers: this._headers,
-    })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      Promise.reject(`Ошибка: ${res.status}. Карточка не удалена`);
-    })
+    }).then((res) => {
+      return this._getResponseData(res, "Карточка не удалена");
+    });
   }
 }

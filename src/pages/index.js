@@ -113,7 +113,7 @@ const cardGallery = new Section({renderer: (cardData) => {
 }, ".gallery__list");
 
 //Получение исходных данных для загрузки от сервера
-const initUserData = api.getUserData().then((res) => userData.initUserInfo(res));
+const initUserData = api.getUserData().then((data) => userData.initUserInfo(data));
 const initCards = api.getCards();
 
 Promise.all([initUserData, initCards])
