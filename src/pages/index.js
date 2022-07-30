@@ -62,24 +62,38 @@ function handleClickAddCardBtn() {
 }
 
 //Изменение лайка при клике
-function addLike(cardID, renderer, likeContainer) {
-  api.addLike(cardID)
-  .then((data) => {return data.likes})
-  .then((likes) => renderer(likes, likeContainer))
-  .catch((err) => console.log(err));
-}
+// function addLike(cardID, renderer, likeContainer) {
+//   api.addLike(cardID)
+//   .then((data) => {return data.likes})
+//   .then((likes) => renderer(likes, likeContainer))
+//   .catch((err) => console.log(err));
+// }
 
-function removeLike(cardID, renderer, likeContainer) {
-  api.removeLike(cardID)
-  .then((data) => {return data.likes})
-  .then((likes) => renderer(likes, likeContainer))
-  .catch((err) => console.log(err));
+// function removeLike(cardID, renderer, likeContainer) {
+//   api.removeLike(cardID)
+//   .then((data) => {return data.likes})
+//   .then((likes) => renderer(likes, likeContainer))
+//   .catch((err) => console.log(err));
+// }
+
+function handleClickLikeBtn(cardID, isLiked, getLikes) {
+  if (isLiked) {
+    api.removeLike(cardID)
+    .then((data) => data.likes)
+    .then((likes) => getLikes(likes))
+    .catch((err) => console.log(err));
+  } else {
+    api.addLike(cardID)
+    .then((data) => data.likes)
+    .then((likes) => getLikes(likes))
+    .catch((err) => console.log(err));
+  }
 }
 
 //Функция для создания новой карточки
 function createCard(data) {
   const userID = userData.userId;
-  const card = new Card(data, ".card-template", handleCardClick, handleClickDeleteCard, addLike, removeLike, userID);
+  const card = new Card(data, ".card-template", handleCardClick, handleClickDeleteCard, handleClickLikeBtn, userID);
   const readyCard = card.generateCard();
 
   return readyCard;

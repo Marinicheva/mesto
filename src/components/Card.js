@@ -1,5 +1,12 @@
 export default class Card {
-  constructor(data, templateSelector, handleOpenViewPopup, handleClickDeleteCard, addLike, removeLike, userId) {
+  constructor(
+    data,
+    templateSelector,
+    handleOpenViewPopup,
+    handleClickDeleteCard,
+    handleClickLikeBtn,
+    userId
+  ) {
     this._title = data["name"];
     this._url = data["link"];
     this._likes = data["likes"];
@@ -9,8 +16,7 @@ export default class Card {
     this._templateSelector = templateSelector;
     this._handleOpenViewPopup = handleOpenViewPopup;
     this._handleClickDeleteCard = handleClickDeleteCard;
-    this._addLike = addLike;
-    this._removeLike = removeLike;
+    this._handleClickLikeBtn = handleClickLikeBtn;
   }
 
   _getTemplate() {
@@ -21,18 +27,25 @@ export default class Card {
     return card;
   }
 
-  _handleLikeClick(evt) {
-    if ( evt.target.classList.contains("gallery__like-btn_active") ) {
-      evt.target.classList.remove("gallery__like-btn_active");
-      this._removeLike(this._cardID, this._renderLikesCounter, this._likeCounter);
+  _setLikeBtnState(isLiked) {
+    if (isLiked) {
+      this._likeBtn.classList.add("gallery__like-btn_active");
     } else {
-      evt.target.classList.add("gallery__like-btn_active");
-      this._addLike(this._cardID, this._renderLikesCounter, this._likeCounter);
+      this._likeBtn.classList.remove("gallery__like-btn_active");
     }
   }
 
-  _renderLikesCounter(likesArr, likeContainer) {
-    likeContainer.textContent = likesArr.length > 0 ? likesArr.length : null;
+  _renderLikesCounter() {
+    this._isLiked = this._likes.some((item) => item["_id"] === this._userId);
+    this._setLikeBtnState(this._isLiked);
+
+    this._likeCounter.textContent =
+      this._likes.length > 0 ? this._likes.length : null;
+  }
+
+  getLikesArr(likes) {
+    this._likes = likes;
+    this._renderLikesCounter();
   }
 
   _handleclickImage() {
@@ -43,8 +56,12 @@ export default class Card {
   }
 
   _setEvenetListeners() {
-    this._likeBtn.addEventListener("click", (evt) => {
-      this._handleLikeClick(evt);
+    this._likeBtn.addEventListener("click", () => {
+      this._handleClickLikeBtn(
+        this._cardID,
+        this._isLiked,
+        this.getLikesArr.bind(this)
+      );
     });
 
     this._deleteBtn.addEventListener("click", () => {
@@ -67,20 +84,16 @@ export default class Card {
 
     this._setEvenetListeners();
 
-    if(this._ownerId !== this._userId) {
+    if (this._ownerId !== this._userId) {
       this._deleteBtn.classList.add("gallery__delete-btn_hide");
     }
 
-    if ( this._likes.some((item) => item["_id"] === this._userId) ) {
-      this._likeBtn.classList.add("gallery__like-btn_active");
-    } 
+    this._renderLikesCounter();
 
     this._cardTitle.textContent = this._title;
     this._cardImage.src = this._url;
     this._cardImage.alt = `Пользовательское фото места ${this._title}`;
 
-    this._renderLikesCounter(this._likes, this._likeCounter);
- 
     return this._cardItem;
   }
 }
