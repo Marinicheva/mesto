@@ -62,20 +62,6 @@ function handleClickAddCardBtn() {
 }
 
 //Изменение лайка при клике
-// function addLike(cardID, renderer, likeContainer) {
-//   api.addLike(cardID)
-//   .then((data) => {return data.likes})
-//   .then((likes) => renderer(likes, likeContainer))
-//   .catch((err) => console.log(err));
-// }
-
-// function removeLike(cardID, renderer, likeContainer) {
-//   api.removeLike(cardID)
-//   .then((data) => {return data.likes})
-//   .then((likes) => renderer(likes, likeContainer))
-//   .catch((err) => console.log(err));
-// }
-
 function handleClickLikeBtn(cardID, isLiked, getLikes) {
   if (isLiked) {
     api.removeLike(cardID)
