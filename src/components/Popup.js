@@ -13,19 +13,6 @@ export default class Popup {
     document.addEventListener("keydown", this._closeByEscape);
   }
 
-  renderLoading(isLoading, newBtnName = 'Подождите...') {
-    this._buttonName = this._submitBtn.getAttribute("data-name");
-
-    if (isLoading) {
-      this._submitBtn.innerText = newBtnName;
-      this._submitBtn.disabled = true;
-      this._submitBtn.classList.add("popup__btn_inactive");
-    } else {
-      this._submitBtn.innerText = this._buttonName;
-      this._submitBtn.classList.remove("popup__btn_inactive");
-    }
-  }
-
   closePopup() {
     this._popup.classList.remove("popup_opened");
     document.removeEventListener("keydown", this._closeByEscape);
