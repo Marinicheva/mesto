@@ -1,8 +1,9 @@
 import Popup from "./Popup.js";
 
 export default class PopupWithConfirmation extends Popup {
-  constructor(popupSelector) {
+  constructor(popupSelector, renderLoading) {
     super(popupSelector);
+    this.renderLoading = renderLoading.bind(this._submitBtn);
   }
 
   setConfirmedAction(actionConfirmed) {
@@ -13,6 +14,7 @@ export default class PopupWithConfirmation extends Popup {
     super.setEventListeners();
     
     this._submitBtn.addEventListener('click', () => {
+      this.renderLoading(true, "Удаление...")
       this._actionConfirmed();
     });
   }

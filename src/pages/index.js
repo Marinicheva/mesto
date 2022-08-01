@@ -61,7 +61,7 @@ function handleClickAddCardBtn() {
   addFormPopup.openPopup();
 }
 
-function renderLoading(isLoading, message) {
+function renderLoading(isLoading, message = "Подождите...") {
   const btnName = this.getAttribute("data-name");
 
   if (isLoading) {
@@ -90,15 +90,6 @@ function handleClickLikeBtn(cardID, isLiked, getLikes) {
   }
 }
 
-//Функция для создания новой карточки
-function createCard(data) {
-  const userID = userData.userId;
-  const card = new Card(data, ".card-template", handleCardClick, handleClickDeleteCard, handleClickLikeBtn, userID);
-  const readyCard = card.generateCard();
-
-  return readyCard;
-}
-
 //Коллбэк клика на кнопку удаления карточки
 function handleClickDeleteCard(card, removeCard) {
   popupWithConfirmation.openPopup();
@@ -106,8 +97,19 @@ function handleClickDeleteCard(card, removeCard) {
   popupWithConfirmation.setConfirmedAction(() => {
     api.removeCardData(card._id)
     .then(() => removeCard())
+    .then(() => popupWithConfirmation.renderLoading(false))
     .then(() => popupWithConfirmation.closePopup())
+    .catch((err) => console.log(err))
   });
+}
+
+//Функция для создания новой карточки
+function createCard(data) {
+  const userID = userData.userId;
+  const card = new Card(data, ".card-template", handleCardClick, handleClickDeleteCard, handleClickLikeBtn, userID);
+  const readyCard = card.generateCard();
+
+  return readyCard;
 }
 
 //Включение валидации
@@ -152,7 +154,7 @@ const popupEdit = new PopupWithForm(".popup_type_edit-form", (data) => {
   .then(() =>  popupEdit.closePopup())
   .catch((err) => console.log(err))
   .finally(() => popupEdit.renderLoading(false));
-});
+}, renderLoading);
 
 popupEdit.setEventListeners();
 editBtn.addEventListener("click", handleClickEditBtn);
@@ -166,7 +168,7 @@ const addFormPopup = new PopupWithForm(".popup_type_add-new-card", (newCardData)
   })
   .then(() => addFormPopup.closePopup())
   .finally(() => addFormPopup.renderLoading(false))
-});
+}, renderLoading);
 
 addFormPopup.setEventListeners();
 addCardBtn.addEventListener("click", handleClickAddCardBtn);
@@ -176,7 +178,7 @@ const popupFullSizeImg = new PopupWithImage(".popup_type_fullscreen-img");
 popupFullSizeImg.setEventListeners();
 
 //Попап подтверждения удаления
-const popupWithConfirmation = new PopupWithConfirmation(".popup_type_delete-card");
+const popupWithConfirmation = new PopupWithConfirmation(".popup_type_delete-card", renderLoading);
 popupWithConfirmation.setEventListeners();
 
 //Попап обновления аватара
@@ -188,7 +190,7 @@ const popupUpdateAvatar = new PopupWithForm(".popup_type_update-avatar", (avatar
   .then(() => popupUpdateAvatar.closePopup())
   .catch((err) => console.log(err))
   .finally(() => popupUpdateAvatar.renderLoading(false))
-});
+}, renderLoading);
 popupUpdateAvatar.setEventListeners();
 
 updateAvatarBtn.addEventListener('click', handleClickUpdateBtn);
