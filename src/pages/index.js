@@ -92,14 +92,15 @@ function handleClickDeleteCard(cardID, removeCard) {
 
 //Отображение загрузки при ожидании ответа от сервера
 function renderLoading(isLoading, message = "Подождите...") {
+  console.log(this);
   const btnName = this.getAttribute("data-name");
 
   if (isLoading) {
-    this.innerText = message;
+    this.textContent = message;
     this.disabled = true;
     this.classList.add("popup__btn_inactive");
   } else {
-    this.innerText = btnName;
+    this.textContent = btnName;
     this.classList.remove("popup__btn_inactive");
   }
 }
@@ -170,12 +171,14 @@ const popupFullSizeImg = new PopupWithImage(".popup_type_fullscreen-img");
 popupFullSizeImg.setEventListeners();
 
 //Попап подтверждения удаления
-const popupWithConfirmation = new PopupWithConfirmation(".popup_type_delete-card", (cardID, removeCard) => { 
+const popupWithConfirmation = new PopupWithConfirmation(".popup_type_delete-card", (cardID) => { 
   api.removeCardData(cardID)
   .then(() => popupWithConfirmation.removeCard())
   .then(() => popupWithConfirmation.closePopup())
   .catch((err) => console.log(err))
-  .finally(() => popupWithConfirmation.renderLoading(false));
+  .finally(() =>  {
+    // popupWithConfirmation.renderLoading(false);
+  });
 }, renderLoading);
 popupWithConfirmation.setEventListeners();
 

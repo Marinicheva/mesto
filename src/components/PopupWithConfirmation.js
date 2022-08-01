@@ -14,14 +14,25 @@ export default class PopupWithConfirmation extends Popup {
     super.openPopup();
     this._idDeletedCard = idDeletedCard;
     this.removeCard = removeCard;
+
+    console.log(idDeletedCard);
   }
+
+  // getConfirmation() {
+  //   this._btnApprove.addEventListener("click" , () => {
+  //     console.log(this._idDeletedCard);
+  //     this.renderLoading(true, "Удаление...");
+  //     this._handleConfirmation(this._idDeletedCard);
+  // });
+// }
 
   setEventListeners() {
     super.setEventListeners();
 
     this._btnApprove.addEventListener('click', () => {
-      this.renderLoading(true, "Удаление...");
-      this._handleConfirmation(this._idDeletedCard, this.removeCard);
+      console.log("click");
+      // this.renderLoading(true, "Удаление...");
+      this._handleConfirmation(this._idDeletedCard);
     });
   }
 }

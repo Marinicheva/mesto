@@ -48,6 +48,10 @@ export default class Card {
     this._renderLikesCounter();
   }
 
+  removeCard() {
+    this._cardItem.remove();
+  }
+
   _handleclickImage() {
     this._handleOpenViewPopup({
       link: this._url,
@@ -71,11 +75,6 @@ export default class Card {
     this._cardImage.addEventListener("click", () => {
       this._handleclickImage();
     });
-  }
-
-  removeCard() {
-    this._cardItem.remove();
-    this._cardItem = null; 
   }
 
   generateCard() {
