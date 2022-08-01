@@ -45,7 +45,7 @@ function handleCardClick({ name, link }) {
   });
 }
 
-//Коллбэк клика на кнопку редатирования профиля
+//Коллбэк клика на кнопку редактирования профиля
 function handleClickEditBtn() {
   const userCurrentData = userData.getUserInfo();
   popupEdit.setInputsValues(userCurrentData);
@@ -102,6 +102,7 @@ function addFormSubmit(newCardData) {
     .finally(() => addFormPopup.renderLoading(false));
 }
 
+//Отображение ожидания ответа от сервера
 function renderLoading(isLoading, message = "Подождите...") {
   const btnName = this.getAttribute("data-name");
 
@@ -191,15 +192,24 @@ Promise.all([initUserData, initCards])
   .then((data) => cardGallery.renderItems(data))
   .catch((err) => console.log(err));
 
+
 //Экземпляры попапов
 //Попап с формой редактирования профиля
-const popupEdit = new PopupWithForm(".popup_type_edit-form", editFormSubmit, renderLoading);
+const popupEdit = new PopupWithForm(
+  ".popup_type_edit-form",
+  editFormSubmit,
+  renderLoading
+);
 
 popupEdit.setEventListeners();
 editBtn.addEventListener("click", handleClickEditBtn);
 
 //Попап с формой добавления карточки пользователем
-const addFormPopup = new PopupWithForm(".popup_type_add-new-card", addFormSubmit, renderLoading);
+const addFormPopup = new PopupWithForm(
+  ".popup_type_add-new-card",
+  addFormSubmit,
+  renderLoading
+);
 
 addFormPopup.setEventListeners();
 addCardBtn.addEventListener("click", handleClickAddCardBtn);
@@ -209,11 +219,18 @@ const popupFullSizeImg = new PopupWithImage(".popup_type_fullscreen-img");
 popupFullSizeImg.setEventListeners();
 
 //Попап подтверждения удаления
-const popupWithConfirmation = new PopupWithConfirmation(".popup_type_delete-card", renderLoading);
+const popupWithConfirmation = new PopupWithConfirmation(
+  ".popup_type_delete-card",
+  renderLoading
+);
 popupWithConfirmation.setEventListeners();
 
 //Попап обновления аватара
-const popupUpdateAvatar = new PopupWithForm(".popup_type_update-avatar", updateAvatarFormSubmit, renderLoading);
+const popupUpdateAvatar = new PopupWithForm(
+  ".popup_type_update-avatar",
+  updateAvatarFormSubmit,
+  renderLoading
+);
 popupUpdateAvatar.setEventListeners();
 
 updateAvatarBtn.addEventListener("click", handleClickUpdateBtn);
