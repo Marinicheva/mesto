@@ -90,20 +90,6 @@ function handleClickDeleteCard(cardID, removeCard) {
   popupWithConfirmation.openPopup(cardID, removeCard);
 }
 
-//Отображение загрузки при ожидании ответа от сервера
-function renderLoading(isLoading, message = "Подождите...") {
-  const btnName = this.getAttribute("data-name");
-
-  if (isLoading) {
-    this.textContent = message;
-    this.disabled = true;
-    this.classList.add("popup__btn_inactive");
-  } else {
-    this.textContent = btnName;
-    this.classList.remove("popup__btn_inactive");
-  }
-}
-
 //Включение валидации
 enableValidation(validationConfig);
 
@@ -146,7 +132,7 @@ const popupEdit = new PopupWithForm(".popup_type_edit-form", (data) => {
   .then(() =>  popupEdit.closePopup())
   .catch((err) => console.log(err))
   .finally(() => popupEdit.renderLoading(false));
-}, renderLoading);
+});
 
 popupEdit.setEventListeners();
 editBtn.addEventListener("click", handleClickEditBtn);
@@ -160,7 +146,7 @@ const addFormPopup = new PopupWithForm(".popup_type_add-new-card", (newCardData)
   })
   .then(() => addFormPopup.closePopup())
   .finally(() => addFormPopup.renderLoading(false))
-}, renderLoading);
+});
 
 addFormPopup.setEventListeners();
 addCardBtn.addEventListener("click", handleClickAddCardBtn);
@@ -175,10 +161,8 @@ const popupWithConfirmation = new PopupWithConfirmation(".popup_type_delete-card
   .then(() => popupWithConfirmation.removeCard())
   .then(() => popupWithConfirmation.closePopup())
   .catch((err) => console.log(err))
-  .finally(() =>  {
-    // popupWithConfirmation.renderLoading(false);
-  });
-}, renderLoading);
+  // .finally(() =>  popupWithConfirmation.renderLoading(false));
+});
 popupWithConfirmation.setEventListeners();
 
 //Попап обновления аватара
@@ -190,7 +174,7 @@ const popupUpdateAvatar = new PopupWithForm(".popup_type_update-avatar", (avatar
   .then(() => popupUpdateAvatar.closePopup())
   .catch((err) => console.log(err))
   .finally(() => popupUpdateAvatar.renderLoading(false))
-}, renderLoading);
+});
 popupUpdateAvatar.setEventListeners();
 
 updateAvatarBtn.addEventListener('click', handleClickUpdateBtn);
