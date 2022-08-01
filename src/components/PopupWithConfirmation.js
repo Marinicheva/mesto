@@ -10,19 +10,18 @@ export default class PopupWithConfirmation extends Popup {
     this.renderLoading = renderLoading.bind(this._btnApprove);
   }
 
-  openPopup(removedCard, idDeletedCard) {
+  openPopup(idDeletedCard, removeCard) {
     super.openPopup();
     this._idDeletedCard = idDeletedCard;
-    this._removedCard = removedCard;
+    this.removeCard = removeCard;
   }
 
   setEventListeners() {
     super.setEventListeners();
 
-    this._btnApprove.addEventListener('click', (evt) => {
-      evt.preventDefault();
+    this._btnApprove.addEventListener('click', () => {
       this.renderLoading(true, "Удаление...");
-      this._handleConfirmation(this._removedCard, this._idDeletedCard);
+      this._handleConfirmation(this._idDeletedCard, this.removeCard);
     });
   }
 }

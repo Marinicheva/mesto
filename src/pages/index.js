@@ -86,8 +86,8 @@ function createCard(data) {
 }
 
 //Коллбэк клика на кнопку удаления карточки
-function handleClickDeleteCard(card, cardID) {
-  popupWithConfirmation.openPopup(card, cardID);
+function handleClickDeleteCard(cardID, removeCard) {
+  popupWithConfirmation.openPopup(cardID, removeCard);
 }
 
 //Отображение загрузки при ожидании ответа от сервера
@@ -170,9 +170,9 @@ const popupFullSizeImg = new PopupWithImage(".popup_type_fullscreen-img");
 popupFullSizeImg.setEventListeners();
 
 //Попап подтверждения удаления
-const popupWithConfirmation = new PopupWithConfirmation(".popup_type_delete-card", (removedCard, cardID) => { 
+const popupWithConfirmation = new PopupWithConfirmation(".popup_type_delete-card", (cardID, removeCard) => { 
   api.removeCardData(cardID)
-  .then(() => removedCard.remove())
+  .then(() => popupWithConfirmation.removeCard())
   .then(() => popupWithConfirmation.closePopup())
   .catch((err) => console.log(err))
   .finally(() => popupWithConfirmation.renderLoading(false));
