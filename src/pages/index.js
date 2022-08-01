@@ -92,7 +92,6 @@ function handleClickDeleteCard(cardID, removeCard) {
 
 //Отображение загрузки при ожидании ответа от сервера
 function renderLoading(isLoading, message = "Подождите...") {
-  console.log(this);
   const btnName = this.getAttribute("data-name");
 
   if (isLoading) {
