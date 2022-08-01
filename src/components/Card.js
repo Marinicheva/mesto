@@ -7,7 +7,7 @@ export default class Card {
     handleClickLikeBtn,
     userId
   ) {
-    this._cardData = data;
+    this.cardData = data;
     this._ownerId = data["owner"]["_id"];
     this._userId = userId;
     this._templateSelector = templateSelector;
@@ -33,15 +33,15 @@ export default class Card {
   }
 
   _renderLikesCounter() {
-    this._isLiked = this._cardData.likes.some((item) => item["_id"] === this._userId);
+    this._isLiked = this.cardData.likes.some((item) => item["_id"] === this._userId);
     this._setLikeBtnState(this._isLiked);
 
     this._likeCounter.textContent =
-      this._cardData.likes.length > 0 ? this._cardData.likes.length : null;
+    this.cardData.likes.length > 0 ? this.cardData.likes.length : null;
   }
 
   getLikesArr(likes) {
-    this._cardData.likes = likes;
+    this.cardData.likes = likes;
     this._renderLikesCounter();
   }
 
@@ -51,22 +51,22 @@ export default class Card {
 
   _handleclickImage() {
     this._handleOpenViewPopup({
-      link: this._cardData.link,
-      name: this._cardData.name,
+      link: this.cardData.link,
+      name: this.cardData.name,
     });
   }
 
   _setEvenetListeners() {
     this._likeBtn.addEventListener("click", () => {
       this._handleClickLikeBtn(
-        this._cardData._id,
+        this.cardData._id,
         this._isLiked,
         this.getLikesArr.bind(this)
       );
     });
 
     this._deleteBtn.addEventListener("click", () => {
-      this._handleClickDeleteCard(this._cardData, this.removeCard.bind(this));
+      this._handleClickDeleteCard(this.cardData, this.removeCard.bind(this));
     });
 
     this._cardImage.addEventListener("click", () => {
@@ -91,9 +91,9 @@ export default class Card {
 
     this._renderLikesCounter();
 
-    this._cardTitle.textContent = this._cardData.name;
-    this._cardImage.src = this._cardData.link;
-    this._cardImage.alt = `Пользовательское фото места ${this._cardData.name}`;
+    this._cardTitle.textContent = this.cardData.name;
+    this._cardImage.src = this.cardData.link;
+    this._cardImage.alt = `Пользовательское фото места ${this.cardData.name}`;
 
     return this._cardItem;
   }
