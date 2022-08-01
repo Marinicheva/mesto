@@ -61,6 +61,20 @@ function handleClickAddCardBtn() {
   addFormPopup.openPopup();
 }
 
+function renderLoading(isLoading, message) {
+  const btnName = this.getAttribute("data-name");
+
+  if (isLoading) {
+    this.textContent = message;
+    this.classList.add("popup__btn_inactive");
+    this.disabled = true;
+  } else {
+    this.textContent = btnName;
+    this.disabled = false;
+    this.classList.remove("popup__btn_inactive");
+  }
+}
+
 //Изменение лайка при клике
 function handleClickLikeBtn(cardID, isLiked, getLikes) {
   if (isLiked) {
@@ -86,8 +100,14 @@ function createCard(data) {
 }
 
 //Коллбэк клика на кнопку удаления карточки
-function handleClickDeleteCard(cardID, removeCard) {
-  popupWithConfirmation.openPopup(cardID, removeCard);
+function handleClickDeleteCard(card, removeCard) {
+  popupWithConfirmation.openPopup();
+
+  popupWithConfirmation.setConfirmedAction(() => {
+    api.removeCardData(card._id)
+    .then(() => removeCard())
+    .then(() => popupWithConfirmation.closePopup())
+  });
 }
 
 //Включение валидации
@@ -156,13 +176,7 @@ const popupFullSizeImg = new PopupWithImage(".popup_type_fullscreen-img");
 popupFullSizeImg.setEventListeners();
 
 //Попап подтверждения удаления
-const popupWithConfirmation = new PopupWithConfirmation(".popup_type_delete-card", (cardID) => { 
-  api.removeCardData(cardID)
-  .then(() => popupWithConfirmation.removeCard())
-  .then(() => popupWithConfirmation.closePopup())
-  .catch((err) => console.log(err))
-  // .finally(() =>  popupWithConfirmation.renderLoading(false));
-});
+const popupWithConfirmation = new PopupWithConfirmation(".popup_type_delete-card");
 popupWithConfirmation.setEventListeners();
 
 //Попап обновления аватара
