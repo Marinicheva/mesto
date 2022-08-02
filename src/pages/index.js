@@ -142,9 +142,9 @@ function handleClickDeleteCard(card, removeCard) {
     api
       .removeCardData(card._id)
       .then(() => removeCard())
-      .then(() => popupWithConfirmation.renderLoading(false))
       .then(() => popupWithConfirmation.closePopup())
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err))
+      .finally(() => popupWithConfirmation.renderLoading(false));
   });
 }
 
