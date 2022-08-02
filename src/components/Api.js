@@ -3,6 +3,7 @@ export default class Api {
     (this._url = url), (this._headers = headers);
   }
 
+  //Обработка ответа сервера
   _getResponseData(res, errorMessage) {
     if (!res.ok) {
       return Promise.reject(`Ошибка: ${res.status}.${errorMessage}`);
